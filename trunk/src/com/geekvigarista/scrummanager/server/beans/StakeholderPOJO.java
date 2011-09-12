@@ -1,0 +1,90 @@
+package com.geekvigarista.scrummanager.server.beans;
+
+import org.bson.types.ObjectId;
+
+import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
+import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.Reference;
+import com.google.code.morphia.annotations.Transient;
+
+@Entity("stakeholders")
+public class StakeholderPOJO {
+
+	@Id
+	private ObjectId id;
+	private String nome;
+	private PapelStakeholder papel;
+	@Reference
+	private ProjetoPOJO projeto;
+	@Reference
+	private UsuarioPOJO usuario;
+
+	@Transient
+	private Stakeholder stakeholder;
+
+	public StakeholderPOJO() {
+	}
+	
+	/**
+	 * @param usuario
+	 */
+	public StakeholderPOJO(Stakeholder stakeholder) {
+		// TODO avoid nullpointers
+		super();
+		this.stakeholder = stakeholder;
+		this.usuario = new UsuarioPOJO(stakeholder.getUsuario());
+		this.id = new ObjectId(stakeholder.getId());
+		this.nome = stakeholder.getNome();
+		this.papel = stakeholder.getPapel();
+		this.projeto = new ProjetoPOJO(stakeholder.getProjeto());
+	}
+
+	public Stakeholder getStakeholder() {
+		// TODO avoid nullpointers
+		stakeholder = new Stakeholder(this.id.toString(), nome, papel,
+				projeto.getProjeto(), usuario.getUsuario());
+		return stakeholder;
+	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public PapelStakeholder getPapel() {
+		return papel;
+	}
+
+	public void setPapel(PapelStakeholder papel) {
+		this.papel = papel;
+	}
+
+	public ProjetoPOJO getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(ProjetoPOJO projeto) {
+		this.projeto = projeto;
+	}
+
+	public UsuarioPOJO getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioPOJO usuario) {
+		this.usuario = usuario;
+	}
+}
