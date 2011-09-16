@@ -2,15 +2,18 @@ package com.geekvigarista.scrummanager.server.interfaces.dao;
 
 import java.util.List;
 
+import com.google.code.morphia.query.QueryResults;
+
 
 /**
  * Interface para os Daos.
  * Aqui ficam descritos todos os metodos comuns para todos os Daos
  * @author Raduq
- *
+ * @param T - Value Object simples, usado no client.
+ *        K - Pojo com anotacoes do morphia, usado somente para persistencia.
  */
-public interface IDao<T> {
-	//TODO substituir por DTO esses booleans aqui ou só no controller?
+public interface IDao<T,K> {
+	//TODO substituir por DTO esses booleans aqui ou sï¿½ no controller?
 	
 	/**
 	 * Salva o objeto e retorna o objeto salvo ja com id.
@@ -37,4 +40,10 @@ public interface IDao<T> {
 	 * @param id, id do objeto a ser buscado.
 	 */
 	T 	    buscar(String id);
+	
+	/**
+	 * Converte uma lista de resultados de um metodo find()
+	 * para uma lista de valueObjects.
+	 */
+	List<T> toValueObject(QueryResults<K> resultadoBusca);
 }

@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
+import com.geekvigarista.scrummanager.server.beans.UsuarioPOJO;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 
 /**
@@ -8,7 +9,7 @@ import com.geekvigarista.scrummanager.shared.vos.Usuario;
  * @author Raduq
  *
  */
-public interface IDaoUsuario extends IDao<Usuario> 
+public interface IDaoUsuario extends IDao<Usuario,UsuarioPOJO> 
 {
-	//TODO, metodos especificos irão aqui..
+	//TODO, metodos especificos irï¿½o aqui..
 }

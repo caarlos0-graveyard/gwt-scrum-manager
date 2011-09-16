@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.server.persistencia.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -10,6 +11,7 @@ import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
 import com.google.code.morphia.dao.BasicDAO;
+import com.google.code.morphia.query.QueryResults;
 
 /**
  * Classe Dao que herda de BasicDao do morphia.
@@ -18,10 +20,11 @@ import com.google.code.morphia.dao.BasicDAO;
  */
 public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoUsuario 
 {
-	//TODO talves usar injeção de dependencia para 
-	//ter o datastore injetado no dao ?
-	//ver isso com o carlos
-	protected DaoUsuario(Datastore ds) {
+	/**
+	 * TODO talves usar injeÃ§Ã£o de dependencia para 
+	 * ter o datastore injetado no dao ?
+	 */
+	public DaoUsuario(Datastore ds) {
 		super(ds);
 	}
 	
@@ -37,9 +40,9 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 		if(key==null){
 			return null;
 		}
-	
+		System.out.println("Salvo com id " + key.toString());
 		//FIXME ver isso se funga
-		uPojo.setId(new ObjectId(key.toString()));
+		uPojo.setId(new ObjectId(key.getId().toString()));
 		return uPojo.getUsuario();
 	}
 	
@@ -47,34 +50,65 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 	 * Metodo que exclui um usuario.
 	 * O usuario deve ter ID preenchido.
 	 * 
-	 * XXX implementar este metodo.
 	 * @param usuario
 	 * @return
 	 */
 	@Override
 	public boolean excluir(Usuario usuario) 
 	{
-		return false;
+		try
+		{
+			//FIXME mudar o jeito de retorno dos metodos
+			this.deleteById(new UsuarioPOJO(usuario).getId());
+			return true;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	/**
 	 * Metodo que busca todos os usuarios sem 
 	 * usar nenhum criterio.
-	 * XXX implementar este metodo.
 	 */
 	@Override
-	public List<Usuario> buscarTodos() {
-		return null;
+	public List<Usuario> buscarTodos() 
+	{
+		return toValueObject(this.find());
 	}
 	
 	/**
 	 * Metodo que busca um usuario de acordo com o id
 	 * passado por parametro.
-	 * XXX implementar este metodo.
+	 * Se nao encontrar retorna null.
 	 */
 	@Override
-	public Usuario buscar(String id) {
-		return null;
+	public Usuario buscar(String id) 
+	{
+		UsuarioPOJO uPojo = this.findOne("id",new ObjectId(id));
+		if(uPojo == null)
+		{
+			return null;
+		}
+		return uPojo.getUsuario();
 	}
-
+	
+	/**
+	 * 
+	 * Converte um QueryResult para uma lista de Usuario.
+	 * Caso venha um queryResult vazio, retorna um array vazio de Usuario.
+	 * 
+	 * @param resultadoBusca, QueryResult de UsuarioPojo 
+	 *        vindo de um metodo this.find();
+	 */
+	public List<Usuario> toValueObject(QueryResults<UsuarioPOJO> resultadoBusca)
+	{
+		List<Usuario> retorno = new ArrayList<Usuario>();
+		for(UsuarioPOJO uPojo : resultadoBusca.asList())
+		{
+			retorno.add(uPojo.getUsuario());
+		}
+		return retorno;
+	}
 }

@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
 import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
+import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 
 /**
  * Interface para o dao stakeholder, extendendo da interface IDao
@@ -8,7 +9,7 @@ import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
  * @author Raduq
  *
  */
-public interface IDaoStakeholder extends IDao<StakeholderPOJO> 
+public interface IDaoStakeholder extends IDao<Stakeholder,StakeholderPOJO> 
 {
-	//TODO, metodos especificos irão aqui..
+	//TODO, metodos especificos irï¿½o aqui..
 }
