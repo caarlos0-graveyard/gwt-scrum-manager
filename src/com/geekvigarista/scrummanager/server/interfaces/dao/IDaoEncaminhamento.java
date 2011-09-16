@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
 import com.geekvigarista.scrummanager.server.beans.EncaminhamentoPOJO;
+import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 
 /**
  * Interface para o dao Encaminhamento, extendendo da interface IDao
@@ -8,7 +9,7 @@ import com.geekvigarista.scrummanager.server.beans.EncaminhamentoPOJO;
  * @author Raduq
  *
  */
-public interface IDaoEncaminhamento extends IDao<EncaminhamentoPOJO> 
+public interface IDaoEncaminhamento extends IDao<Encaminhamento, EncaminhamentoPOJO> 
 {
-	//TODO, metodos especificos irão aqui..
+	//TODO, metodos especificos irï¿½o aqui..
 }

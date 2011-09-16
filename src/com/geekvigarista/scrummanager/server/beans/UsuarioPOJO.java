@@ -1,107 +1,129 @@
 package com.geekvigarista.scrummanager.server.beans;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.bson.types.ObjectId;
 
-import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
-import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 
+/**
+ * Classe de Usuario que vai ser usada pelo Morphia para persistencia. Não pode ser vista no lado Client da aplicação.
+ * 
+ * @author Raduq
+ */
 @Entity("usuarios")
-public class UsuarioPOJO {
-
+public class UsuarioPOJO
+{
+	
 	@Transient
 	private Usuario usuario;
-
+	
 	@Id
-	private org.bson.types.ObjectId id;
-
+	ObjectId id;
+	
 	private String login;
 	private String senha;
 	private String nome;
-
+	
 	@Transient
 	private String confirmacaoSenha;
-
-	@Reference
-	private List<ProjetoPOJO> projetos;
-
-	public UsuarioPOJO() {
+	
+	/**
+	 * Construtor vazio de UsuarioPojo.
+	 * @deprecated nao instanciar, usar o outro construtor recebendo usuario.
+	 */
+	public UsuarioPOJO()
+	{
 	}
 	
-	public UsuarioPOJO(Usuario usuario) {
+	/**
+	 * Construtor que recebe um usuario.
+	 * Necessario para converter de vo 
+	 * para UsuarioPOJO persistivel.
+	 * @param usuario
+	 */
+	public UsuarioPOJO(Usuario usuario)
+	{
 		// TODO avoid nullpointers
 		super();
 		this.usuario = usuario;
-		this.id = new org.bson.types.ObjectId(usuario.getId());
+		if(usuario.getId() != null)
+		{
+			this.id = new ObjectId(usuario.getId());
+		}
 		this.login = usuario.getLogin();
 		this.senha = usuario.getSenha();
 		this.nome = usuario.getNome();
 	}
 	
-	
-	public Usuario getUsuario() {
-		// TODO avoid nullpointers
-		List<Projeto> projetos = new ArrayList<Projeto>();
-		
-		for(ProjetoPOJO p : this.projetos)
+	/**
+	 * Retorna o vo de Usuario, usavel no client.
+	 * Caso o POJO tenha id, retorna um vo com id...
+	 * @return
+	 */
+	public Usuario getUsuario()
+	{
+		// se o usuarioPojo tem id entao retorna um usuario com id
+		if(this.id != null)
 		{
-			projetos.add(p.getProjeto());
+			usuario = new Usuario(this.id.toString(), this.login, this.senha, this.nome);
 		}
-		
-		usuario = new Usuario(this.id.toString(), this.login, this.senha, this.nome, projetos);
+		else
+		{
+			//se o usuarioPojo NAO tem id, retorna um sem id
+			usuario = new Usuario(this.login, this.senha, this.nome);
+		}
 		return usuario;
 	}
-
-
-	public org.bson.types.ObjectId getId() {
+	
+	public ObjectId getId()
+	{
 		return id;
 	}
-
-	public void setId(org.bson.types.ObjectId id) {
+	
+	public void setId(ObjectId id)
+	{
 		this.id = id;
 	}
-
-	public String getConfirmacaoSenha() {
+	
+	public String getConfirmacaoSenha()
+	{
 		return confirmacaoSenha;
 	}
-
-	public void setConfirmacaoSenha(String confirmacaoSenha) {
+	
+	public void setConfirmacaoSenha(String confirmacaoSenha)
+	{
 		this.confirmacaoSenha = confirmacaoSenha;
 	}
-
-	public String getLogin() {
+	
+	public String getLogin()
+	{
 		return login;
 	}
-
-	public void setLogin(String login) {
+	
+	public void setLogin(String login)
+	{
 		this.login = login;
 	}
-
-	public String getSenha() {
+	
+	public String getSenha()
+	{
 		return senha;
 	}
-
-	public void setSenha(String senha) {
+	
+	public void setSenha(String senha)
+	{
 		this.senha = senha;
 	}
-
-	public String getNome() {
+	
+	public String getNome()
+	{
 		return nome;
 	}
-
-	public void setNome(String nome) {
+	
+	public void setNome(String nome)
+	{
 		this.nome = nome;
-	}
-
-	public List<ProjetoPOJO> getProjetos() {
-		return projetos;
-	}
-
-	public void setProjetos(List<ProjetoPOJO> projetos) {
-		this.projetos = projetos;
 	}
 }

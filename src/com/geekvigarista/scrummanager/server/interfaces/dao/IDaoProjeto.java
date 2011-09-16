@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
 import com.geekvigarista.scrummanager.server.beans.ProjetoPOJO;
+import com.geekvigarista.scrummanager.shared.vos.Projeto;
 
 /**
  * Interface para o dao projeto, extendendo da interface IDao
@@ -8,7 +9,7 @@ import com.geekvigarista.scrummanager.server.beans.ProjetoPOJO;
  * @author Raduq
  *
  */
-public interface IDaoProjeto extends IDao<ProjetoPOJO> 
+public interface IDaoProjeto extends IDao<Projeto, ProjetoPOJO> 
 {
-	//TODO, metodos especificos irão aqui..
+	//TODO, metodos especificos irï¿½o aqui..
 }

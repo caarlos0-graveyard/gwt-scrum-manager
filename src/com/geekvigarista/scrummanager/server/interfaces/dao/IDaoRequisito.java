@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
 import com.geekvigarista.scrummanager.server.beans.RequisitoPOJO;
+import com.geekvigarista.scrummanager.shared.vos.Requisito;
 
 /**
  * Interface para o dao requisito, extendendo da interface IDao
@@ -8,7 +9,7 @@ import com.geekvigarista.scrummanager.server.beans.RequisitoPOJO;
  * @author Raduq
  *
  */
-public interface IDaoRequisito extends IDao<RequisitoPOJO> 
+public interface IDaoRequisito extends IDao<Requisito, RequisitoPOJO> 
 {
-	//TODO, metodos especificos irão aqui..
+	//TODO, metodos especificos irï¿½o aqui..
 }
