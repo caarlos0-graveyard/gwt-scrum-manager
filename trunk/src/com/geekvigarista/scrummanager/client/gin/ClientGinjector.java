@@ -1,7 +1,7 @@
 package com.geekvigarista.scrummanager.client.gin;
 
 import com.geekvigarista.scrummanager.client.place.ClientPlaceManager;
-import com.geekvigarista.scrummanager.client.presenter.CadastroUsuarioPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
@@ -15,5 +15,5 @@ public interface ClientGinjector extends Ginjector {
 
 	ClientPlaceManager getPlaceManager();
 	
-	Provider<CadastroUsuarioPresenter> getCadastroUsuario();
+	Provider<AddUserPresenter> getCadastroUsuario();
 }

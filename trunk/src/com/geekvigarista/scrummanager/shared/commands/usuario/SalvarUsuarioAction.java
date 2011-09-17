@@ -3,17 +3,17 @@ package com.geekvigarista.scrummanager.shared.commands.usuario;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.gwtplatform.dispatch.shared.UnsecuredActionImpl;
 
-public class SalvarUsuario extends UnsecuredActionImpl<SalvarUsuarioResult> {
+public class SalvarUsuarioAction extends UnsecuredActionImpl<SalvarUsuarioResult> {
 
 	private Usuario usuario;
 
-	public SalvarUsuario(Usuario usuario) {
+	public SalvarUsuarioAction(Usuario usuario) {
 		super();
 		this.usuario = usuario;
 	}
 
 	@SuppressWarnings("unused")
-	private SalvarUsuario() {
+	private SalvarUsuarioAction() {
 	}
 
 	public Usuario getUsuario() {

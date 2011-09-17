@@ -1,10 +1,11 @@
 package com.geekvigarista.scrummanager.shared.vos;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Usuario
+public class Usuario implements Serializable
 {
-	
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String login;
 	private String senha;
