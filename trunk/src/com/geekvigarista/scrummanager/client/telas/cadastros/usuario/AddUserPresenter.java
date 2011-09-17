@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.usuario;
 
+import com.geekvigarista.scrummanager.client.converters.UsuarioConverter;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.CadastroUsuarioProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.CadastroUsuarioView;
@@ -37,7 +38,16 @@ public class AddUserPresenter extends Presenter<CadastroUsuarioView, CadastroUsu
 	{
 		HasValue<String> getNome();
 		
+		HasValue<String> getLogin();
+		
+		HasValue<String> getSenha();
+		
+		HasValue<String> getConfSenha();
+		
 		HasClickHandlers getBtSalvar();
+		
+		HasClickHandlers getBtCancelar();
+		
 	}
 	
 	private final PlaceManager placeManager;
@@ -68,8 +78,7 @@ public class AddUserPresenter extends Presenter<CadastroUsuarioView, CadastroUsu
 	
 	private void salvar()
 	{
-		Usuario usuario = new Usuario();
-		usuario.setNome(getView().getNome().getValue());
+		Usuario usuario = UsuarioConverter.convert(getView().getNome(), getView().getLogin(), getView().getSenha());
 		dispatcher.execute(new SalvarUsuarioAction(usuario), new AsyncCallback<SalvarUsuarioResult>()
 		{
 			@Override
