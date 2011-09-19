@@ -1,5 +1,7 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
+import java.util.List;
+
 import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 
@@ -11,5 +13,5 @@ import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
  */
 public interface IDaoStakeholder extends IDao<Stakeholder,StakeholderPOJO> 
 {
-	//TODO, metodos especificos ir�o aqui..
+	List<Stakeholder> buscarLike(String parametro);	
 }
