@@ -1,4 +1,4 @@
-package com.geekvigarista.scrummanager.server.actionhandlers.cadastros;
+package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto;
 
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
