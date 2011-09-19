@@ -12,20 +12,20 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy>
+public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresenter.HomeProxy>
 {
-	public interface MyView extends View
+	public interface HomeView extends View
 	{
 	}
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.home)
-	public interface MyProxy extends ProxyPlace<HomePresenter>
+	public interface HomeProxy extends ProxyPlace<HomePresenter>
 	{
 	}
 	
 	@Inject
-	public HomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy)
+	public HomePresenter(final EventBus eventBus, final HomeView view, final HomeProxy proxy)
 	{
 		super(eventBus, view, proxy);
 	}

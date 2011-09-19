@@ -1,12 +1,11 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home;
 
-import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter.MyView;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class HomeView extends ViewImpl implements MyView
+public class HomeView extends ViewImpl implements HomePresenter.HomeView
 {
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 	

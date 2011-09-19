@@ -25,10 +25,10 @@ public class ClientModule extends AbstractPresenterModule
 		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.home);
 		
 		// presenters
-		bindPresenter(HomePresenter.class, HomePresenter.MyView.class, HomeView.class, HomePresenter.MyProxy.class);
-		bindPresenter(MainPresenter.class, MainPresenter.HomeView.class, MainView.class, MainPresenter.HomeProxy.class);
-		bindPresenter(AddUserPresenter.class, AddUserPresenter.CadastroUsuarioView.class, AddUserView.class,
-				AddUserPresenter.CadastroUsuarioProxy.class);
+		bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
+		bindPresenter(MainPresenter.class, MainPresenter.MainView.class, MainView.class, MainPresenter.MainProxy.class);
+		bindPresenter(AddUserPresenter.class, AddUserPresenter.AddUserView.class, AddUserView.class,
+				AddUserPresenter.AddUserProxy.class);
 		
 	}
 }

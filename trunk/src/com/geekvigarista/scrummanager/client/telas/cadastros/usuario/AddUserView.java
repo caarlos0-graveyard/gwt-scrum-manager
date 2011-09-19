@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class AddUserView extends ViewImpl implements AddUserPresenter.CadastroUsuarioView
+public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserView
 {
 	
 	private Panel spPrincipal;
