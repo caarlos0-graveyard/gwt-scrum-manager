@@ -10,8 +10,9 @@ import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("stakeholders")
-public class StakeholderPOJO {
-
+public class StakeholderPOJO
+{
+	
 	@Id
 	private ObjectId id;
 	private String nome;
@@ -20,71 +21,94 @@ public class StakeholderPOJO {
 	private ProjetoPOJO projeto;
 	@Reference
 	private UsuarioPOJO usuario;
-
+	
 	@Transient
 	private Stakeholder stakeholder;
-
-	public StakeholderPOJO() {
+	
+	/**
+	 * @Deprecated usar o outro construtor.
+	 */
+	public StakeholderPOJO()
+	{
 	}
 	
 	/**
 	 * @param usuario
 	 */
-	public StakeholderPOJO(Stakeholder stakeholder) {
-		// TODO avoid nullpointers
+	public StakeholderPOJO(Stakeholder stakeholder)
+	{
 		super();
 		this.stakeholder = stakeholder;
 		this.usuario = new UsuarioPOJO(stakeholder.getUsuario());
-		this.id = new ObjectId(stakeholder.getId());
+		if(stakeholder.getId() != null)
+		{
+			this.id = new ObjectId(stakeholder.getId());
+		}
 		this.nome = stakeholder.getNome();
 		this.papel = stakeholder.getPapel();
 		this.projeto = new ProjetoPOJO(stakeholder.getProjeto());
 	}
-
-	public Stakeholder getStakeholder() {
-		// TODO avoid nullpointers
-		stakeholder = new Stakeholder(this.id.toString(), nome, papel,
-				projeto.getProjeto(), usuario.getUsuario());
+	
+	public Stakeholder getStakeholder()
+	{
+		if(this.id != null)
+		{
+			stakeholder = new Stakeholder(this.id.toString(), nome, papel, projeto.getProjeto(), usuario.getUsuario());
+		}
+		else
+		{
+			stakeholder = new Stakeholder(nome, papel, projeto.getProjeto(), usuario.getUsuario());
+		}
 		return stakeholder;
 	}
-
-	public ObjectId getId() {
+	
+	public ObjectId getId()
+	{
 		return id;
 	}
-
-	public void setId(ObjectId id) {
+	
+	public void setId(ObjectId id)
+	{
 		this.id = id;
 	}
-
-	public String getNome() {
+	
+	public String getNome()
+	{
 		return nome;
 	}
-
-	public void setNome(String nome) {
+	
+	public void setNome(String nome)
+	{
 		this.nome = nome;
 	}
-
-	public PapelStakeholder getPapel() {
+	
+	public PapelStakeholder getPapel()
+	{
 		return papel;
 	}
-
-	public void setPapel(PapelStakeholder papel) {
+	
+	public void setPapel(PapelStakeholder papel)
+	{
 		this.papel = papel;
 	}
-
-	public ProjetoPOJO getProjeto() {
+	
+	public ProjetoPOJO getProjeto()
+	{
 		return projeto;
 	}
-
-	public void setProjeto(ProjetoPOJO projeto) {
+	
+	public void setProjeto(ProjetoPOJO projeto)
+	{
 		this.projeto = projeto;
 	}
-
-	public UsuarioPOJO getUsuario() {
+	
+	public UsuarioPOJO getUsuario()
+	{
 		return usuario;
 	}
-
-	public void setUsuario(UsuarioPOJO usuario) {
+	
+	public void setUsuario(UsuarioPOJO usuario)
+	{
 		this.usuario = usuario;
 	}
 }

@@ -30,9 +30,6 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 		super(MongoConnection.getDatastore());
 	}
 	
-	/**
-	 * TODO talves usar injeção de dependencia para ter o datastore injetado no dao ?
-	 */
 	public DaoUsuario(Datastore ds)
 	{
 		super(ds);
