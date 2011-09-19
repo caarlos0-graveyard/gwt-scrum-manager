@@ -1,7 +1,6 @@
 package com.geekvigarista.scrummanager.shared.vos;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Usuario implements Serializable
 {

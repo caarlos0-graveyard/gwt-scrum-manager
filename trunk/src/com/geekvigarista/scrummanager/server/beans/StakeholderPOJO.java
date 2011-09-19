@@ -13,8 +13,7 @@ import com.google.code.morphia.annotations.Transient;
 public class StakeholderPOJO
 {
 	
-	@Id
-	private ObjectId id;
+	@Id ObjectId id;
 	private String nome;
 	private PapelStakeholder papel;
 	@Reference
@@ -46,14 +45,24 @@ public class StakeholderPOJO
 		}
 		this.nome = stakeholder.getNome();
 		this.papel = stakeholder.getPapel();
-		this.projeto = new ProjetoPOJO(stakeholder.getProjeto());
+		if(stakeholder.getProjeto() != null)
+		{
+			this.projeto = new ProjetoPOJO(stakeholder.getProjeto());
+		}
 	}
 	
 	public Stakeholder getStakeholder()
 	{
 		if(this.id != null)
 		{
-			stakeholder = new Stakeholder(this.id.toString(), nome, papel, projeto.getProjeto(), usuario.getUsuario());
+			//XXX essa porra aqui só coloquei pra testar, nao vai ter esse if
+			if(projeto == null)
+			{
+				stakeholder = new Stakeholder(this.id.toString(), nome, papel, usuario.getUsuario());
+			}else
+			{
+				stakeholder = new Stakeholder(this.id.toString(), nome, papel, projeto.getProjeto(), usuario.getUsuario());
+			}
 		}
 		else
 		{
