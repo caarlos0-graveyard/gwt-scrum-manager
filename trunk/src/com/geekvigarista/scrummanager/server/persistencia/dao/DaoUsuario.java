@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 import com.geekvigarista.scrummanager.server.beans.UsuarioPOJO;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
+import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
@@ -21,10 +22,16 @@ import com.google.inject.Inject;
  */
 public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoUsuario
 {
+	
+	@Inject
+	public DaoUsuario()
+	{
+		super(MongoConnection.getDatastore());
+	}
+	
 	/**
 	 * TODO talves usar injeção de dependencia para ter o datastore injetado no dao ?
 	 */
-	@Inject
 	public DaoUsuario(Datastore ds)
 	{
 		super(ds);
