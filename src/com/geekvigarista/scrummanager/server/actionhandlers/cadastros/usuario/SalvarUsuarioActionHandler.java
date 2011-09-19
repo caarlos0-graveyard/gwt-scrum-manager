@@ -2,8 +2,8 @@ package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario;
 
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
-import com.geekvigarista.scrummanager.shared.commands.usuario.SalvarUsuarioAction;
-import com.geekvigarista.scrummanager.shared.commands.usuario.SalvarUsuarioResult;
+import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
+import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.inject.Guice;
 import com.google.inject.Injector;

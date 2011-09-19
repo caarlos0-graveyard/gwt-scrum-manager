@@ -12,6 +12,7 @@ import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
 import com.google.code.morphia.dao.BasicDAO;
+import com.google.code.morphia.query.Query;
 import com.google.code.morphia.query.QueryResults;
 import com.google.inject.Inject;
 
@@ -98,6 +99,17 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 			return null;
 		}
 		return uPojo.getUsuario();
+	}
+	
+	/**
+	 * Metodo que busca usuarios de acordo com o login deles.
+	 * Busca por partes da palavra do login também. (like)
+	 */
+	@Override
+	public List<Usuario> buscarLike(String parametro)
+	{
+		Query<UsuarioPOJO> query = createQuery().field("login").contains(parametro);
+		return toValueObject(this.find(query));
 	}
 	
 	/**
