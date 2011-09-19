@@ -8,6 +8,7 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("projetos")
@@ -16,7 +17,7 @@ public class ProjetoPOJO {
 	@Transient
 	private Projeto projeto;
 	
-	private String id;
+	@Id String id;
 	private String nome;
 	private Date dataInicio;
 	private Date dataFim;

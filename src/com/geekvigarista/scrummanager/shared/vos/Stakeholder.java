@@ -11,6 +11,10 @@ public class Stakeholder
 	private Projeto projeto;
 	private Usuario usuario;
 	
+	public Stakeholder()
+	{
+		
+	}
 	public Stakeholder(String id, String nome, PapelStakeholder papel, Projeto projeto, Usuario usuario)
 	{
 		super();
@@ -20,6 +24,16 @@ public class Stakeholder
 		this.projeto = projeto;
 		this.usuario = usuario;
 	}
+	
+	public Stakeholder(String id, String nome, PapelStakeholder papel,Usuario usuario)
+	{
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.papel = papel;
+		this.usuario = usuario;
+	}
+	
 	
 	public Stakeholder(String nome, PapelStakeholder papel, Projeto projeto, Usuario usuario)
 	{
