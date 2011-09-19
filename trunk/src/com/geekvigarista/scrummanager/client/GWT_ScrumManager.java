@@ -11,13 +11,11 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
 public class GWT_ScrumManager implements EntryPoint {
 
 	private final ClientGinjector ginjector = GWT.create(ClientGinjector.class);
-
+	
 	@Override
 	public void onModuleLoad()
 	{
-		// This is required for Gwt-Platform proxy's generator
 		DelayedBindRegistry.bind(ginjector);
-		
 		ginjector.getPlaceManager().revealCurrentPlace();
 	}
 

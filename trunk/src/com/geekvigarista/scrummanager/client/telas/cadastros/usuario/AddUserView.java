@@ -68,7 +68,7 @@ public class AddUserView extends ViewImpl implements AddUserPresenter.CadastroUs
 		tabela.setWidget(4, 1, btCancelar);
 		
 		spPrincipal.add(tabela);
-		RootPanel.get().add(spPrincipal);
+//		RootPanel.get().add(spPrincipal);
 	}
 	
 	@Override
