@@ -4,7 +4,7 @@
 	xmlns:npui="urn:import:com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu">
 
 	<g:HTMLPanel>
-<!-- 		<npui:MainMenu /> -->
+		<npui:MainMenu />
 
 		<g:FlowPanel ui:field="mainContentPanel" />
 

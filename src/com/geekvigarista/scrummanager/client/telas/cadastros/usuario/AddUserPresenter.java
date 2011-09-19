@@ -2,8 +2,9 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.usuario;
 
 import com.geekvigarista.scrummanager.client.converters.UsuarioConverter;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
-import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.CadastroUsuarioProxy;
-import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.CadastroUsuarioView;
+import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
+import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserView;
+import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
@@ -19,22 +20,20 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.ProxyStandard;
-import com.gwtplatform.mvp.client.proxy.Place;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.Proxy;
-import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class AddUserPresenter extends Presenter<CadastroUsuarioView, CadastroUsuarioProxy>
+public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 {
 	
-	@ProxyStandard
+	@ProxyCodeSplit
 	@NameToken(NameTokens.adduser)
-	public interface CadastroUsuarioProxy extends Proxy<AddUserPresenter>, Place
+	public interface AddUserProxy extends ProxyPlace<AddUserPresenter>
 	{
 	}
 	
-	public interface CadastroUsuarioView extends View
+	public interface AddUserView extends View
 	{
 		HasValue<String> getNome();
 		
@@ -50,15 +49,12 @@ public class AddUserPresenter extends Presenter<CadastroUsuarioView, CadastroUsu
 		
 	}
 	
-	private final PlaceManager placeManager;
 	private DispatchAsync dispatcher;
 	
 	@Inject
-	public AddUserPresenter(EventBus eventBus, CadastroUsuarioView view, CadastroUsuarioProxy proxy, PlaceManager placeManager,
-			DispatchAsync dispatcher)
+	public AddUserPresenter(final EventBus eventBus, final AddUserView view, final AddUserProxy proxy, final DispatchAsync dispatcher)
 	{
 		super(eventBus, view, proxy);
-		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
 	}
 	
@@ -99,7 +95,7 @@ public class AddUserPresenter extends Presenter<CadastroUsuarioView, CadastroUsu
 	@Override
 	protected void revealInParent()
 	{
-		RevealRootContentEvent.fire(this, this);
+		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
 	}
 	
 }
