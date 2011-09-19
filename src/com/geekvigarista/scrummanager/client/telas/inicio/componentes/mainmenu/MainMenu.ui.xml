@@ -1,0 +1,12 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="com.geekvigarista.scrummanager.client.place.NameTokens"
+		field="token"></ui:with>
+	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
+		field="msg"></ui:with>
+	<g:HTMLPanel>
+		<g:InlineHyperlink targetHistoryToken="{token.getAdduser}"
+			text="{msg.addUser}"></g:InlineHyperlink>
+	</g:HTMLPanel>
+</ui:UiBinder> 

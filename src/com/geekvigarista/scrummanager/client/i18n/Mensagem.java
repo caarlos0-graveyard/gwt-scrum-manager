@@ -20,6 +20,18 @@ public interface Mensagem extends Constants
 	public static Mensagem get = MENSAGEM.getInstance();
 	
 	/*
+	 * Generics
+	 */
+	public String salvar();
+	
+	public String cancelar();
+	
+	/*
+	 * Home
+	 */
+	public String addUser();
+	
+	/*
 	 * add USer
 	 */
 	public String nome();
@@ -30,10 +42,4 @@ public interface Mensagem extends Constants
 	
 	public String confirmacaSenha();
 	
-	/*
-	 * Generics
-	 */
-	public String salvar();
-	
-	public String cancelar();
 }
