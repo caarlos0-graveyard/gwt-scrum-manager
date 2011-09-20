@@ -1,5 +1,7 @@
 package com.geekvigarista.scrummanager.server.interfaces.dao;
 
+import java.util.List;
+
 import com.geekvigarista.scrummanager.server.beans.ProjetoPOJO;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 
@@ -11,5 +13,7 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
  */
 public interface IDaoProjeto extends IDao<Projeto, ProjetoPOJO> 
 {
-	//TODO, metodos especificos ir�o aqui..
+	//TODO, metodos especificos irão aqui..
+	List<Projeto> buscarLike(String parametro);	
+
 }

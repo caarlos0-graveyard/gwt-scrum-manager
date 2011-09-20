@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
@@ -12,25 +14,29 @@ import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("projetos")
-public class ProjetoPOJO {
-
+public class ProjetoPOJO
+{
+	
 	@Transient
 	private Projeto projeto;
 	
-	@Id String id;
+	@Id
+	ObjectId id;
 	private String nome;
 	private Date dataInicio;
 	private Date dataFim;
 	private List<StakeholderPOJO> stakeholders;
 	private List<RequisitoPOJO> requisitos;
 	
-	public ProjetoPOJO() {
+	public ProjetoPOJO()
+	{
 	}
 	
 	/**
 	 * @param projeto
 	 */
-	public ProjetoPOJO(Projeto projeto) {
+	public ProjetoPOJO(Projeto projeto)
+	{
 		// TODO avoid nullpointers
 		super();
 		this.projeto = projeto;
@@ -38,75 +44,133 @@ public class ProjetoPOJO {
 		this.dataInicio = projeto.getDataInicio();
 		this.nome = projeto.getNome();
 		
-		this.requisitos = new ArrayList<RequisitoPOJO>();
-		for(Requisito r : projeto.getRequisitos())
+		if(projeto.getRequisitos() != null)
 		{
-			this.requisitos.add(new RequisitoPOJO(r));
+			this.requisitos = new ArrayList<RequisitoPOJO>();
+			for(Requisito r : projeto.getRequisitos())
+			{
+				this.requisitos.add(new RequisitoPOJO(r));
+			}
 		}
 		
-		this.stakeholders = new ArrayList<StakeholderPOJO>();
-		for(Stakeholder s : projeto.getStakeholders())
+		if(projeto.getStakeholders() != null)
 		{
-			this.stakeholders.add(new StakeholderPOJO(s));
+			this.stakeholders = new ArrayList<StakeholderPOJO>();
+			
+			for(Stakeholder s : projeto.getStakeholders())
+			{
+				this.stakeholders.add(new StakeholderPOJO(s));
+			}
+		}
+		if(projeto.getId() != null && !projeto.getId().isEmpty())
+		{
+			this.id = new ObjectId(projeto.getId());
 		}
 		
 	}
 	
-	
-	public Projeto getProjeto() {
+	public Projeto getProjeto()
+	{
 		// TODO avoid nullpointers
 		List<Stakeholder> stakeholders = new ArrayList<Stakeholder>();
-		for(StakeholderPOJO s : this.stakeholders)
+		if(this.stakeholders != null)
 		{
-			stakeholders.add(s.getStakeholder());
+			for(StakeholderPOJO s : this.stakeholders)
+			{
+				stakeholders.add(s.getStakeholder());
+			}
 		}
 		
 		List<Requisito> requisitos = new ArrayList<Requisito>();
-		for(RequisitoPOJO r : this.requisitos)
+		if(this.requisitos != null)
 		{
-			requisitos.add(r.getRequisito());
+			for(RequisitoPOJO r : this.requisitos)
+			{
+				requisitos.add(r.getRequisito());
+			}
 		}
 		
-		this.projeto = new Projeto(this.id.toString(), nome, dataInicio, dataFim, stakeholders, requisitos);
+		if(this.id == null)
+		{
+			//XXX só para teste, este if nao vai ter...
+			if(this.requisitos == null)
+			{
+				this.projeto = new Projeto(nome, dataInicio, dataFim, stakeholders);
+			}
+			else
+			{
+				this.projeto = new Projeto(nome, dataInicio, dataFim, stakeholders, requisitos);
+			}
+		}
+		else
+		{
+			this.projeto = new Projeto(this.id.toString(), nome, dataInicio, dataFim, stakeholders, requisitos);
+		}
 		return this.projeto;
 	}
-	public void setProjeto(Projeto projeto) {
+	
+	public void setProjeto(Projeto projeto)
+	{
 		this.projeto = projeto;
 	}
-	public String getId() {
+	
+	public ObjectId getId()
+	{
 		return id;
 	}
-	public void setId(String id) {
+	
+	public void setId(ObjectId id)
+	{
 		this.id = id;
 	}
-	public String getNome() {
+	
+	public String getNome()
+	{
 		return nome;
 	}
-	public void setNome(String nome) {
+	
+	public void setNome(String nome)
+	{
 		this.nome = nome;
 	}
-	public Date getDataInicio() {
+	
+	public Date getDataInicio()
+	{
 		return dataInicio;
 	}
-	public void setDataInicio(Date dataInicio) {
+	
+	public void setDataInicio(Date dataInicio)
+	{
 		this.dataInicio = dataInicio;
 	}
-	public Date getDataFim() {
+	
+	public Date getDataFim()
+	{
 		return dataFim;
 	}
-	public void setDataFim(Date dataFim) {
+	
+	public void setDataFim(Date dataFim)
+	{
 		this.dataFim = dataFim;
 	}
-	public List<StakeholderPOJO> getStakeholders() {
+	
+	public List<StakeholderPOJO> getStakeholders()
+	{
 		return stakeholders;
 	}
-	public void setStakeholders(List<StakeholderPOJO> stakeholders) {
+	
+	public void setStakeholders(List<StakeholderPOJO> stakeholders)
+	{
 		this.stakeholders = stakeholders;
 	}
-	public List<RequisitoPOJO> getRequisitos() {
+	
+	public List<RequisitoPOJO> getRequisitos()
+	{
 		return requisitos;
 	}
-	public void setRequisitos(List<RequisitoPOJO> requisitos) {
+	
+	public void setRequisitos(List<RequisitoPOJO> requisitos)
+	{
 		this.requisitos = requisitos;
 	}
 }
