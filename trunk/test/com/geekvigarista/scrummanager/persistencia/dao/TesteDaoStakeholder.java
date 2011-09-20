@@ -4,7 +4,6 @@ import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
-import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
