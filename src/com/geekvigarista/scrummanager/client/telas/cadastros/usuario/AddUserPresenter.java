@@ -49,7 +49,7 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 		
 	}
 	
-	private DispatchAsync dispatcher;
+	private final DispatchAsync dispatcher;
 	
 	@Inject
 	public AddUserPresenter(final EventBus eventBus, final AddUserView view, final AddUserProxy proxy, final DispatchAsync dispatcher)

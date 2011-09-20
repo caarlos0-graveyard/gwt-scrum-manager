@@ -26,20 +26,34 @@ public interface Mensagem extends Constants
 	
 	public String cancelar();
 	
+	public String nome();
+	
 	/*
 	 * Home
 	 */
 	public String addUser();
 	
+	public String addStakeholder();
+	
 	/*
 	 * add USer
 	 */
-	public String nome();
 	
 	public String login();
 	
 	public String senha();
 	
 	public String confirmacaSenha();
+	
+	/*
+	 * add stakeholder
+	 */
+	public String papelStakeholder();
+	public String usuario();
+	
+	/*
+	 * Projeto
+	 */
+	public String projeto();
 	
 }

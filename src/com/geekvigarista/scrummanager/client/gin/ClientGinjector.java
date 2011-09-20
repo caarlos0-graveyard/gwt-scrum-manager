@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.client.gin;
 
+import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
@@ -26,4 +27,6 @@ public interface ClientGinjector extends Ginjector
 	AsyncProvider<HomePresenter> getHomePresenter();
 	
 	AsyncProvider<AddUserPresenter> getAddUserPresenter();
+	
+	AsyncProvider<AddStakeholderPresenter> getAddStakeholderPresenter();
 }

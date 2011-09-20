@@ -16,7 +16,7 @@ public class MainMenu extends Composite
 	public MainMenu()
 	{
 		System.out.println("MainMenu.MainMenu()");
-		initWidget(uiBinder.createAndBindUi(this));
+		initWidget(uiBinder.createAndBindUi(this).asWidget());
 	}
 	
 }
