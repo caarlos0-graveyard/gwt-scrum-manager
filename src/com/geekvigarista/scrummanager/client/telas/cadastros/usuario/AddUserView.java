@@ -1,86 +1,68 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.usuario;
 
-import com.geekvigarista.scrummanager.client.i18n.Mensagem;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserView
 {
 	
-	private Panel spPrincipal;
-	private final FlexTable tabela;
-	private final Label labelNome;
-	private final Label labelLogin;
-	private final Label labelSenha;
-	private final Label labelConfSenha;
-	private final TextBox txtNome;
-	private final TextBox txtLogin;
-	private final PasswordTextBox txtSenha;
-	private final PasswordTextBox txtConfSenha;
-	private final Button btSalvar;
-	private final Hyperlink btCancelar;
+	private static AddUserViewUiBinder uiBinder = GWT.create(AddUserViewUiBinder.class);
 	
-	@Inject
-	public AddUserView()
+	interface AddUserViewUiBinder extends UiBinder<Widget, AddUserView>
 	{
-		spPrincipal = new DecoratorPanel();
-		
-		labelNome = new Label(Mensagem.get.nome());
-		txtNome = new TextBox();
-		
-		labelLogin = new Label(Mensagem.get.login());
-		txtLogin = new TextBox();
-		
-		labelSenha = new Label(Mensagem.get.senha());
-		txtSenha = new PasswordTextBox();
-		
-		labelConfSenha = new Label(Mensagem.get.confirmacaSenha());
-		txtConfSenha = new PasswordTextBox();
-		
-		btSalvar = new Button(Mensagem.get.salvar());
-		btCancelar = new Hyperlink();
-		btCancelar.setText(Mensagem.get.cancelar());
-		
-		tabela = new FlexTable();
-		
-		tabela.setWidget(0, 0, labelNome);
-		tabela.setWidget(0, 1, txtNome);
-		tabela.setWidget(1, 0, labelLogin);
-		tabela.setWidget(1, 1, txtLogin);
-		tabela.setWidget(2, 0, labelSenha);
-		tabela.setWidget(2, 1, txtSenha);
-		tabela.setWidget(3, 0, labelConfSenha);
-		tabela.setWidget(3, 1, txtConfSenha);
-		
-		tabela.setWidget(4, 0, btSalvar);
-		tabela.setWidget(4, 1, btCancelar);
-		
-		spPrincipal.add(tabela);
-//		RootPanel.get().add(spPrincipal);
 	}
 	
-	@Override
-	public Widget asWidget()
+	@UiField
+	HTMLPanel conteudo;
+	@UiField
+	TextBox nome;
+	@UiField
+	TextBox login;
+	@UiField
+	TextBox senha;
+	@UiField
+	TextBox confSenha;
+	@UiField
+	Hyperlink btCancelar;
+	@UiField
+	Button btSalvar;
+	
+	public AddUserView()
 	{
-		return spPrincipal.asWidget();
+		uiBinder.createAndBindUi(this);
 	}
 	
 	@Override
 	public HasValue<String> getNome()
 	{
-		return txtNome;
+		return nome;
+	}
+	
+	@Override
+	public HasValue<String> getLogin()
+	{
+		return login;
+	}
+	
+	@Override
+	public HasValue<String> getSenha()
+	{
+		return senha;
+	}
+	
+	@Override
+	public HasValue<String> getConfSenha()
+	{
+		return confSenha;
 	}
 	
 	@Override
@@ -90,26 +72,15 @@ public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserVie
 	}
 	
 	@Override
-	public HasValue<String> getLogin()
-	{
-		return txtLogin;
-	}
-	
-	@Override
-	public HasValue<String> getSenha()
-	{
-		return txtSenha;
-	}
-	
-	@Override
-	public HasValue<String> getConfSenha()
-	{
-		return txtConfSenha;
-	}
-	
-	@Override
 	public HasClickHandlers getBtCancelar()
 	{
 		return btCancelar;
 	}
+	
+	@Override
+	public Widget asWidget()
+	{
+		return conteudo;
+	}
+	
 }
