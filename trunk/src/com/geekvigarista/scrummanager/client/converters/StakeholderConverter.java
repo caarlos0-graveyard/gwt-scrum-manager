@@ -13,7 +13,6 @@ public class StakeholderConverter
 		Stakeholder s = new Stakeholder();
 		s.setNome(nome.getValue());
 		s.setUsuario(usuario);
-		s.setProjeto(projeto);
 		s.setPapel(papel);
 		return s;
 	}
