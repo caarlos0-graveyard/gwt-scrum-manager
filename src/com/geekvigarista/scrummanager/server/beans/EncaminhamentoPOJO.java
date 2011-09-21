@@ -16,13 +16,13 @@ import com.google.code.morphia.annotations.Transient;
 @Entity("encaminhamentos")
 public class EncaminhamentoPOJO {
 
-	@Id
-	private ObjectId id;
+	@Id ObjectId id;
+	
 	@Embedded
-	private StakeholderPOJO stakeholder; // o stakeholder que recebeu o
-											// encaminhamento;
+	private StakeholderPOJO stakeholder; // o stakeholder que recebeu o encaminhamento;
 	@Reference
 	private EncaminhamentoPOJO encaminhamentoAnterior;
+	
 	private Date data;
 	private int tempoGasto; // em horas
 	private List<String> anexos;
