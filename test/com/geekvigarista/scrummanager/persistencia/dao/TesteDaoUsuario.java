@@ -18,9 +18,9 @@ public class TesteDaoUsuario
 	public static void cadastra(IDaoUsuario dao)
 	{
 		Usuario u = new Usuario();
-		u.setNome("raduq");
-		u.setSenha("raduq");
-		u.setLogin("raduq");
+		u.setNome("pedrao");
+		u.setSenha("pedrao");
+		u.setLogin("pedrao");
 		dao.salvar(u);
 	}
 	
@@ -64,8 +64,8 @@ public class TesteDaoUsuario
 		IDaoUsuario dao = new DaoUsuario(MongoConnection.getDatastore());
 		
 //		cadastra(dao);
-//		buscaTodos(dao);
-		buscaById(dao);
+		buscaTodos(dao);
+//		buscaById(dao);
 //		exclui(dao);
 	}
 }

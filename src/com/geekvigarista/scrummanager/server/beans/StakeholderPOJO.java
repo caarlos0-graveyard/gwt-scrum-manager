@@ -17,8 +17,6 @@ public class StakeholderPOJO
 	private String nome;
 	private PapelStakeholder papel;
 	@Reference
-	private ProjetoPOJO projeto;
-	@Reference
 	private UsuarioPOJO usuario;
 	
 	@Transient
@@ -45,28 +43,16 @@ public class StakeholderPOJO
 		}
 		this.nome = stakeholder.getNome();
 		this.papel = stakeholder.getPapel();
-		if(stakeholder.getProjeto() != null)
-		{
-			this.projeto = new ProjetoPOJO(stakeholder.getProjeto());
-		}
 	}
-	
 	public Stakeholder getStakeholder()
 	{
 		if(this.id != null)
 		{
-			//XXX essa porra aqui só coloquei pra testar, nao vai ter esse if
-			if(projeto == null)
-			{
-				stakeholder = new Stakeholder(this.id.toString(), nome, papel, usuario.getUsuario());
-			}else
-			{
-				stakeholder = new Stakeholder(this.id.toString(), nome, papel, projeto.getProjeto(), usuario.getUsuario());
-			}
+			stakeholder = new Stakeholder(id.toString(),nome, papel, usuario.getUsuario());
 		}
 		else
 		{
-			stakeholder = new Stakeholder(nome, papel, projeto.getProjeto(), usuario.getUsuario());
+			stakeholder = new Stakeholder(nome, papel, usuario.getUsuario());
 		}
 		return stakeholder;
 	}
@@ -99,16 +85,6 @@ public class StakeholderPOJO
 	public void setPapel(PapelStakeholder papel)
 	{
 		this.papel = papel;
-	}
-	
-	public ProjetoPOJO getProjeto()
-	{
-		return projeto;
-	}
-	
-	public void setProjeto(ProjetoPOJO projeto)
-	{
-		this.projeto = projeto;
 	}
 	
 	public UsuarioPOJO getUsuario()

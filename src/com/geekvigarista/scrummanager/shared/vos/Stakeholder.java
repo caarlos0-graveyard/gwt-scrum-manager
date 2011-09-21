@@ -8,23 +8,12 @@ public class Stakeholder
 	private String id;
 	private String nome;
 	private PapelStakeholder papel;
-	private Projeto projeto;
 	private Usuario usuario;
 	
 	public Stakeholder()
 	{
 		
 	}
-	public Stakeholder(String id, String nome, PapelStakeholder papel, Projeto projeto, Usuario usuario)
-	{
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.papel = papel;
-		this.projeto = projeto;
-		this.usuario = usuario;
-	}
-	
 	public Stakeholder(String id, String nome, PapelStakeholder papel,Usuario usuario)
 	{
 		super();
@@ -34,13 +23,11 @@ public class Stakeholder
 		this.usuario = usuario;
 	}
 	
-	
-	public Stakeholder(String nome, PapelStakeholder papel, Projeto projeto, Usuario usuario)
+	public Stakeholder(String nome, PapelStakeholder papel, Usuario usuario)
 	{
 		super();
 		this.nome = nome;
 		this.papel = papel;
-		this.projeto = projeto;
 		this.usuario = usuario;
 	}
 	
@@ -72,16 +59,6 @@ public class Stakeholder
 	public void setPapel(PapelStakeholder papel)
 	{
 		this.papel = papel;
-	}
-	
-	public Projeto getProjeto()
-	{
-		return projeto;
-	}
-	
-	public void setProjeto(Projeto projeto)
-	{
-		this.projeto = projeto;
 	}
 	
 	public Usuario getUsuario()
