@@ -28,6 +28,10 @@ public interface Mensagem extends Constants
 	
 	public String nome();
 	
+	public String mais();
+	
+	public String menos();
+	
 	/*
 	 * Home
 	 */
@@ -49,11 +53,20 @@ public interface Mensagem extends Constants
 	 * add stakeholder
 	 */
 	public String papelStakeholder();
+	
 	public String usuario();
 	
 	/*
 	 * Projeto
 	 */
 	public String projeto();
+	
+	public String dataInicio();
+	
+	public String dataFim();
+	
+	public String requisitos();
+	
+	public String stakeholders();
 	
 }

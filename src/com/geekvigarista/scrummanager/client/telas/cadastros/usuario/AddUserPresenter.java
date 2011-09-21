@@ -81,13 +81,13 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 			public void onFailure(Throwable caught)
 			{
 				Window.alert("FAIL");
-				caught.printStackTrace();
+				caught.printStackTrace(); //TODO
 			}
 			
 			@Override
 			public void onSuccess(SalvarUsuarioResult result)
 			{
-				Window.alert("LOL " + result.getResponse().getNome());
+				Window.alert("LOL " + result.getResponse().getNome()); //TODO
 			}
 		});
 	}

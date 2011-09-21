@@ -4,8 +4,14 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.salvar.SalvarStakeholderAction;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.salvar.SalvarStakeholderResult;
+import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.ListBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -21,7 +27,7 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addstak)
 	public interface AddStakeholderProxy extends ProxyPlace<AddStakeholderPresenter>
-	{
+	{ 
 	}
 	
 	public interface AddStakeholderView extends View
@@ -49,6 +55,39 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		this.dispatcher = dispatcher;
 	}
 	
+	@Override
+	protected void onBind()
+	{
+		super.onBind();
+		getView().getBtSalvar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				
+			}
+		});
+	}
+
+	private void doSalvar()
+	{
+		Stakeholder stakeholder = new Stakeholder(); // TODO conversao
+		dispatcher.execute(new SalvarStakeholderAction(stakeholder), new AsyncCallback<SalvarStakeholderResult>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onSuccess(SalvarStakeholderResult result)
+			{
+				// TODO Auto-generated method stub
+			}
+		});
+	}
+
 	@Override
 	protected void revealInParent()
 	{

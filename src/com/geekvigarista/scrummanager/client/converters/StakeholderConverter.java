@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HasValue;
 
 public class StakeholderConverter
 {
-	public Stakeholder convert(HasValue<String> nome, Usuario usuario, Projeto projeto, PapelStakeholder papel)
+	public static Stakeholder convert(HasValue<String> nome, Usuario usuario, Projeto projeto, PapelStakeholder papel)
 	{
 		Stakeholder s = new Stakeholder();
 		s.setNome(nome.getValue());
