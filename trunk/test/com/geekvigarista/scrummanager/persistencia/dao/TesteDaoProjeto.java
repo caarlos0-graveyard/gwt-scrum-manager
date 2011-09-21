@@ -9,8 +9,6 @@ import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProjeto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
-import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
-import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
@@ -28,7 +26,7 @@ public class TesteDaoProjeto
 	public static void cadastra(IDaoProjeto dao)
 	{
 		Projeto p = new Projeto();
-		p.setNome("projeto abc");
+		p.setNome("projeto unico");
 		p.setDataInicio(new Date());
 		p.setDataFim(new Date());
 		
@@ -47,7 +45,7 @@ public class TesteDaoProjeto
 	{
 		for(Projeto u : dao.buscarTodos())
 		{
-			System.out.println(u.getNome() + "  " + u.getId());
+			System.out.println(u.getStakeholders().size());
 		}
 	}
 	
@@ -71,6 +69,16 @@ public class TesteDaoProjeto
 		System.out.println(p.getNome());
 	}
 	
+	public static void buscaByUsuario(IDaoProjeto dao)
+	{
+		IDaoUsuario daoU = new DaoUsuario();
+		Usuario u = daoU.buscar("4e72960f7f3d9c3b7fe27673");
+		for(Projeto p : dao.buscarByUsuario(u))
+		{
+			System.out.println(p.getNome());
+		}
+	}
+	
 	/**
 	 * Testa a parada...
 	 */
@@ -78,8 +86,9 @@ public class TesteDaoProjeto
 	{
 		IDaoProjeto dao = new DaoProjeto();
 		
+		buscaByUsuario(dao);
 //		cadastra(dao);
-		buscaTodos(dao);
+//		buscaTodos(dao);
 //		buscaById(dao);
 //		exclui(dao);
 	}

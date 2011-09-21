@@ -6,9 +6,11 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
+import com.geekvigarista.scrummanager.server.beans.UsuarioPOJO;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
 import com.google.code.morphia.dao.BasicDAO;
@@ -87,6 +89,16 @@ public class DaoStakeholder extends BasicDAO<StakeholderPOJO, ObjectId> implemen
 		return stakePojo.getStakeholder();
 	}
 	
+	/**
+	 * Retorna todos os stakeholders desse usuario.
+	 */
+	@Override
+	public List<Stakeholder> buscarByUsuario(Usuario usuario)
+	{
+		UsuarioPOJO usuarioPojo = new UsuarioPOJO(usuario);
+		Query<StakeholderPOJO> query = createQuery().filter("usuario", usuarioPojo);
+		return toValueObject(this.find(query));
+	}
 	
 	/**
 	 * 
