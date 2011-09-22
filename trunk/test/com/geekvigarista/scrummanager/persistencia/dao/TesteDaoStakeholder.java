@@ -85,9 +85,9 @@ public class TesteDaoStakeholder
 //		IDaoUsuario dao = new DaoUsuario(MongoConnection.getDatastore());
 		IDaoStakeholder dao = new DaoStakeholder();
 		
-		adicionarProjetoEmTodosOsStakes(dao);
+//		adicionarProjetoEmTodosOsStakes(dao);
 //		cadastra(dao);
-//		buscaTodos(dao);
+		buscaTodos(dao);
 //		buscaById(dao);
 //		exclui(dao);
 	}

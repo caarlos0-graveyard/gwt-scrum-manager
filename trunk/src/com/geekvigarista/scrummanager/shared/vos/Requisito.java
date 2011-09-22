@@ -22,15 +22,23 @@ public class Requisito implements Serializable
 	private List<String> anexos;
 	private int tempoTotal; // horas
 	
+	public Requisito(){}
+	
 	public Requisito(String id, String titulo, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
 			Date dataCadastro, List<String> anexos, int tempoTotal)
 	{
 		super();
-		this.id = id;
+		if(id != null)
+		{
+			this.id = id;
+		}
 		this.titulo = titulo;
 		this.prioridade = prioridade;
 		this.tempoEstimado = tempoEstimado;
-		this.encaminhamentos = encaminhamentos;
+		if(encaminhamentos != null)
+		{
+			this.encaminhamentos = encaminhamentos;
+		}
 		this.dataCadastro = dataCadastro;
 		this.anexos = anexos;
 		this.tempoTotal = tempoTotal;
