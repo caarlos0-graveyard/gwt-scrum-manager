@@ -1,12 +1,18 @@
 package com.geekvigarista.scrummanager.shared.vos;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 
-public class Requisito {
-
+public class Requisito implements Serializable
+{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String titulo;
 	private PrioridadeRequisito prioridade;
@@ -15,10 +21,10 @@ public class Requisito {
 	private Date dataCadastro;
 	private List<String> anexos;
 	private int tempoTotal; // horas
-
-	public Requisito(String id, String titulo, PrioridadeRequisito prioridade,
-			int tempoEstimado, List<Encaminhamento> encaminhamentos,
-			Date dataCadastro, List<String> anexos, int tempoTotal) {
+	
+	public Requisito(String id, String titulo, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
+			Date dataCadastro, List<String> anexos, int tempoTotal)
+	{
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -29,69 +35,85 @@ public class Requisito {
 		this.anexos = anexos;
 		this.tempoTotal = tempoTotal;
 	}
-
-	public String getId() {
+	
+	public String getId()
+	{
 		return id;
 	}
-
-	public void setId(String id) {
+	
+	public void setId(String id)
+	{
 		this.id = id;
 	}
-
-	public String getTitulo() {
+	
+	public String getTitulo()
+	{
 		return titulo;
 	}
-
-	public void setTitulo(String titulo) {
+	
+	public void setTitulo(String titulo)
+	{
 		this.titulo = titulo;
 	}
-
-	public PrioridadeRequisito getPrioridade() {
+	
+	public PrioridadeRequisito getPrioridade()
+	{
 		return prioridade;
 	}
-
-	public void setPrioridade(PrioridadeRequisito prioridade) {
+	
+	public void setPrioridade(PrioridadeRequisito prioridade)
+	{
 		this.prioridade = prioridade;
 	}
-
-	public int getTempoEstimado() {
+	
+	public int getTempoEstimado()
+	{
 		return tempoEstimado;
 	}
-
-	public void setTempoEstimado(int tempoEstimado) {
+	
+	public void setTempoEstimado(int tempoEstimado)
+	{
 		this.tempoEstimado = tempoEstimado;
 	}
-
-	public List<Encaminhamento> getEncaminhamentos() {
+	
+	public List<Encaminhamento> getEncaminhamentos()
+	{
 		return encaminhamentos;
 	}
-
-	public void setEncaminhamentos(List<Encaminhamento> encaminhamentos) {
+	
+	public void setEncaminhamentos(List<Encaminhamento> encaminhamentos)
+	{
 		this.encaminhamentos = encaminhamentos;
 	}
-
-	public Date getDataCadastro() {
+	
+	public Date getDataCadastro()
+	{
 		return dataCadastro;
 	}
-
-	public void setDataCadastro(Date dataCadastro) {
+	
+	public void setDataCadastro(Date dataCadastro)
+	{
 		this.dataCadastro = dataCadastro;
 	}
-
-	public List<String> getAnexos() {
+	
+	public List<String> getAnexos()
+	{
 		return anexos;
 	}
-
-	public void setAnexos(List<String> anexos) {
+	
+	public void setAnexos(List<String> anexos)
+	{
 		this.anexos = anexos;
 	}
-
-	public int getTempoTotal() {
+	
+	public int getTempoTotal()
+	{
 		return tempoTotal;
 	}
-
-	public void setTempoTotal(int tempoTotal) {
+	
+	public void setTempoTotal(int tempoTotal)
+	{
 		this.tempoTotal = tempoTotal;
 	}
-
+	
 }

@@ -1,10 +1,12 @@
 package com.geekvigarista.scrummanager.shared.vos;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Projeto
+public class Projeto implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String nome;
 	private Date dataInicio;
