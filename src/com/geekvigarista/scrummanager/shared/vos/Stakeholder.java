@@ -1,10 +1,12 @@
 package com.geekvigarista.scrummanager.shared.vos;
 
+import java.io.Serializable;
+
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 
-public class Stakeholder
+public class Stakeholder implements Serializable
 {
-	
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String nome;
 	private PapelStakeholder papel;
