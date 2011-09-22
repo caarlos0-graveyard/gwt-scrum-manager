@@ -10,11 +10,13 @@ import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
+import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.geekvigarista.scrummanager.shared.vos.Usuario;
 
 /**
  * Teste para o dao Usuario
@@ -29,23 +31,34 @@ public class TesteDaoRequisito
 	public static void cadastra(IDaoRequisito dao)
 	{
 		IDaoEncaminhamento daoE = new DaoEncaminhamento();
-		Encaminhamento e = daoE.buscar("4e7ba6ea5aec5a4675ee3114");
+		
+		Stakeholder stk = new Stakeholder();
+		stk.setNome("rushahaha");
+		stk.setPapel(PapelStakeholder.DESENVOLVEDOR);
+		stk.setUsuario(new Usuario("rushahaha", "rushahaha", "rushahaha"));
+		
+		Encaminhamento e = new Encaminhamento();
+		e.setData( new Date());
+		e.setStakeholder(stk);
+		e.setStatus(StatusRequisito.AGUARDANDO);
+		e.setTempoGasto(0);
+		
+		List<String> anexos = new ArrayList<String>();
+		anexos.add("rushahaha");
+		e.setAnexos(anexos);
 		
 		List<Encaminhamento> encs = new ArrayList<Encaminhamento>();
 		encs.add(e);
 		
 		Requisito r = new Requisito();
 		
-		List<String> anexos = new ArrayList<String>();
-		anexos.add("C:/porn");
-		
 		r.setAnexos(anexos);
 		r.setDataCadastro(new Date());
 		r.setEncaminhamentos(encs);
 		r.setPrioridade(PrioridadeRequisito.ALTA);
-		r.setTempoEstimado(20);
-		r.setTempoTotal(100);
-		r.setTitulo("Estrombelete de pombo obeso");
+		r.setTempoEstimado(25);
+		r.setTempoTotal(204);
+		r.setTitulo("Enfia no rushahaha");
 		
 		dao.salvar(r);
 	}

@@ -5,12 +5,17 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
+import com.google.code.morphia.annotations.PrePersist;
 import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 import com.google.code.morphia.utils.IndexDirection;
@@ -94,6 +99,17 @@ public class EncaminhamentoPOJO
 											anexos, 
 											status);
 		return encaminhamento;
+	}
+	
+	@PrePersist void prePersist()
+	{
+		IDaoStakeholder daoStake = new DaoStakeholder();
+		setStakeholder(new StakeholderPOJO(daoStake.salvar(stakeholder.getStakeholder())));
+		if(!status.equals(StatusRequisito.AGUARDANDO))
+		{
+			IDaoEncaminhamento dao = new DaoEncaminhamento();
+			setEncaminhamentoAnterior(new EncaminhamentoPOJO(dao.salvar(encaminhamentoAnterior.getEncaminhamento())));
+		}
 	}
 	
 	public ObjectId getId()

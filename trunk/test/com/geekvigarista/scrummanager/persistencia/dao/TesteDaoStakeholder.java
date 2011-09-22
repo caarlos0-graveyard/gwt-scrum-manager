@@ -26,11 +26,15 @@ public class TesteDaoStakeholder
 	public static void cadastra(IDaoStakeholder dao)
 	{
 		Stakeholder stk = new Stakeholder();
-		stk.setNome("joao stk");
-		stk.setPapel(PapelStakeholder.GP);
+		stk.setNome("local stake");
+		stk.setPapel(PapelStakeholder.DESENVOLVEDOR);
 		
 		IDaoUsuario daoUsuario = new DaoUsuario();
-		Usuario usu = daoUsuario.buscar("4e72960f7f3d9c3b7fe27673");
+//		Usuario usu = daoUsuario.buscar("4e72960f7f3d9c3b7fe27673");
+		Usuario usu = new Usuario();
+		usu.setLogin("locao");
+		usu.setNome("locao");
+		usu.setSenha("locao");
 		stk.setUsuario(usu);
 		
 		dao.salvar(stk);
@@ -87,7 +91,7 @@ public class TesteDaoStakeholder
 		
 //		adicionarProjetoEmTodosOsStakes(dao);
 //		cadastra(dao);
-		buscaTodos(dao);
+//		buscaTodos(dao);
 //		buscaById(dao);
 //		exclui(dao);
 	}

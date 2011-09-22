@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
@@ -13,6 +15,7 @@ import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
+import com.google.code.morphia.annotations.PrePersist;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("requisitos")
@@ -26,7 +29,7 @@ public class RequisitoPOJO
 	private int tempoEstimado; // horas
 	
 	@Embedded
-	@Indexed(name="encaminhamentos")
+	@Indexed(name = "encaminhamentos")
 	private List<EncaminhamentoPOJO> encaminhamentos;
 	private Date dataCadastro;
 	private List<String> anexos;
@@ -75,16 +78,30 @@ public class RequisitoPOJO
 				encaminhamentos.add(e.getEncaminhamento());
 			}
 		}
-		requisito = new Requisito((this.id == null)?null:this.id.toString(), 
-									titulo, 
-									prioridade, 
-									tempoEstimado, 
-									(encaminhamentos==null)?null:encaminhamentos, 
-									dataCadastro, 
-									anexos, 
-									tempoTotal);
+		requisito = new Requisito((this.id == null) ? null : this.id.toString(), titulo, prioridade, tempoEstimado, (encaminhamentos == null) ? null
+				: encaminhamentos, dataCadastro, anexos, tempoTotal);
 		
 		return requisito;
+	}
+	
+	@PrePersist
+	void prePersist()
+	{	
+		if(encaminhamentos != null && !encaminhamentos.isEmpty())
+		{
+			IDaoEncaminhamento daoE = new DaoEncaminhamento();
+			List<EncaminhamentoPOJO> encs = new ArrayList<EncaminhamentoPOJO>();
+			for(EncaminhamentoPOJO e : encaminhamentos)
+			{
+				Encaminhamento eSalvo = daoE.salvar(e.getEncaminhamento());
+				encs.add(new EncaminhamentoPOJO(eSalvo));
+			}
+			if(!encs.isEmpty())
+			{
+				encaminhamentos.clear();
+				encaminhamentos = encs;
+			}
+		}
 	}
 	
 	public ObjectId getId()
