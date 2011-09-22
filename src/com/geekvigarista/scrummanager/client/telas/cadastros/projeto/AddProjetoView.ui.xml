@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:db="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.defaultbox"
 	xmlns:dp="urn:import:com.google.gwt.user.datepicker.client">
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
@@ -34,18 +34,20 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="{msg.requisitos}" />
+						<g:Label />
 					</g:customCell>
 					<g:customCell>
-						<g:Button ui:field="addRequisitos">+</g:Button>
+						<g:Button ui:field="addRequisitos" text="{msg.addRequisitos}"
+							width="150px" enabled="false" title="{msg.necessarioSalvarProjeto}"></g:Button>
 					</g:customCell>
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="{msg.stakeholders}" />
+						<g:Label text="" />
 					</g:customCell>
 					<g:customCell>
-						<g:Button ui:field="addStakeholders">+</g:Button>
+						<g:Button ui:field="addStakeholders" text="{msg.addStakeholders}"
+							width="150px" enabled="false" title="{msg.necessarioSalvarProjeto}"></g:Button>
 					</g:customCell>
 				</g:row>
 			</g:Grid>

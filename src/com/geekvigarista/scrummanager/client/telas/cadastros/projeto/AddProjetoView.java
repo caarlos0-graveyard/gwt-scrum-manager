@@ -7,7 +7,9 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -29,25 +31,25 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 	@UiField
 	DateBox dataFim;
 	@UiField
-	HasClickHandlers addRequisitos;
+	Button addRequisitos;
 	@UiField
-	HasClickHandlers addStakeholders;
+	Button addStakeholders;
 	@UiField
-	HasClickHandlers btSalvar;
+	Button btSalvar;
 	@UiField
-	HasClickHandlers btCancelar;
-	
-	Widget w;
+	Hyperlink btCancelar;
+	@UiField
+	HTMLPanel conteudo;
 	
 	public AddProjetoView()
 	{
-		w = uiBinder.createAndBindUi(this);
+		uiBinder.createAndBindUi(this);
 	}
 	
 	@Override
 	public Widget asWidget()
 	{
-		return w;
+		return conteudo;
 	}
 	
 	@Override
@@ -79,15 +81,15 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 	{
 		return btCancelar;
 	}
-
+	
 	@Override
-	public HasClickHandlers getAddRequisitos()
+	public Button getAddRequisitos()
 	{
 		return addRequisitos;
 	}
-
+	
 	@Override
-	public HasClickHandlers getAddStakeholders()
+	public Button getAddStakeholders()
 	{
 		return addStakeholders;
 	}
