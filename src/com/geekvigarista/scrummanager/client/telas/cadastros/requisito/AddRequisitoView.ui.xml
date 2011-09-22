@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:d="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.defaultbox">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<d:DefaultDialogBox ui:field="conteudo">
+		<g:Label text="OI OOOOSOAOOSA"></g:Label>
+	</d:DefaultDialogBox>
+</ui:UiBinder> 
