@@ -10,6 +10,8 @@ import com.geekvigarista.scrummanager.client.converters.ProjetoConverter;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoResult;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
@@ -20,6 +22,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasValue;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -47,9 +50,9 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		
 		HasValue<Date> getDtFim();
 		
-		HasClickHandlers getAddRequisitos();
+		Button getAddRequisitos();
 		
-		HasClickHandlers getAddStakeholders();
+		Button getAddStakeholders();
 		
 		HasClickHandlers getBtCancelar();
 		
@@ -91,22 +94,23 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 				Projeto projeto = ProjetoConverter.convert(getView().getNome(), getView().getDtInicio(), getView().getDtFim(), requisitos,
 						stakeholders); // TODO mehlorar conversao
 				
+				if(getProjeto() != null)
+				{
+					projeto.setId(getProjeto().getId());
+				}
+				
 				dispatch.execute(new SalvarProjetoAction(projeto), new AsyncCallback<SalvarProjetoResult>()
 				{
-					
 					@Override
 					public void onFailure(Throwable caught)
 					{
 						// TODO trtar
 						caught.printStackTrace();
-						System.out
-								.println("AddProjetoPresenter.onBind().new ClickHandler() {...}.onClick(...).new AsyncCallback() {...}.onFailure()");
 					}
 					
 					@Override
 					public void onSuccess(SalvarProjetoResult result)
 					{
-						System.out.println("oi!");
 						setProjeto(result.getResponse());
 					}
 				});
@@ -124,6 +128,34 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		});
 	}
 	
+	@Override
+	public void prepareFromRequest(PlaceRequest request)
+	{
+		super.prepareFromRequest(request);
+		String id = request.getParameter(Parameters.projid, null);
+		
+		if(id == null)
+		{
+			setProjeto(null);
+			return;
+		}
+		
+		dispatch.execute(new LoadProjetoAction(id), new AsyncCallback<LoadProjetoResult>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				caught.printStackTrace(); //TODO tratar
+			}
+			
+			@Override
+			public void onSuccess(LoadProjetoResult result)
+			{
+				setProjeto(result.getProjeto());
+			}
+		});
+	}
+	
 	public Projeto getProjeto()
 	{
 		return projeto;
@@ -132,5 +164,18 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	public void setProjeto(Projeto projeto)
 	{
 		this.projeto = projeto;
+		if(projeto != null)
+		{
+			getView().getDtFim().setValue(projeto.getDataFim());
+			getView().getDtInicio().setValue(projeto.getDataInicio());
+			getView().getNome().setValue(projeto.getNome());
+			getView().getAddRequisitos().setEnabled(true);
+			getView().getAddStakeholders().setEnabled(true);
+		}
+		else
+		{
+			getView().getAddRequisitos().setEnabled(false);
+			getView().getAddStakeholders().setEnabled(false);
+		}
 	}
 }

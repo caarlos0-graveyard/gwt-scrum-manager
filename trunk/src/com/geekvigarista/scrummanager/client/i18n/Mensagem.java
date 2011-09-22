@@ -71,8 +71,14 @@ public interface Mensagem extends Constants
 	
 	public String dataFim();
 	
+	public String addRequisitos();
+	
+	public String addStakeholders();
+	
 	public String requisitos();
 	
 	public String stakeholders();
+	
+	public String necessarioSalvarProjeto();
 	
 }

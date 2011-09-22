@@ -30,15 +30,17 @@ public class ClientModule extends AbstractPresenterModule
 		// constants
 		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.home);
 		
-		// presenters
-		bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
-		bindPresenter(MainPresenter.class, MainPresenter.MainView.class, MainView.class, MainPresenter.MainProxy.class);
-		bindPresenter(AddUserPresenter.class, AddUserPresenter.AddUserView.class, AddUserView.class, AddUserPresenter.AddUserProxy.class);
-		bindPresenter(AddStakeholderPresenter.class, AddStakeholderPresenter.AddStakeholderView.class, AddStakeholderView.class,
-				AddStakeholderPresenter.AddStakeholderProxy.class);
-		bindPresenter(AddProjetoPresenter.class, AddProjetoPresenter.AddProjetoView.class, AddProjetoView.class,
-				AddProjetoPresenter.AddProjetoProxy.class);
-		bindPresenter(AddRequisitoPresenter.class, AddRequisitoPresenter.AddRequisitoView.class, AddRequisitoView.class,
-				AddRequisitoPresenter.AddRequisitoProxy.class);
+		// presenters dos cadastros
+		{
+			bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
+			bindPresenter(MainPresenter.class, MainPresenter.MainView.class, MainView.class, MainPresenter.MainProxy.class);
+			bindPresenter(AddUserPresenter.class, AddUserPresenter.AddUserView.class, AddUserView.class, AddUserPresenter.AddUserProxy.class);
+			bindPresenter(AddStakeholderPresenter.class, AddStakeholderPresenter.AddStakeholderView.class, AddStakeholderView.class,
+					AddStakeholderPresenter.AddStakeholderProxy.class);
+			bindPresenter(AddProjetoPresenter.class, AddProjetoPresenter.AddProjetoView.class, AddProjetoView.class,
+					AddProjetoPresenter.AddProjetoProxy.class);
+			bindPresenter(AddRequisitoPresenter.class, AddRequisitoPresenter.AddRequisitoView.class, AddRequisitoView.class,
+					AddRequisitoPresenter.AddRequisitoProxy.class);
+		}
 	}
 }
