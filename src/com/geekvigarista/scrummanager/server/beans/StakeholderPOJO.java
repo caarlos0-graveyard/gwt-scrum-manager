@@ -2,10 +2,13 @@ package com.geekvigarista.scrummanager.server.beans;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.PrePersist;
 import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 
@@ -55,6 +58,16 @@ public class StakeholderPOJO
 			stakeholder = new Stakeholder(nome, papel, usuario.getUsuario());
 		}
 		return stakeholder;
+	}
+	
+	/**
+	 * Salva o usuario automaticamente toda vez antes de salvar um stakeholder.
+	 * Ou seja, faz cascade.
+	 */
+	@PrePersist void prePersist()
+	{
+		IDaoUsuario dao = new DaoUsuario();
+		setUsuario(new UsuarioPOJO(dao.salvar(usuario.getUsuario())));
 	}
 	
 	public ObjectId getId()

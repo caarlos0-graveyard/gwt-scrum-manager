@@ -99,14 +99,26 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 	}
 	
 	/**
-	 * Metodo que busca usuarios de acordo com o login deles.
-	 * Busca por partes da palavra do login também. (like)
+	 * Metodo que busca usuarios de acordo com o login deles. Busca por partes da palavra do login também. (like)
 	 */
 	@Override
 	public List<Usuario> buscarLike(String parametro)
 	{
 		Query<UsuarioPOJO> query = createQuery().field("login").contains(parametro);
 		return toValueObject(this.find(query));
+	}
+	
+	/**
+	 * Busca usuarios por login, com o limite especificado.
+	 * @param login, login a ser pesquisado.
+	 * @param limite, limite de resultados a serem retornados.
+	 * @return
+	 */
+	@Override
+	public List<Usuario> buscaByLogin(String login, int limite)
+	{
+		Query<UsuarioPOJO> query = createQuery().filter("login", login).limit(limite);
+		return toValueObject(find(query));
 	}
 	
 	/**

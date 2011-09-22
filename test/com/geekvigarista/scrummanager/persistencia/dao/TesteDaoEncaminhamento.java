@@ -8,9 +8,11 @@ import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
+import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.geekvigarista.scrummanager.shared.vos.Usuario;
 
 /**
  * Teste para o dao Usuario
@@ -25,8 +27,13 @@ public class TesteDaoEncaminhamento
 	public static void cadastra(IDaoEncaminhamento dao)
 	{
 		IDaoStakeholder daoS = new DaoStakeholder();
-		Stakeholder st = daoS.buscar("4e78b91405c6e7d5c52ac3c6");
+		Stakeholder st = new Stakeholder();
+		st.setNome("mario");
+		st.setPapel(PapelStakeholder.ANALISTA_NEGOCIO);
+		st.setUsuario(new Usuario("mariozao", "123456", "mario gomes"));
 		
+		Encaminhamento eAnterior = dao.buscar("4e7bc26b5aec94d9aa93512f");
+				
 		Encaminhamento e = new Encaminhamento();
 		
 		List<String> anexos = new ArrayList<String>();
@@ -34,8 +41,9 @@ public class TesteDaoEncaminhamento
 		e.setAnexos(anexos);
 		e.setData(new Date());
 		e.setStakeholder(st);
-		e.setStatus(StatusRequisito.AGUARDANDO);
+		e.setStatus(StatusRequisito.EM_ANALISE);
 		e.setTempoGasto(25);
+		e.setEncaminhamentoAnterior(eAnterior);
 		
 		dao.salvar(e);
 	}
