@@ -11,11 +11,41 @@ import com.gwtplatform.dispatch.server.guice.HandlerModule;
 public class ServerModule extends HandlerModule
 {
 	
+	/*
+	 * TODO ActionHandler DI
+	 * 
+	 * sempre que adicionar um ActionHandler, deve-se adiciona-lo a esta classe para 
+	 * que o guice possa injeta-lo atraves do servlet.
+	 * 
+	 */
+	
 	@Override
 	protected void configureHandlers()
 	{
+		configureProjeto();
+		configureStakeholder();
+		configureUsuario();
+	}
+	
+	/*
+	 * adicione os binds nos métodos abaixo.
+	 * 
+	 * crie mais se for necessário - MANTER ORGANIZADO ESSA BAGAÇA
+	 */
+	
+	private void configureUsuario()
+	{
 		bindHandler(SalvarUsuarioAction.class, SalvarUsuarioActionHandler.class);
+	}
+	
+	private void configureProjeto()
+	{
 		bindHandler(SalvarProjetoAction.class, SalvarProjetoActionHandler.class);
 		bindHandler(LoadProjetoAction.class, LoadProjetoActionHandler.class);
+	}
+	
+	private void configureStakeholder()
+	{
+		
 	}
 }
