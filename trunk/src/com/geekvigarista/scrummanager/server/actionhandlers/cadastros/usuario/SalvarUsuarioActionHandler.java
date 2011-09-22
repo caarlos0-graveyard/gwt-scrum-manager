@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario;
 
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;
@@ -16,7 +17,7 @@ public class SalvarUsuarioActionHandler implements ActionHandler<SalvarUsuarioAc
 	
 	Injector inj = Guice.createInjector(new DAOModule());
 	
-	DaoUsuario dao = inj.getInstance(DaoUsuario.class);
+	IDaoUsuario dao = inj.getInstance(DaoUsuario.class);
 	
 	@Override
 	public SalvarUsuarioResult execute(SalvarUsuarioAction arg0, ExecutionContext arg1) throws ActionException

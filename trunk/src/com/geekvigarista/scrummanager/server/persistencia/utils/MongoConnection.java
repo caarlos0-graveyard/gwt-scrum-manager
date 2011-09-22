@@ -1,5 +1,9 @@
 package com.geekvigarista.scrummanager.server.persistencia.utils;
 
+import com.geekvigarista.scrummanager.server.beans.EncaminhamentoPOJO;
+import com.geekvigarista.scrummanager.server.beans.ProjetoPOJO;
+import com.geekvigarista.scrummanager.server.beans.RequisitoPOJO;
+import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
 import com.geekvigarista.scrummanager.server.beans.UsuarioPOJO;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
@@ -22,7 +26,7 @@ public class MongoConnection
 	private static Datastore datastore;
 
 	/**
-	 * XXX - Verificar esta classe posteriorment Não sei se estou implementando
+	 * XXX - Verificar esta classe posteriorment Nï¿½o sei se estou implementando
 	 * certo esta classe.
 	 * FIXME - Mais pra frente verificar possibilidade de injetar o datastore nos daos.
 	 * 
@@ -57,7 +61,11 @@ public class MongoConnection
 		if (morphia == null) 
 		{
 			morphia = new Morphia();
-			morphia.map(UsuarioPOJO.class);
+			morphia.map(UsuarioPOJO.class)
+				   .map(StakeholderPOJO.class)
+				   .map(ProjetoPOJO.class)
+			       .map(EncaminhamentoPOJO.class)
+			       .map(RequisitoPOJO.class);
 			// TODO mapear os outros beans
 			// TODO inserir ensureIndex
 		}
@@ -73,6 +81,7 @@ public class MongoConnection
 		if (datastore == null) 
 		{
 			datastore = getMorphia().createDatastore(getMongo(), BANCO);
+			datastore.ensureIndexes();
 		}
 		return datastore;
 	}

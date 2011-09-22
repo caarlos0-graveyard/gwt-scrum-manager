@@ -3,6 +3,7 @@ package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario;
 import java.util.List;
 
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
 import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioListResult;
@@ -18,7 +19,7 @@ public class BuscarUsuarioActionHandler implements ActionHandler<BuscarUsuarioAc
 	
 	Injector inj = Guice.createInjector(new DAOModule());
 	
-	DaoUsuario dao = inj.getInstance(DaoUsuario.class);
+	IDaoUsuario dao = inj.getInstance(DaoUsuario.class);
 	
 	/**
 	 * Busca usuarios de acordo com o parametro.

@@ -3,6 +3,7 @@ package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.stakehold
 import java.util.List;
 
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderListResult;
@@ -18,7 +19,7 @@ public class BuscarStakeholderActionHandler implements ActionHandler<BuscarStake
 	
 	Injector inj = Guice.createInjector(new DAOModule());
 	
-	DaoStakeholder dao = inj.getInstance(DaoStakeholder.class);
+	IDaoStakeholder dao = inj.getInstance(DaoStakeholder.class);
 	
 	/**
 	 * Busca stakeholders de acordo com o parametro.
