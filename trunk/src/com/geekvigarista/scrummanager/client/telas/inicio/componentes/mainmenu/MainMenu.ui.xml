@@ -10,5 +10,9 @@
 			text="{msg.addUser}"></g:InlineHyperlink>
 		<g:InlineHyperlink targetHistoryToken="{token.getAddstak}"
 			text="{msg.addStakeholder}"></g:InlineHyperlink>
+		<g:InlineHyperlink targetHistoryToken="{token.getAddproj}"
+			text="{msg.addProjeto}"></g:InlineHyperlink>
+			<g:InlineHyperlink targetHistoryToken="{token.getAddreq}"
+			text="{msg.addRequisito}"></g:InlineHyperlink>
 	</g:HTMLPanel>
 </ui:UiBinder> 

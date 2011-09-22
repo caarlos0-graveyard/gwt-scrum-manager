@@ -3,6 +3,10 @@ package com.geekvigarista.scrummanager.client.gin;
 import com.geekvigarista.scrummanager.client.place.ClientPlaceManager;
 import com.geekvigarista.scrummanager.client.place.DefaultPlace;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoView;
+import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoView;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderView;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
@@ -32,5 +36,9 @@ public class ClientModule extends AbstractPresenterModule
 		bindPresenter(AddUserPresenter.class, AddUserPresenter.AddUserView.class, AddUserView.class, AddUserPresenter.AddUserProxy.class);
 		bindPresenter(AddStakeholderPresenter.class, AddStakeholderPresenter.AddStakeholderView.class, AddStakeholderView.class,
 				AddStakeholderPresenter.AddStakeholderProxy.class);
+		bindPresenter(AddProjetoPresenter.class, AddProjetoPresenter.AddProjetoView.class, AddProjetoView.class,
+				AddProjetoPresenter.AddProjetoProxy.class);
+		bindPresenter(AddRequisitoPresenter.class, AddRequisitoPresenter.AddRequisitoView.class, AddRequisitoView.class,
+				AddRequisitoPresenter.AddRequisitoProxy.class);
 	}
 }

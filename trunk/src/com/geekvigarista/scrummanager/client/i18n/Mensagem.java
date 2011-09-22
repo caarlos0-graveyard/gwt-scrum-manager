@@ -39,6 +39,12 @@ public interface Mensagem extends Constants
 	
 	public String addStakeholder();
 	
+	public String addProjeto();
+	
+	public String addProduto();
+	
+	public String addRequisito();
+	
 	/*
 	 * add USer
 	 */
