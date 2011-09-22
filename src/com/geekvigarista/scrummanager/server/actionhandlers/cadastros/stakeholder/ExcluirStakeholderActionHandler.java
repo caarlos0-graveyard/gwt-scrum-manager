@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.stakeholder;
 
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.excluir.ExcluirStakeholderAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.excluir.ExcluirStakeholderResult;
@@ -16,7 +17,7 @@ public class ExcluirStakeholderActionHandler implements ActionHandler<ExcluirSta
 	
 	Injector inj = Guice.createInjector(new DAOModule());
 	
-	DaoStakeholder dao = inj.getInstance(DaoStakeholder.class);
+	IDaoStakeholder dao = inj.getInstance(DaoStakeholder.class);
 	
 	@Override
 	public ExcluirStakeholderResult execute(ExcluirStakeholderAction arg0, ExecutionContext arg1) throws ActionException
