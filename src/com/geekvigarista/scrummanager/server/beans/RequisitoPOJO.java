@@ -12,43 +12,52 @@ import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("requisitos")
-public class RequisitoPOJO {
-
+public class RequisitoPOJO
+{
+	
 	@Id
 	private ObjectId id;
 	private String titulo;
 	private PrioridadeRequisito prioridade;
 	private int tempoEstimado; // horas
+	
 	@Embedded
+	@Indexed(name="encaminhamentos")
 	private List<EncaminhamentoPOJO> encaminhamentos;
 	private Date dataCadastro;
 	private List<String> anexos;
 	private int tempoTotal; // horas
-
 	
 	@Transient
 	private Requisito requisito;
 	
-	
-	public RequisitoPOJO() {
+	public RequisitoPOJO()
+	{
 	}
 	
-	public RequisitoPOJO(Requisito requisito) {
-		// TODO avoid nullpointers
+	public RequisitoPOJO(Requisito requisito)
+	{
 		super();
 		this.requisito = requisito;
-		this.id = new ObjectId(requisito.getId());
+		if(requisito.getId() != null)
+		{
+			this.id = new ObjectId(requisito.getId());
+		}
 		this.titulo = requisito.getTitulo();
 		this.prioridade = requisito.getPrioridade();
 		this.tempoEstimado = requisito.getTempoEstimado();
-		this.encaminhamentos = new ArrayList<EncaminhamentoPOJO>();
 		
-		for(Encaminhamento e : requisito.getEncaminhamentos())
+		if(requisito.getEncaminhamentos() != null)
 		{
-			this.encaminhamentos.add(new EncaminhamentoPOJO(e));
+			this.encaminhamentos = new ArrayList<EncaminhamentoPOJO>();
+			for(Encaminhamento e : requisito.getEncaminhamentos())
+			{
+				this.encaminhamentos.add(new EncaminhamentoPOJO(e));
+			}
 		}
 		
 		this.dataCadastro = requisito.getDataCadastro();
@@ -56,83 +65,106 @@ public class RequisitoPOJO {
 		this.tempoTotal = requisito.getTempoTotal();
 	}
 	
-	
-
-	public Requisito getRequisito() {
-		// TODO avoid nullpointers
+	public Requisito getRequisito()
+	{
 		List<Encaminhamento> encaminhamentos = new ArrayList<Encaminhamento>();
-		for(EncaminhamentoPOJO e : this.encaminhamentos)
+		if(this.encaminhamentos != null)
 		{
-			encaminhamentos.add(e.getEncaminhamento());
+			for(EncaminhamentoPOJO e : this.encaminhamentos)
+			{
+				encaminhamentos.add(e.getEncaminhamento());
+			}
 		}
-		requisito = new Requisito(this.id.toString(), titulo, prioridade, tempoEstimado, encaminhamentos, dataCadastro, anexos, tempoTotal);
+		requisito = new Requisito((this.id == null)?null:this.id.toString(), 
+									titulo, 
+									prioridade, 
+									tempoEstimado, 
+									(encaminhamentos==null)?null:encaminhamentos, 
+									dataCadastro, 
+									anexos, 
+									tempoTotal);
 		
 		return requisito;
 	}
-
-
-	public ObjectId getId() {
+	
+	public ObjectId getId()
+	{
 		return id;
 	}
-
-	public void setId(ObjectId id) {
+	
+	public void setId(ObjectId id)
+	{
 		this.id = id;
 	}
-
-	public String getTitulo() {
+	
+	public String getTitulo()
+	{
 		return titulo;
 	}
-
-	public void setTitulo(String titulo) {
+	
+	public void setTitulo(String titulo)
+	{
 		this.titulo = titulo;
 	}
-
-	public PrioridadeRequisito getPrioridade() {
+	
+	public PrioridadeRequisito getPrioridade()
+	{
 		return prioridade;
 	}
-
-	public void setPrioridade(PrioridadeRequisito prioridade) {
+	
+	public void setPrioridade(PrioridadeRequisito prioridade)
+	{
 		this.prioridade = prioridade;
 	}
-
-	public int getTempoEstimado() {
+	
+	public int getTempoEstimado()
+	{
 		return tempoEstimado;
 	}
-
-	public void setTempoEstimado(int tempoEstimado) {
+	
+	public void setTempoEstimado(int tempoEstimado)
+	{
 		this.tempoEstimado = tempoEstimado;
 	}
-
-	public List<EncaminhamentoPOJO> getEncaminhamentos() {
+	
+	public List<EncaminhamentoPOJO> getEncaminhamentos()
+	{
 		return encaminhamentos;
 	}
-
-	public void setEncaminhamentos(List<EncaminhamentoPOJO> encaminhamentos) {
+	
+	public void setEncaminhamentos(List<EncaminhamentoPOJO> encaminhamentos)
+	{
 		this.encaminhamentos = encaminhamentos;
 	}
-
-	public Date getDataCadastro() {
+	
+	public Date getDataCadastro()
+	{
 		return dataCadastro;
 	}
-
-	public void setDataCadastro(Date dataCadastro) {
+	
+	public void setDataCadastro(Date dataCadastro)
+	{
 		this.dataCadastro = dataCadastro;
 	}
-
-	public List<String> getAnexos() {
+	
+	public List<String> getAnexos()
+	{
 		return anexos;
 	}
-
-	public void setAnexos(List<String> anexos) {
+	
+	public void setAnexos(List<String> anexos)
+	{
 		this.anexos = anexos;
 	}
-
-	public int getTempoTotal() {
+	
+	public int getTempoTotal()
+	{
 		return tempoTotal;
 	}
-
-	public void setTempoTotal(int tempoTotal) {
+	
+	public void setTempoTotal(int tempoTotal)
+	{
 		this.tempoTotal = tempoTotal;
 	}
-
+	
 }

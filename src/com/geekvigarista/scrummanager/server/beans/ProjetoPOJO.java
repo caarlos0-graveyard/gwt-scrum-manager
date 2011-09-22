@@ -11,7 +11,9 @@ import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.Transient;
+import com.google.code.morphia.utils.IndexDirection;
 
 @Entity("projetos")
 public class ProjetoPOJO
@@ -22,10 +24,14 @@ public class ProjetoPOJO
 	
 	@Id
 	ObjectId id;
+	
+	@Indexed(name="nome",unique=true,dropDups=true,value=IndexDirection.ASC)
 	private String nome;
 	private Date dataInicio;
 	private Date dataFim;
+	@Indexed(name="stakeholders")
 	private List<StakeholderPOJO> stakeholders;
+	@Indexed(name="requisitos")
 	private List<RequisitoPOJO> requisitos;
 	
 	public ProjetoPOJO()
