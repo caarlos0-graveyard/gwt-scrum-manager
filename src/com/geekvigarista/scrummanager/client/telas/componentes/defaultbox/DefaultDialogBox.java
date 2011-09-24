@@ -8,6 +8,7 @@ public class DefaultDialogBox extends DialogBox
 	public DefaultDialogBox()
 	{
 		super();
+		super.setWidth("100px");
 		setAnimationEnabled(true);
 		setGlassEnabled(true);
 		setAutoHideEnabled(true);
