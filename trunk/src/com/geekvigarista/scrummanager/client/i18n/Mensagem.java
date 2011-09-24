@@ -93,4 +93,7 @@ public interface Mensagem extends Constants
 	public String horas();
 
 	public String anexos();
+	
+	public String semRequisitos();
+	
 }

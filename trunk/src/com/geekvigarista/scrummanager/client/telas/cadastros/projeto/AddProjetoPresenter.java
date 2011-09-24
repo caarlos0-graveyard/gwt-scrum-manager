@@ -89,8 +89,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			public void onClick(ClickEvent event)
 			{
 				System.out.println("AddProjetoPresenter.onBind().new ClickHandler() {...}.onClick()");
-				List<Requisito> requisitos = new ArrayList<Requisito>();
-				List<Stakeholder> stakeholders = new ArrayList<Stakeholder>();
+				List<Requisito> requisitos = (getProjeto() == null || getProjeto().getId() == null) ? new ArrayList<Requisito>() : getProjeto().getRequisitos();
+				List<Stakeholder> stakeholders = (getProjeto() == null || getProjeto().getId() == null) ?  new ArrayList<Stakeholder>() : getProjeto().getStakeholders();
 				Projeto projeto = ProjetoConverter.convert(getView().getNome(), getView().getDtInicio(), getView().getDtFim(), requisitos,
 						stakeholders); // TODO mehlorar conversao
 				
