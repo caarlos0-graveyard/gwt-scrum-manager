@@ -2,6 +2,7 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.requisito;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,10 +20,15 @@ import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -43,14 +49,15 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		
 	}
 	
-	
 	public interface AddRequisitoView extends View
 	{
+		void setData(List<Requisito> reqs);
+		
 		SingleSelectionModel<Requisito> selectionModel();
 		
-		HasValue<Integer> tempoEstimado();
+		IntegerBox tempoEstimado();
 		
-		HasValue<String> titulo();
+		TextBox titulo();
 		
 		ListBox prioridade();
 		
@@ -99,49 +106,18 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	protected void onBind()
 	{
 		super.onBind();
-		
-		getView().getBtSalvar().addClickHandler(new ClickHandler()
+		SalvarRequisitoHandler handler = new SalvarRequisitoHandler();
+		getView().getBtSalvar().addClickHandler(handler);
+		getView().prioridade().addKeyUpHandler(handler);
+		getView().titulo().addKeyUpHandler(handler);
+		getView().tempoEstimado().addKeyUpHandler(handler);
+		getView().selectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler()
 		{
 			@Override
-			public void onClick(ClickEvent event)
+			public void onSelectionChange(SelectionChangeEvent event)
 			{
-				
-				System.out.println("AddRequisitoPresenter.onBind().new ClickHandler() {...}.onClick()");
-				
-				Requisito req = new Requisito();
-				req.setPrioridade(PrioridadeRequisito.ALTA);
-				req.setTempoEstimado(getView().tempoEstimado().getValue());
-				req.setEncaminhamentos(new ArrayList<Encaminhamento>());
-				req.setTitulo(getView().titulo().getValue());
-				
-				if(getRequisito() != null && getRequisito().getId() != null)
-				{
-					req.setId(getRequisito().getId());
-					req.setDataCadastro(getRequisito().getDataCadastro());
-					req.setTempoTotal(getRequisito().getTempoTotal());
-				}
-				else
-				{
-					req.setDataCadastro(new Date());
-					req.setTempoTotal(0);
-				}
-				
-				dispatcher.execute(new SalvarRequisitoAction(req), new AsyncCallback<SalvarRequisitoResult>()
-				{
-					@Override
-					public void onFailure(Throwable caught)
-					{
-						// TODO tratar
-						caught.printStackTrace();
-					}
-
-					@Override
-					public void onSuccess(SalvarRequisitoResult result)
-					{
-						setRequisito(result.getResponse());
-						System.out.println("LULZ");
-					}
-				});
+				System.out.println("MERDA");
+				setRequisito(getView().selectionModel().getSelectedObject());
 			}
 		});
 	}
@@ -160,15 +136,74 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	public void setProjeto(Projeto projeto)
 	{
 		this.projeto = projeto;
+		getView().setData(projeto.getRequisitos());
 	}
-
+	
 	public Requisito getRequisito()
 	{
 		return requisito;
 	}
-
+	
 	public void setRequisito(Requisito requisito)
 	{
 		this.requisito = requisito;
+		getView().titulo().setText(requisito.getTitulo());
+		getView().tempoEstimado().setValue(requisito.getTempoEstimado());
+		
+	}
+	
+	private class SalvarRequisitoHandler implements ClickHandler, KeyUpHandler
+	{
+		public void doSalvar()
+		{
+			Requisito req = new Requisito();
+			req.setPrioridade(PrioridadeRequisito.ALTA);
+			req.setTempoEstimado(getView().tempoEstimado().getValue());
+			req.setEncaminhamentos(new ArrayList<Encaminhamento>());
+			req.setTitulo(getView().titulo().getValue());
+			
+			if(getRequisito() != null && getRequisito().getId() != null)
+			{
+				req.setId(getRequisito().getId());
+				req.setDataCadastro(getRequisito().getDataCadastro());
+				req.setTempoTotal(getRequisito().getTempoTotal());
+			}
+			else
+			{
+				req.setDataCadastro(new Date());
+				req.setTempoTotal(0);
+			}
+			
+			dispatcher.execute(new SalvarRequisitoAction(req, getProjeto()), new AsyncCallback<SalvarRequisitoResult>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					// TODO tratar
+					caught.printStackTrace();
+				}
+				
+				@Override
+				public void onSuccess(SalvarRequisitoResult result)
+				{
+					setRequisito(result.getResponse());
+					System.out.println("LULZ");
+				}
+			});
+		}
+		
+		@Override
+		public void onKeyUp(KeyUpEvent event)
+		{
+			if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				doSalvar();
+		}
+		
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			doSalvar();
+		}
+		
 	}
 }

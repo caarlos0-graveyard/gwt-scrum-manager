@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
@@ -30,8 +31,10 @@ public class ProjetoPOJO
 	private Date dataInicio;
 	private Date dataFim;
 	@Indexed(name="stakeholders")
+	@Embedded
 	private List<StakeholderPOJO> stakeholders;
 	@Indexed(name="requisitos")
+	@Embedded
 	private List<RequisitoPOJO> requisitos;
 	
 	public ProjetoPOJO()

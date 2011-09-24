@@ -7,10 +7,22 @@
 
 	<g:HTMLPanel ui:field="conteudo">
 		<g:HorizontalPanel width="">
-			<g:VerticalPanel>
-				<c:CellList ui:field="requisitos" width="150px">
+			<g:VerticalPanel spacing="10">
+				<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
+					<g:Label text="{msg.requisitos}" styleName="titulo1" />
+				</g:Cell>
+				
 
-				</c:CellList>
+				<g:DecoratorPanel title="{msg.requisitos}" ui:field="panelRequisitos">
+					<c:CellList ui:field="requisitos" width="150px"></c:CellList>
+				</g:DecoratorPanel>
+				<g:Cell horizontalAlignment="ALIGN_RIGHT">
+					<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" spacing="4">
+					<g:Button ui:field="btRm" text="-" title="" />
+					<g:Button ui:field="btAdd" text="+" title="" />
+				</g:HorizontalPanel>
+				</g:Cell>
+
 			</g:VerticalPanel>
 
 			<g:VerticalPanel>
@@ -38,7 +50,9 @@
 						<g:customCell>
 							<g:HorizontalPanel>
 								<d:DefaultIntegerBox ui:field="tempoEstimado" />
-								<g:Label text="{msg.horas}" />
+								<g:Cell verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+									<g:Label text="{msg.horas}" />
+								</g:Cell>
 							</g:HorizontalPanel>
 						</g:customCell>
 					</g:row>

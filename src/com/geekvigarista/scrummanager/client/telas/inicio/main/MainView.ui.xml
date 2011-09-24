@@ -5,6 +5,7 @@
 
 	<g:HTMLPanel>
 		<menu:MainMenu />
+		<hr />
 		<g:FlowPanel ui:field="mainContentPanel" />
 	</g:HTMLPanel>
 </ui:UiBinder> 
