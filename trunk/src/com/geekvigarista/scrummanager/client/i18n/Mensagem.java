@@ -81,4 +81,16 @@ public interface Mensagem extends Constants
 	
 	public String necessarioSalvarProjeto();
 	
+	/*
+	 * Requisito
+	 */
+	public String titulo();
+	
+	public String prioridade();
+	
+	public String tempoEstimado();
+	
+	public String horas();
+
+	public String anexos();
 }

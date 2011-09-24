@@ -122,8 +122,9 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
-				placeManager.revealPlace(pr);
+								PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
+								placeManager.revealPlace(pr);
+//				RevealRootPopupContentEvent.fire(this, AddRequisitoPresenter.class);
 			}
 		});
 	}
