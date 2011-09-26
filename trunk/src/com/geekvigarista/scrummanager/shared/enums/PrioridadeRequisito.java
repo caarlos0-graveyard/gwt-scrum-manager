@@ -2,7 +2,7 @@ package com.geekvigarista.scrummanager.shared.enums;
 
 public enum PrioridadeRequisito {
 	
-	ALTA("Alta"), BAIXA("Baixa"), MEDIA("Média");
+	ALTA("Alta"), MEDIA("Média"), BAIXA("Baixa");
 	
 	String desc = "";
 
