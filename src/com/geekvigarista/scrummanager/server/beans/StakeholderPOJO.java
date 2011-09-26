@@ -66,8 +66,11 @@ public class StakeholderPOJO
 	 */
 	@PrePersist void prePersist()
 	{
-		IDaoUsuario dao = new DaoUsuario();
-		setUsuario(new UsuarioPOJO(dao.salvar(usuario.getUsuario())));
+		if(usuario.getId() == null)
+		{
+			IDaoUsuario dao = new DaoUsuario();
+			setUsuario(new UsuarioPOJO(dao.salvar(usuario.getUsuario())));
+		}
 	}
 	
 	public ObjectId getId()

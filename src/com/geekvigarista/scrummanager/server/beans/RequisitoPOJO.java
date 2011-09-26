@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
-import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
-import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
@@ -16,6 +14,7 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.PrePersist;
+import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("requisitos")
@@ -25,6 +24,7 @@ public class RequisitoPOJO
 	@Id
 	private ObjectId id;
 	private String titulo;
+	private String descricao;
 	private PrioridadeRequisito prioridade;
 	private int tempoEstimado; // horas
 	
@@ -51,6 +51,7 @@ public class RequisitoPOJO
 			this.id = new ObjectId(requisito.getId());
 		}
 		this.titulo = requisito.getTitulo();
+		this.descricao = requisito.getDescricao();
 		this.prioridade = requisito.getPrioridade();
 		this.tempoEstimado = requisito.getTempoEstimado();
 		
@@ -78,7 +79,7 @@ public class RequisitoPOJO
 				encaminhamentos.add(e.getEncaminhamento());
 			}
 		}
-		requisito = new Requisito((this.id == null) ? null : this.id.toString(), titulo, prioridade, tempoEstimado, (encaminhamentos == null) ? null
+		requisito = new Requisito((this.id == null) ? null : this.id.toString(), titulo,descricao, prioridade, tempoEstimado, (encaminhamentos == null) ? null
 				: encaminhamentos, dataCadastro, anexos, tempoTotal);
 		
 		return requisito;
@@ -87,21 +88,10 @@ public class RequisitoPOJO
 	@PrePersist
 	void prePersist()
 	{	
-		if(encaminhamentos != null && !encaminhamentos.isEmpty())
-		{
-			IDaoEncaminhamento daoE = new DaoEncaminhamento();
-			List<EncaminhamentoPOJO> encs = new ArrayList<EncaminhamentoPOJO>();
-			for(EncaminhamentoPOJO e : encaminhamentos)
-			{
-				Encaminhamento eSalvo = daoE.salvar(e.getEncaminhamento());
-				encs.add(new EncaminhamentoPOJO(eSalvo));
-			}
-			if(!encs.isEmpty())
-			{
-				encaminhamentos.clear();
-				encaminhamentos = encs;
-			}
-		}
+		/*
+		 * Requisito contem só campos embed, entao
+		 * nao precisa de pre-persist.
+		 */
 	}
 	
 	public ObjectId getId()
@@ -129,6 +119,22 @@ public class RequisitoPOJO
 		return prioridade;
 	}
 	
+	/**
+	 * @return the descricao
+	 */
+	public String getDescricao()
+	{
+		return descricao;
+	}
+
+	/**
+	 * @param descricao the descricao to set
+	 */
+	public void setDescricao(String descricao)
+	{
+		this.descricao = descricao;
+	}
+
 	public void setPrioridade(PrioridadeRequisito prioridade)
 	{
 		this.prioridade = prioridade;
@@ -183,5 +189,4 @@ public class RequisitoPOJO
 	{
 		this.tempoTotal = tempoTotal;
 	}
-	
 }

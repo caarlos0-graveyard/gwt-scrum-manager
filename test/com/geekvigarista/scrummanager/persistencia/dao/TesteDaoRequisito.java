@@ -6,10 +6,8 @@ import java.util.List;
 
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
-import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
-import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;

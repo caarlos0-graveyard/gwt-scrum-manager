@@ -64,7 +64,7 @@ public class TesteDaoUsuario
 		IDaoUsuario dao = new DaoUsuario(MongoConnection.getDatastore());
 		
 //		cadastra(dao);
-//		buscaTodos(dao);
+		buscaTodos(dao);
 //		buscaById(dao);
 //		exclui(dao);
 	}

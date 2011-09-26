@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
@@ -13,28 +15,32 @@ import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
+import com.google.code.morphia.annotations.PrePersist;
+import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 import com.google.code.morphia.utils.IndexDirection;
 
 @Entity("projetos")
 public class ProjetoPOJO
 {
-	
 	@Transient
 	private Projeto projeto;
 	
 	@Id
 	ObjectId id;
 	
-	@Indexed(name="nome",unique=true,dropDups=true,value=IndexDirection.ASC)
+	@Indexed(name = "nome", unique = true, dropDups = true, value = IndexDirection.ASC)
 	private String nome;
+	
 	private Date dataInicio;
 	private Date dataFim;
-	@Indexed(name="stakeholders")
+	
+	@Indexed(name = "stakeholders")
 	@Embedded
 	private List<StakeholderPOJO> stakeholders;
-	@Indexed(name="requisitos")
-	@Embedded
+	
+	@Reference
+	@Indexed(name = "requisitos")
 	private List<RequisitoPOJO> requisitos;
 	
 	public ProjetoPOJO()
@@ -58,7 +64,8 @@ public class ProjetoPOJO
 			this.requisitos = new ArrayList<RequisitoPOJO>();
 			for(Requisito r : projeto.getRequisitos())
 			{
-				this.requisitos.add(new RequisitoPOJO(r));
+				RequisitoPOJO rPojo = new RequisitoPOJO(r);
+				this.requisitos.add(rPojo);
 			}
 		}
 		
@@ -78,6 +85,34 @@ public class ProjetoPOJO
 		
 	}
 	
+	@PrePersist
+	void prePersist()
+	{
+		if(requisitos != null && !requisitos.isEmpty())
+		{
+			IDaoRequisito daoR = new DaoRequisito();
+			List<RequisitoPOJO> requisitos = new ArrayList<RequisitoPOJO>();
+			for(RequisitoPOJO r : this.requisitos)
+			{
+				if(r.getId() == null)
+				{
+					Requisito rSalvo = daoR.salvar(r.getRequisito());
+					requisitos.add(new RequisitoPOJO(rSalvo));
+				}
+				else
+				{
+					requisitos.add(r);
+				}
+			}
+			if(!requisitos.isEmpty())
+			{
+				this.requisitos.clear();
+				this.requisitos = requisitos;
+			}
+			
+		}
+	}
+	
 	public Projeto getProjeto()
 	{
 		// TODO avoid nullpointers
@@ -95,7 +130,8 @@ public class ProjetoPOJO
 		{
 			for(RequisitoPOJO r : this.requisitos)
 			{
-				requisitos.add(r.getRequisito());
+				Requisito req = r.getRequisito();
+				requisitos.add(req);
 			}
 		}
 		
