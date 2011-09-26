@@ -11,16 +11,21 @@
 				<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="{msg.requisitos}" styleName="titulo1" />
 				</g:Cell>
-				
 
-				<g:DecoratorPanel title="{msg.requisitos}" ui:field="panelRequisitos">
+
+				<g:DecoratorPanel title="{msg.requisitos}"
+					ui:field="panelRequisitos">
 					<c:CellList ui:field="requisitos" width="150px"></c:CellList>
 				</g:DecoratorPanel>
 				<g:Cell horizontalAlignment="ALIGN_RIGHT">
-					<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" spacing="4">
-					<g:Button ui:field="btRm" text="-" title="" />
-					<g:Button ui:field="btAdd" text="+" title="" />
-				</g:HorizontalPanel>
+					<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT"
+						spacing="4">
+						<g:Cell verticalAlignment="ALIGN_MIDDLE">
+							<g:Label text="Horas" ui:field="labelHorasTotais" />
+						</g:Cell>
+						<g:Button ui:field="btRm" text="-" title="" />
+						<g:Button ui:field="btAdd" text="+" title="" />
+					</g:HorizontalPanel>
 				</g:Cell>
 
 			</g:VerticalPanel>
@@ -50,7 +55,8 @@
 						<g:customCell>
 							<g:HorizontalPanel>
 								<d:DefaultIntegerBox ui:field="tempoEstimado" />
-								<g:Cell verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER">
+								<g:Cell verticalAlignment="ALIGN_MIDDLE"
+									horizontalAlignment="ALIGN_CENTER">
 									<g:Label text="{msg.horas}" />
 								</g:Cell>
 							</g:HorizontalPanel>
@@ -70,8 +76,7 @@
 						<g:Label width="180px" />
 						<g:Cell verticalAlignment="ALIGN_MIDDLE"
 							horizontalAlignment="ALIGN_RIGHT">
-							<g:Hyperlink text="{msg.cancelar}" ui:field="btCancelar"
-								targetHistoryToken="newHistoryToken" />
+							<g:Anchor text="{msg.cancelar}" ui:field="btCancelar" />
 						</g:Cell>
 						<g:Cell verticalAlignment="ALIGN_MIDDLE"
 							horizontalAlignment="ALIGN_RIGHT">

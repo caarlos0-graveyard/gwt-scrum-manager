@@ -11,4 +11,9 @@ public class Parameters
 	 * id do stakeholder
 	 */
 	public static String stakid = "stakid";
+	
+	/**
+	 * id do usuario
+	 */
+	public static String userid = "userid";
 }
