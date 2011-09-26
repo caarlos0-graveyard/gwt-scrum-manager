@@ -22,7 +22,11 @@ public class Requisito implements Serializable
 	private List<String> anexos;
 	private int tempoTotal; // horas
 	
-	public Requisito(){}
+	public Requisito()
+	{
+		// isso evita erros variados na view, visto que um Enum nao pode ser null.
+		setPrioridade(PrioridadeRequisito.MEDIA); 
+	}
 	
 	public Requisito(String id, String titulo, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
 			Date dataCadastro, List<String> anexos, int tempoTotal)
