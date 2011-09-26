@@ -14,7 +14,7 @@ public class Stakeholder implements Serializable
 	
 	public Stakeholder()
 	{
-		
+		this.papel = PapelStakeholder.DESENVOLVEDOR;
 	}
 	public Stakeholder(String id, String nome, PapelStakeholder papel,Usuario usuario)
 	{
