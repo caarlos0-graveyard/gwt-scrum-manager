@@ -14,6 +14,7 @@ public class SalvarRequisitoResult implements Result {
 	public SalvarRequisitoResult(Requisito response, Projeto projeto) {
 		super();
 		this.response = response;
+		this.projeto = projeto;
 	}
 	
 	public SalvarRequisitoResult(List<String> erros)
