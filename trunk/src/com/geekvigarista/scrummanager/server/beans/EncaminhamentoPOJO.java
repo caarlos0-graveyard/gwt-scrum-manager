@@ -6,9 +6,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
-import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
-import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.google.code.morphia.annotations.Embedded;
@@ -28,14 +26,14 @@ public class EncaminhamentoPOJO
 	ObjectId id;
 	
 	@Embedded
-	@Indexed(name="stakeholder")
+	@Indexed(name = "stakeholder")
 	private StakeholderPOJO stakeholder; // o stakeholder que recebeu o encaminhamento;
 	
 	@Reference
 	private EncaminhamentoPOJO encaminhamentoAnterior;
 	
 	//cria index no sentido decrescente
-	@Indexed(name="data",value=IndexDirection.DESC)
+	@Indexed(name = "data", value = IndexDirection.DESC)
 	private Date data;
 	
 	private int tempoGasto; // em horas
@@ -91,21 +89,15 @@ public class EncaminhamentoPOJO
 	
 	public Encaminhamento getEncaminhamento()
 	{
-		encaminhamento = new Encaminhamento(this.id == null ? null : this.id.toString(), 
-											stakeholder != null ? stakeholder.getStakeholder() : null,
-											encaminhamentoAnterior == null ? null : encaminhamentoAnterior.getEncaminhamento(),
-											data,
-											tempoGasto, 
-											anexos, 
-											status);
+		encaminhamento = new Encaminhamento(this.id == null ? null : this.id.toString(), stakeholder != null ? stakeholder.getStakeholder() : null,
+				encaminhamentoAnterior == null ? null : encaminhamentoAnterior.getEncaminhamento(), data, tempoGasto, anexos, status);
 		return encaminhamento;
 	}
 	
-	@PrePersist void prePersist()
+	@PrePersist
+	void prePersist()
 	{
-		IDaoStakeholder daoStake = new DaoStakeholder();
-		setStakeholder(new StakeholderPOJO(daoStake.salvar(stakeholder.getStakeholder())));
-		if(!status.equals(StatusRequisito.AGUARDANDO))
+		if(!status.equals(StatusRequisito.AGUARDANDO) && encaminhamentoAnterior.getId() == null)
 		{
 			IDaoEncaminhamento dao = new DaoEncaminhamento();
 			setEncaminhamentoAnterior(new EncaminhamentoPOJO(dao.salvar(encaminhamentoAnterior.getEncaminhamento())));

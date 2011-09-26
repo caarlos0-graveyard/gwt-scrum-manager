@@ -15,6 +15,7 @@ public class Requisito implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String titulo;
+	private String descricao;
 	private PrioridadeRequisito prioridade;
 	private int tempoEstimado; // horas
 	private List<Encaminhamento> encaminhamentos;
@@ -28,7 +29,7 @@ public class Requisito implements Serializable
 		setPrioridade(PrioridadeRequisito.MEDIA); 
 	}
 	
-	public Requisito(String id, String titulo, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
+	public Requisito(String id, String titulo, String descricao, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
 			Date dataCadastro, List<String> anexos, int tempoTotal)
 	{
 		super();
@@ -37,6 +38,7 @@ public class Requisito implements Serializable
 			this.id = id;
 		}
 		this.titulo = titulo;
+		this.descricao = descricao;
 		this.prioridade = prioridade;
 		this.tempoEstimado = tempoEstimado;
 		if(encaminhamentos != null)
@@ -68,6 +70,24 @@ public class Requisito implements Serializable
 		this.titulo = titulo;
 	}
 	
+	
+	
+	/**
+	 * @return the descricao
+	 */
+	public String getDescricao()
+	{
+		return descricao;
+	}
+
+	/**
+	 * @param descricao the descricao to set
+	 */
+	public void setDescricao(String descricao)
+	{
+		this.descricao = descricao;
+	}
+
 	public PrioridadeRequisito getPrioridade()
 	{
 		return prioridade;
@@ -127,5 +147,4 @@ public class Requisito implements Serializable
 	{
 		this.tempoTotal = tempoTotal;
 	}
-	
 }

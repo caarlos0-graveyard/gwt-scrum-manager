@@ -26,15 +26,16 @@ public class TesteDaoStakeholder
 	public static void cadastra(IDaoStakeholder dao)
 	{
 		Stakeholder stk = new Stakeholder();
-		stk.setNome("local stake");
+		stk.setNome("stake pintudao tetudao");
 		stk.setPapel(PapelStakeholder.DESENVOLVEDOR);
 		
 		IDaoUsuario daoUsuario = new DaoUsuario();
-//		Usuario usu = daoUsuario.buscar("4e72960f7f3d9c3b7fe27673");
-		Usuario usu = new Usuario();
-		usu.setLogin("locao");
-		usu.setNome("locao");
-		usu.setSenha("locao");
+		Usuario usu = daoUsuario.buscar("4e7bbcca5aec04e4e8389a40");
+		usu.setLogin("locao tetudao");
+//		Usuario usu = new Usuario();
+//		usu.setLogin("locao");
+//		usu.setNome("locao");
+//		usu.setSenha("locao");
 		stk.setUsuario(usu);
 		
 		dao.salvar(stk);
@@ -68,9 +69,9 @@ public class TesteDaoStakeholder
 	
 	public static void buscaById(IDaoStakeholder dao)
 	{
-		String id = "4e77c99cd1ccd51eb6fa6fdb";
+		String id = "4e80f0a334922311d12d34d0";
 		Stakeholder stk = dao.buscar(id);
-		System.out.println(stk.getNome());
+		System.out.println(stk.getNome() + " - Usuario -> " + stk.getUsuario().getNome());
 	}
 	
 	public static void adicionarProjetoEmTodosOsStakes(IDaoStakeholder dao)
@@ -92,7 +93,7 @@ public class TesteDaoStakeholder
 //		adicionarProjetoEmTodosOsStakes(dao);
 //		cadastra(dao);
 //		buscaTodos(dao);
-//		buscaById(dao);
+		buscaById(dao);
 //		exclui(dao);
 	}
 }
