@@ -4,6 +4,7 @@ import com.geekvigarista.scrummanager.client.converters.UsuarioConverter;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserView;
+import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;
@@ -13,7 +14,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -75,15 +75,8 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	private void salvar()
 	{
 		Usuario usuario = UsuarioConverter.convert(getView().getNome(), getView().getLogin(), getView().getSenha());
-		dispatcher.execute(new SalvarUsuarioAction(usuario), new AsyncCallback<SalvarUsuarioResult>()
+		dispatcher.execute(new SalvarUsuarioAction(usuario), new AbstractCallback<SalvarUsuarioResult>()
 		{
-			@Override
-			public void onFailure(Throwable caught)
-			{
-				Window.alert("FAIL");
-				caught.printStackTrace(); //TODO
-			}
-			
 			@Override
 			public void onSuccess(SalvarUsuarioResult result)
 			{

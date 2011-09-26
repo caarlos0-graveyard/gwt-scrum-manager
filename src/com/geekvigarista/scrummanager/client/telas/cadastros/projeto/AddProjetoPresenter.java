@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import com.geekvigarista.scrummanager.client.converters.ProjetoConverter;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
+import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
@@ -99,15 +100,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 					projeto.setId(getProjeto().getId());
 				}
 				
-				dispatch.execute(new SalvarProjetoAction(projeto), new AsyncCallback<SalvarProjetoResult>()
+				dispatch.execute(new SalvarProjetoAction(projeto), new AbstractCallback<SalvarProjetoResult>()
 				{
-					@Override
-					public void onFailure(Throwable caught)
-					{
-						// TODO trtar
-						caught.printStackTrace();
-					}
-					
 					@Override
 					public void onSuccess(SalvarProjetoResult result)
 					{
@@ -141,14 +135,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			return;
 		}
 		
-		dispatch.execute(new LoadProjetoAction(id), new AsyncCallback<LoadProjetoResult>()
+		dispatch.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
 		{
-			@Override
-			public void onFailure(Throwable caught)
-			{
-				caught.printStackTrace(); //TODO tratar
-			}
-			
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{

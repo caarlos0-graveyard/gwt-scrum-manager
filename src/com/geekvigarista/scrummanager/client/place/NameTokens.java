@@ -10,6 +10,7 @@ public class NameTokens
 	public static final String addstak = "!addstak";
 	public static final String addreq = "!addreq";
 	public static final String addenc = "!addenc";
+	public static final String visreq = "!req";
 	
 	public static String getHome()
 	{
