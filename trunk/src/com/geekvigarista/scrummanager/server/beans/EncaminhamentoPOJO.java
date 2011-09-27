@@ -1,7 +1,6 @@
 package com.geekvigarista.scrummanager.server.beans;
 
 import java.util.Date;
-import java.util.List;
 
 import org.bson.types.ObjectId;
 
@@ -37,11 +36,12 @@ public class EncaminhamentoPOJO
 	private Date data;
 	
 	private int tempoGasto; // em horas
-	private List<String> anexos;
 	private StatusRequisito status;
 	
 	@Transient
 	private Encaminhamento encaminhamento;
+	
+	private String descricao;
 	
 	public EncaminhamentoPOJO()
 	{
@@ -57,7 +57,6 @@ public class EncaminhamentoPOJO
 			this.stakeholder = null;
 			this.encaminhamentoAnterior = null;
 			this.data = null;
-			this.anexos = null;
 			this.id = null;
 			this.status = null;
 			
@@ -74,8 +73,8 @@ public class EncaminhamentoPOJO
 			
 			this.data = encaminhamento.getData();
 			this.tempoGasto = encaminhamento.getTempoGasto();
-			this.anexos = encaminhamento.getAnexos();
 			this.status = encaminhamento.getStatus();
+			this.descricao = encaminhamento.getDescricao();
 			if(encaminhamento.getId() == null)
 			{
 				this.id = null;
@@ -90,7 +89,7 @@ public class EncaminhamentoPOJO
 	public Encaminhamento getEncaminhamento()
 	{
 		encaminhamento = new Encaminhamento(this.id == null ? null : this.id.toString(), stakeholder != null ? stakeholder.getStakeholder() : null,
-				encaminhamentoAnterior == null ? null : encaminhamentoAnterior.getEncaminhamento(), data, tempoGasto, anexos, status);
+				encaminhamentoAnterior == null ? null : encaminhamentoAnterior.getEncaminhamento(), data, tempoGasto, status, descricao);
 		return encaminhamento;
 	}
 	
@@ -154,16 +153,6 @@ public class EncaminhamentoPOJO
 		this.tempoGasto = tempoGasto;
 	}
 	
-	public List<String> getAnexos()
-	{
-		return anexos;
-	}
-	
-	public void setAnexos(List<String> anexos)
-	{
-		this.anexos = anexos;
-	}
-	
 	public StatusRequisito getStatus()
 	{
 		return status;
@@ -172,6 +161,16 @@ public class EncaminhamentoPOJO
 	public void setStatus(StatusRequisito status)
 	{
 		this.status = status;
+	}
+
+	public String getDescricao()
+	{
+		return descricao;
+	}
+
+	public void setDescricao(String descricao)
+	{
+		this.descricao = descricao;
 	}
 	
 }

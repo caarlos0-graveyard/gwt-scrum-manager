@@ -41,16 +41,11 @@ public class TesteDaoRequisito
 		e.setStatus(StatusRequisito.AGUARDANDO);
 		e.setTempoGasto(0);
 		
-		List<String> anexos = new ArrayList<String>();
-		anexos.add("rushahaha");
-		e.setAnexos(anexos);
-		
 		List<Encaminhamento> encs = new ArrayList<Encaminhamento>();
 		encs.add(e);
 		
 		Requisito r = new Requisito();
 		
-		r.setAnexos(anexos);
 		r.setDataCadastro(new Date());
 		r.setEncaminhamentos(encs);
 		r.setPrioridade(PrioridadeRequisito.ALTA);
