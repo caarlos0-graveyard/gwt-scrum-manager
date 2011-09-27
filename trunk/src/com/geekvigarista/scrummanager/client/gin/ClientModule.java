@@ -15,6 +15,8 @@ import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomeView;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainView;
+import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoPresenter;
+import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoView;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
 
@@ -41,6 +43,8 @@ public class ClientModule extends AbstractPresenterModule
 					AddProjetoPresenter.AddProjetoProxy.class);
 			bindPresenter(AddRequisitoPresenter.class, AddRequisitoPresenter.AddRequisitoView.class, AddRequisitoView.class,
 					AddRequisitoPresenter.AddRequisitoProxy.class);
+			bindPresenter(VisualizarRequisitoPresenter.class, VisualizarRequisitoPresenter.VisReqView.class, VisualizarRequisitoView.class,
+					VisualizarRequisitoPresenter.VisReqProxy.class);
 		}
 	}
 }

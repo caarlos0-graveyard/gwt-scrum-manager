@@ -1,0 +1,50 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
+		field="msg"></ui:with>
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel ui:field="conteudo">
+		<g:Label text="Titulo" ui:field="titulo" styleName="titulo1" />
+		<g:Label text="Prioridade" ui:field="prioridade" styleName="titulo2" />
+		<g:Grid>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{msg.dataCadastro}" />
+				</g:customCell>
+				<g:customCell>
+					<g:DateLabel ui:field="dataCadastro" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{msg.tempoEstimado}" />
+				</g:customCell>
+				<g:customCell>
+					<g:Label ui:field="tempoEstimado" />
+				</g:customCell>
+				<g:customCell>
+					<g:Label text="{msg.tempoGasto}" />
+				</g:customCell>
+				<g:customCell>
+					<g:Label ui:field="tempoGasto" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{msg.descricao}" />
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+		<g:Label text="" ui:field="descricao" />
+		<hr />
+		<g:Label text="{msg.encaminhar}" styleName="titulo2" />
+		<g:SimplePanel ui:field="encaminharPanel"></g:SimplePanel>
+
+		<hr />
+		<g:Label text="{msg.encaminhamentosAnteriores}" styleName="titulo2" />
+		<p1:CellTable ui:field="encaminhamentosAnteriores"/>
+	</g:HTMLPanel>
+</ui:UiBinder> 
