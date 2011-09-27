@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
+		field="msg"></ui:with>
+
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel ui:field="conteudo">
+		<g:Label text="{msg.efetuarlogin}" styleName="titulo1"></g:Label>
+		<hr />
+		<g:Grid>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{msg.usuario}" />
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="login" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="{msg.senha}" />
+				</g:customCell>
+				<g:customCell>
+					<g:PasswordTextBox ui:field="passwd" />
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label></g:Label>
+				</g:customCell>
+				<g:customCell>
+					<g:Button ui:field="btlogin" text="{msg.login}"></g:Button>
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+	</g:HTMLPanel>
+</ui:UiBinder> 

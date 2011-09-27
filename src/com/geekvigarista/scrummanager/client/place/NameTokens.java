@@ -11,6 +11,17 @@ public class NameTokens
 	public static final String addreq = "!addreq";
 	public static final String addenc = "!addenc";
 	public static final String visreq = "!req";
+	public static final String login = "!login";
+	
+	public static String getVisreq()
+	{
+		return visreq;
+	}
+	
+	public static String getLogin()
+	{
+		return login;
+	}
 	
 	public static String getHome()
 	{

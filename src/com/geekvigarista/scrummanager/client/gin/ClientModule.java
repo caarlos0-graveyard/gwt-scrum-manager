@@ -13,6 +13,8 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPres
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserView;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomeView;
+import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginViewImpl;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainView;
 import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoPresenter;
@@ -32,19 +34,24 @@ public class ClientModule extends AbstractPresenterModule
 		// constants
 		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.home);
 		
-		// presenters dos cadastros
-		{
-			bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
-			bindPresenter(MainPresenter.class, MainPresenter.MainView.class, MainView.class, MainPresenter.MainProxy.class);
-			bindPresenter(AddUserPresenter.class, AddUserPresenter.AddUserView.class, AddUserView.class, AddUserPresenter.AddUserProxy.class);
-			bindPresenter(AddStakeholderPresenter.class, AddStakeholderPresenter.AddStakeholderView.class, AddStakeholderView.class,
-					AddStakeholderPresenter.AddStakeholderProxy.class);
-			bindPresenter(AddProjetoPresenter.class, AddProjetoPresenter.AddProjetoView.class, AddProjetoView.class,
-					AddProjetoPresenter.AddProjetoProxy.class);
-			bindPresenter(AddRequisitoPresenter.class, AddRequisitoPresenter.AddRequisitoView.class, AddRequisitoView.class,
-					AddRequisitoPresenter.AddRequisitoProxy.class);
-			bindPresenter(VisualizarRequisitoPresenter.class, VisualizarRequisitoPresenter.VisReqView.class, VisualizarRequisitoView.class,
-					VisualizarRequisitoPresenter.VisReqProxy.class);
-		}
+		bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
+		
+		bindPresenter(MainPresenter.class, MainPresenter.MainView.class, MainView.class, MainPresenter.MainProxy.class);
+		
+		bindPresenter(AddUserPresenter.class, AddUserPresenter.AddUserView.class, AddUserView.class, AddUserPresenter.AddUserProxy.class);
+		
+		bindPresenter(AddStakeholderPresenter.class, AddStakeholderPresenter.AddStakeholderView.class, AddStakeholderView.class,
+				AddStakeholderPresenter.AddStakeholderProxy.class);
+		
+		bindPresenter(AddProjetoPresenter.class, AddProjetoPresenter.AddProjetoView.class, AddProjetoView.class,
+				AddProjetoPresenter.AddProjetoProxy.class);
+		
+		bindPresenter(AddRequisitoPresenter.class, AddRequisitoPresenter.AddRequisitoView.class, AddRequisitoView.class,
+				AddRequisitoPresenter.AddRequisitoProxy.class);
+		
+		bindPresenter(VisualizarRequisitoPresenter.class, VisualizarRequisitoPresenter.VisReqView.class, VisualizarRequisitoView.class,
+				VisualizarRequisitoPresenter.VisReqProxy.class);
+		
+		bindPresenter(LoginPresenter.class, LoginPresenter.LoginView.class, LoginViewImpl.class, LoginPresenter.LoginProxy.class);
 	}
 }
