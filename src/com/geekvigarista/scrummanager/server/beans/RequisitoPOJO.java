@@ -14,7 +14,6 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.PrePersist;
-import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("requisitos")
@@ -32,7 +31,6 @@ public class RequisitoPOJO
 	@Indexed(name = "encaminhamentos")
 	private List<EncaminhamentoPOJO> encaminhamentos;
 	private Date dataCadastro;
-	private List<String> anexos;
 	private int tempoTotal; // horas
 	
 	@Transient
@@ -65,7 +63,6 @@ public class RequisitoPOJO
 		}
 		
 		this.dataCadastro = requisito.getDataCadastro();
-		this.anexos = requisito.getAnexos();
 		this.tempoTotal = requisito.getTempoTotal();
 	}
 	
@@ -80,7 +77,7 @@ public class RequisitoPOJO
 			}
 		}
 		requisito = new Requisito((this.id == null) ? null : this.id.toString(), titulo,descricao, prioridade, tempoEstimado, (encaminhamentos == null) ? null
-				: encaminhamentos, dataCadastro, anexos, tempoTotal);
+				: encaminhamentos, dataCadastro, tempoTotal);
 		
 		return requisito;
 	}
@@ -168,16 +165,6 @@ public class RequisitoPOJO
 	public void setDataCadastro(Date dataCadastro)
 	{
 		this.dataCadastro = dataCadastro;
-	}
-	
-	public List<String> getAnexos()
-	{
-		return anexos;
-	}
-	
-	public void setAnexos(List<String> anexos)
-	{
-		this.anexos = anexos;
 	}
 	
 	public int getTempoTotal()

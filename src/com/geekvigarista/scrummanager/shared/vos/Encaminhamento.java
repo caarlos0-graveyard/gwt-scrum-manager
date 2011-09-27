@@ -2,7 +2,6 @@ package com.geekvigarista.scrummanager.shared.vos;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 
@@ -19,15 +18,16 @@ public class Encaminhamento implements Serializable
 	private Encaminhamento encaminhamentoAnterior;
 	private Date data;
 	private int tempoGasto; // em horas
-	private List<String> anexos;
 	private StatusRequisito status;
+	
+	private String descricao;
 	
 	public Encaminhamento()
 	{
 	}
 	
-	public Encaminhamento(String id, Stakeholder stakeholder, Encaminhamento encaminhamentoAnterior, Date data, int tempoGasto, List<String> anexos,
-			StatusRequisito status)
+	public Encaminhamento(String id, Stakeholder stakeholder, Encaminhamento encaminhamentoAnterior, Date data, int tempoGasto,
+			StatusRequisito status,String descricao)
 	{
 		super();
 		if(id != null)
@@ -44,8 +44,8 @@ public class Encaminhamento implements Serializable
 		}
 		this.data = data;
 		this.tempoGasto = tempoGasto;
-		this.anexos = anexos;
 		this.status = status;
+		this.descricao = descricao;
 	}
 	
 	public String getId()
@@ -98,16 +98,6 @@ public class Encaminhamento implements Serializable
 		this.tempoGasto = tempoGasto;
 	}
 	
-	public List<String> getAnexos()
-	{
-		return anexos;
-	}
-	
-	public void setAnexos(List<String> anexos)
-	{
-		this.anexos = anexos;
-	}
-	
 	public StatusRequisito getStatus()
 	{
 		return status;
@@ -117,4 +107,16 @@ public class Encaminhamento implements Serializable
 	{
 		this.status = status;
 	}
+
+	public String getDescricao()
+	{
+		return descricao;
+	}
+
+	public void setDescricao(String descricao)
+	{
+		this.descricao = descricao;
+	}
+	
+	
 }

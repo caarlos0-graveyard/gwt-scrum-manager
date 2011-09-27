@@ -1,8 +1,6 @@
 package com.geekvigarista.scrummanager.persistencia.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
@@ -30,9 +28,6 @@ public class TesteDaoEncaminhamento
 		
 		Encaminhamento e = new Encaminhamento();
 		
-		List<String> anexos = new ArrayList<String>();
-		anexos.add("C:/porn");
-		e.setAnexos(anexos);
 		e.setData(new Date());
 		e.setStakeholder(st);
 		e.setStatus(StatusRequisito.AGUARDANDO);

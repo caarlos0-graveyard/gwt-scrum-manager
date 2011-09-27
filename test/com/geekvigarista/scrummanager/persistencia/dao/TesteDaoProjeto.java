@@ -46,14 +46,10 @@ public class TesteDaoProjeto
 	{
 		Projeto p = dao.buscar("4e80ff3b349291d0536851ca");
 		Requisito r = new Requisito();
-		List<String> anexos = new ArrayList<String>();
-		anexos.add("dogola");
-		r.setAnexos(anexos);
 		r.setDataCadastro(new Date());
 		r.setDescricao("Dogola descricao");
 		
 		Encaminhamento e = new Encaminhamento();
-		e.setAnexos(anexos);
 		e.setData(new Date());
 		e.setEncaminhamentoAnterior(null);
 		e.setStatus(StatusRequisito.AGUARDANDO);

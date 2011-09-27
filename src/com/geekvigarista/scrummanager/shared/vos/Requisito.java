@@ -9,9 +9,6 @@ import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 public class Requisito implements Serializable
 {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String titulo;
@@ -20,7 +17,6 @@ public class Requisito implements Serializable
 	private int tempoEstimado; // horas
 	private List<Encaminhamento> encaminhamentos;
 	private Date dataCadastro;
-	private List<String> anexos;
 	private int tempoTotal; // horas
 	
 	public Requisito()
@@ -30,7 +26,7 @@ public class Requisito implements Serializable
 	}
 	
 	public Requisito(String id, String titulo, String descricao, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
-			Date dataCadastro, List<String> anexos, int tempoTotal)
+			Date dataCadastro, int tempoTotal)
 	{
 		super();
 		if(id != null)
@@ -46,7 +42,6 @@ public class Requisito implements Serializable
 			this.encaminhamentos = encaminhamentos;
 		}
 		this.dataCadastro = dataCadastro;
-		this.anexos = anexos;
 		this.tempoTotal = tempoTotal;
 	}
 	
@@ -126,16 +121,6 @@ public class Requisito implements Serializable
 	public void setDataCadastro(Date dataCadastro)
 	{
 		this.dataCadastro = dataCadastro;
-	}
-	
-	public List<String> getAnexos()
-	{
-		return anexos;
-	}
-	
-	public void setAnexos(List<String> anexos)
-	{
-		this.anexos = anexos;
 	}
 	
 	public int getTempoTotal()
