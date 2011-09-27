@@ -5,6 +5,7 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequis
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoPresenter;
 import com.google.gwt.event.shared.EventBus;
@@ -38,4 +39,6 @@ public interface ClientGinjector extends Ginjector
 	AsyncProvider<AddRequisitoPresenter> getAddRequisitoPresenter();
 	
 	AsyncProvider<VisualizarRequisitoPresenter> getVisualizarRequisitoPresenter();
+	
+	AsyncProvider<LoginPresenter> getLoginPresenter();
 }

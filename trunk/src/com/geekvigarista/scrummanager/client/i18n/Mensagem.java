@@ -110,4 +110,6 @@ public interface Mensagem extends Constants
 
 	public String status();
 	
+	public String efetuarlogin();
+	
 }
