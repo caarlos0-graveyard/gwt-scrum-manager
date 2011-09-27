@@ -32,6 +32,14 @@ public interface Mensagem extends Constants
 	
 	public String menos();
 	
+	public String dataCadastro();
+	
+	public String descricao();
+	
+	public String tempoGasto();
+	
+	public String data();
+	
 	/*
 	 * Home
 	 */
@@ -44,6 +52,10 @@ public interface Mensagem extends Constants
 	public String addProduto();
 	
 	public String addRequisito();
+	
+	public String encaminhamentosAnteriores();
+	
+	public String encaminhar();
 	
 	/*
 	 * add USer
@@ -91,9 +103,11 @@ public interface Mensagem extends Constants
 	public String tempoEstimado();
 	
 	public String horas();
-
+	
 	public String anexos();
 	
 	public String semRequisitos();
+
+	public String status();
 	
 }
