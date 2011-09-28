@@ -1,9 +1,12 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.google.gwt.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -16,6 +19,8 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 {
 	public interface HomeView extends View
 	{
+		void setProjetos(List<Projeto> projetos);
+		
 	}
 	
 	@ProxyCodeSplit
