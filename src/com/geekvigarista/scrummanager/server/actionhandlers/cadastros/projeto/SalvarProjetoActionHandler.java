@@ -1,8 +1,12 @@
 package com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.geekvigarista.scrummanager.server.guice.DAOModule;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProjeto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProjeto;
+import com.geekvigarista.scrummanager.server.validacoes.RetornoValidacao;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoResult;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
@@ -22,8 +26,39 @@ public class SalvarProjetoActionHandler implements ActionHandler<SalvarProjetoAc
 	@Override
 	public SalvarProjetoResult execute(SalvarProjetoAction arg0, ExecutionContext arg1) throws ActionException
 	{
-		Projeto p = dao.salvar(arg0.getProjeto());
+		Projeto p = arg0.getProjeto();
+		RetornoValidacao rv = valida(p);
+		if(!rv.isOk())
+		{
+			return new SalvarProjetoResult(rv.getErros());
+		}
+		dao.salvar(p);
 		return new SalvarProjetoResult(p);
+	}
+	
+	public RetornoValidacao valida(Projeto p)
+	{
+		List<String> erros = new ArrayList<String>();
+		if(p == null)
+		{
+			erros.add("Tu conseguiu dar nullpointer no projeto. Vai pro mundo cara !");
+		}else
+		{
+			if(p.getDataFim() == null)
+			{
+				erros.add("Projetos com tempo para terminar infinitos não são permitidos.");
+			}
+			if(p.getDataInicio() == null)
+			{
+				erros.add("Eu acho, que o projeto deve iniciar algum dia. Larga de ser vagabundo e coloca a dataInicio!");
+			}
+			if(p.getNome() == null || p.getNome().trim().isEmpty())
+			{
+				erros.add("Projetos sem nome não sao permitidos."); 
+			}
+		}
+		RetornoValidacao rv = (erros.isEmpty())?new RetornoValidacao(true):new RetornoValidacao(false, erros);
+		return rv;
 	}
 	
 	@Override
