@@ -21,6 +21,8 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	MenuItem stakeholder;
 	@UiField
 	MenuItem sair;
+	@UiField
+	MenuItem inicio;
 	
 	Widget widget;
 	
@@ -61,5 +63,11 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	public MenuItem produto()
 	{
 		return produto;
+	}
+	
+	@Override
+	public MenuItem inicio()
+	{
+		return inicio;
 	}
 }

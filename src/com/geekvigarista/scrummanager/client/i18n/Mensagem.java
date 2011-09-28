@@ -112,4 +112,13 @@ public interface Mensagem extends Constants
 	
 	public String efetuarlogin();
 	
+	public String detalhes();
+	
+	public String produto();
+	
+	public String novo();
+	
+	public String sair();
+	
+	public String inicio();
 }

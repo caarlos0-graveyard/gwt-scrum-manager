@@ -16,4 +16,9 @@ public class Parameters
 	 * id do usuario
 	 */
 	public static String userid = "userid";
+	
+	/**
+	 * id do requisito
+	 */
+	public static String reqid = "reqid";
 }
