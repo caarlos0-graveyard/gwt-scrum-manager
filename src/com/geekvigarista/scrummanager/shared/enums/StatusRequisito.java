@@ -3,11 +3,9 @@ package com.geekvigarista.scrummanager.shared.enums;
 public enum StatusRequisito
 {
 	AGUARDANDO("Aguardando"), 
-	EM_DESENVOLVIMENTO("Em desenvolvimento"), 
-	EM_TESTE("Em testes"), 
-	EM_ANALISE("Em análise"), 
-	CONCLUIDO("Concluído"), 
-	ATUALIZACAO("Em atualização");
+	DESENVOLVENDO("Em desenvolvimento"), 
+	TESTANDO("Em testes"), 
+	CONCLUIDO("Concluído");
 	
 	String desc = "";
 	
