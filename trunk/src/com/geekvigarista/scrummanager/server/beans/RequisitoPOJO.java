@@ -6,7 +6,10 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
+import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.code.morphia.annotations.Embedded;
@@ -86,9 +89,24 @@ public class RequisitoPOJO
 	void prePersist()
 	{	
 		/*
-		 * Requisito contem só campos embed, entao
-		 * nao precisa de pre-persist.
+		 * Crio o primeiro encaminhamento automagicamente.
 		 */
+		if(encaminhamentos == null || encaminhamentos.isEmpty())
+		{
+			List<EncaminhamentoPOJO> encs = new ArrayList<EncaminhamentoPOJO>();
+			
+			IDaoEncaminhamento dao = new DaoEncaminhamento();
+			Encaminhamento e = new Encaminhamento();
+			e.setData(new Date());
+			e.setDescricao("Encaminhamento aguardando padrão");
+			e.setEncaminhamentoAnterior(null);
+			//FIXME ver que usuario padrao usar...
+//			e.setStakeholder(requisito.)
+			e.setStatus(StatusRequisito.AGUARDANDO);
+			e.setTempoGasto(01);
+			encs.add(new EncaminhamentoPOJO(dao.salvar(e)));
+			setEncaminhamentos(encs);
+		}
 	}
 	
 	public ObjectId getId()
