@@ -26,8 +26,7 @@ public class LoadUsuarioActionHandler implements ActionHandler<BuscarUsuarioById
 	@Override
 	public Class<BuscarUsuarioByIdAction> getActionType()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return BuscarUsuarioByIdAction.class;
 	}
 	
 	@Override

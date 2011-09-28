@@ -26,8 +26,7 @@ public class LoadProjetoActionHandler implements ActionHandler<LoadProjetoAction
 	@Override
 	public Class<LoadProjetoAction> getActionType()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return LoadProjetoAction.class;
 	}
 	
 	@Override

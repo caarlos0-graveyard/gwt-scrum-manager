@@ -2,23 +2,37 @@ package com.geekvigarista.scrummanager.server.guice;
 
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.encaminhamento.ExcluirEncaminhamentoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.encaminhamento.SalvarEncaminhamentoActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.LoadProdutoActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.SalvarProdutoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.LoadProjetoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.SalvarProjetoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.requisito.ExcluirRequisitoActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.requisito.LoadRequisitoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.requisito.SalvarRequisitoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.stakeholder.BuscarStakeholderActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.stakeholder.ExcluirStakeholderActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.stakeholder.LoadStakeholderActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.stakeholder.SalvarStakeholderActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.BuscarUsuarioActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.ExcluirUsuarioActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.LoadUsuarioActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.SalvarUsuarioActionHandler;
 import com.geekvigarista.scrummanager.shared.commands.encaminhamento.excluir.ExcluirEncaminhamentoAction;
 import com.geekvigarista.scrummanager.shared.commands.encaminhamento.salvar.SalvarEncaminhamentoAction;
+import com.geekvigarista.scrummanager.shared.commands.produto.load.LoadProdutoAction;
+import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdutoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
+import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.excluir.ExcluirRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderAction;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.excluir.ExcluirStakeholderAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.salvar.SalvarStakeholderAction;
+import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioAction;
+import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioByIdAction;
+import com.geekvigarista.scrummanager.shared.commands.usuario.excluir.ExcluirUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
@@ -41,6 +55,7 @@ public class ServerModule extends HandlerModule
 		configureUsuario();
 		configureEncaminhamento();
 		configureRequisito();
+		configureProduto();
 	}
 	
 	/*
@@ -52,6 +67,9 @@ public class ServerModule extends HandlerModule
 	private void configureUsuario()
 	{
 		bindHandler(SalvarUsuarioAction.class, SalvarUsuarioActionHandler.class);
+		bindHandler(BuscarUsuarioByIdAction.class, LoadUsuarioActionHandler.class);
+		bindHandler(ExcluirUsuarioAction.class, ExcluirUsuarioActionHandler.class);
+		bindHandler(BuscarUsuarioAction.class, BuscarUsuarioActionHandler.class);	
 	}
 	
 	private void configureProjeto()
@@ -60,11 +78,18 @@ public class ServerModule extends HandlerModule
 		bindHandler(LoadProjetoAction.class, LoadProjetoActionHandler.class);
 	}
 	
+	private void configureProduto()
+	{
+		bindHandler(SalvarProdutoAction.class, SalvarProdutoActionHandler.class);
+		bindHandler(LoadProdutoAction.class, LoadProdutoActionHandler.class);
+	}
+	
 	private void configureStakeholder()
 	{
 		bindHandler(SalvarStakeholderAction.class, SalvarStakeholderActionHandler.class);
 		bindHandler(ExcluirStakeholderAction.class, ExcluirStakeholderActionHandler.class);
 		bindHandler(BuscarStakeholderAction.class, BuscarStakeholderActionHandler.class);
+		bindHandler(BuscarStakeholderByIdAction.class, LoadStakeholderActionHandler.class);
 	}
 	
 	private void configureEncaminhamento()
@@ -77,6 +102,7 @@ public class ServerModule extends HandlerModule
 	{
 		bindHandler(SalvarRequisitoAction.class, SalvarRequisitoActionHandler.class);
 		bindHandler(ExcluirRequisitoAction.class, ExcluirRequisitoActionHandler.class);
+		bindHandler(BuscarRequisitoByIdAction.class, LoadRequisitoActionHandler.class);
 	}
 	
 }

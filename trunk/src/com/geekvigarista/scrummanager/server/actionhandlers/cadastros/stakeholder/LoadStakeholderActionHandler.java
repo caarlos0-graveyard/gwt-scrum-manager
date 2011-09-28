@@ -26,8 +26,7 @@ public class LoadStakeholderActionHandler implements ActionHandler<BuscarStakeho
 	@Override
 	public Class<BuscarStakeholderByIdAction> getActionType()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return BuscarStakeholderByIdAction.class;
 	}
 	
 	@Override

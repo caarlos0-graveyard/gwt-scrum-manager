@@ -1,11 +1,13 @@
 package com.geekvigarista.scrummanager.server.guice;
 
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProduto;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProjeto;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProduto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProjeto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
@@ -23,6 +25,7 @@ public class DAOModule extends AbstractModule
 		bind(IDaoEncaminhamento.class).to(DaoEncaminhamento.class);
 		bind(IDaoRequisito.class).to(DaoRequisito.class);
 		bind(IDaoProjeto.class).to(DaoProjeto.class);
+		bind(IDaoProduto.class).to(DaoProduto.class);
 		
 	}
 	

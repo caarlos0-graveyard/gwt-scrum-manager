@@ -10,6 +10,7 @@ import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoUsuario;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProjeto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoUsuario;
+import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
@@ -108,9 +109,9 @@ public class TesteDaoProjeto
 	{
 		IDaoUsuario daoU = new DaoUsuario();
 		Usuario u = daoU.buscar("4e72960f7f3d9c3b7fe27673");
-		for(Projeto p : dao.buscarByUsuario(u))
+		for(ProjetoStakeholderDTO p : dao.buscarByUsuario(u))
 		{
-			System.out.println(p.getNome());
+			System.out.println(p.getProjeto().getNome());
 		}
 	}
 	

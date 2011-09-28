@@ -1,9 +1,7 @@
 package com.geekvigarista.scrummanager.server.persistencia.dao;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.bson.types.ObjectId;
 
@@ -12,6 +10,7 @@ import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProjeto;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
+import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
@@ -86,7 +85,7 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 	 * Busca por todos os projetos que tenham o usuario parametro
 	 * atuando como stakeholder.
 	 */
-	public List<Projeto> buscarByUsuario(Usuario usuario)
+	public List<ProjetoStakeholderDTO> buscarByUsuario(Usuario usuario)
 	{
 		//TODO injetar isso ?
 		IDaoStakeholder daoStake = new DaoStakeholder();
@@ -96,7 +95,7 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 			return null;
 		}
 		
-		Set<Projeto> projetosRetorno = new LinkedHashSet<Projeto>();
+		List<ProjetoStakeholderDTO> projetosRetorno = new ArrayList<ProjetoStakeholderDTO>();
 		List<StakeholderPOJO> stakesPojo = new ArrayList<StakeholderPOJO>();
 		for(Stakeholder s : stakeholders)
 		{
@@ -114,13 +113,13 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 				//FIXME este codigo fico uma bosta, refatorar algum dia...
 				if(projetosRetorno.isEmpty())
 				{
-					projetosRetorno.add(p);
+					projetosRetorno.add(new ProjetoStakeholderDTO(p, stakePojo.getStakeholder()));
 				}else
 				{
 					boolean podeAdicionar = true;
-					for(Projeto projetoAdicionado : projetosRetorno)
+					for(ProjetoStakeholderDTO projetoAdicionado : projetosRetorno)
 					{
-						if(projetoAdicionado.getId().equals(p.getId()))
+						if(projetoAdicionado.getProjeto().getId().equals(p.getId()))
 						{
 							podeAdicionar = false;
 							break;
@@ -128,13 +127,13 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 					}
 					if(podeAdicionar)
 					{
-						projetosRetorno.add(p);
+						projetosRetorno.add(new ProjetoStakeholderDTO(p, stakePojo.getStakeholder()));
 					}
 				}
 			}
 		}
 		
-		return new ArrayList<Projeto>(projetosRetorno);
+		return projetosRetorno;
 		
 	}
 	
