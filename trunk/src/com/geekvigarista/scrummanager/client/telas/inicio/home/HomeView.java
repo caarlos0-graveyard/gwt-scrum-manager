@@ -56,4 +56,16 @@ public class HomeView extends ViewImpl implements HomePresenter.HomeView
 	{
 		factory.setData(projetos);
 	}
+	
+	@Override
+	public HorizontalPanel panelScrum()
+	{
+		return panelScrum;
+	}
+
+	@Override
+	public ProjetoCellFactory factory()
+	{
+		return factory;
+	}
 }

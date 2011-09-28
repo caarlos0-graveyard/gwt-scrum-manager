@@ -27,6 +27,8 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 		
 		MenuItem projeto();
 		
+		MenuItem inicio();
+		
 		MenuItem produto();
 	}
 	
@@ -82,6 +84,15 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 			public void execute()
 			{
 				goToPlace(NameTokens.addstak);
+			}
+		});
+		
+		getView().inicio().setCommand(new Command()
+		{
+			@Override
+			public void execute()
+			{
+				goToPlace(NameTokens.home);
 			}
 		});
 	}
