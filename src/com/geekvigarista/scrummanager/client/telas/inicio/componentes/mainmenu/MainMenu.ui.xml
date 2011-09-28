@@ -6,14 +6,18 @@
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
 	<g:HTMLPanel>
-		Cadastrar: 
-		<g:InlineHyperlink targetHistoryToken="{token.getAdduser}"
-			text="{msg.addUser}"></g:InlineHyperlink> | 
-		<g:InlineHyperlink targetHistoryToken="{token.getAddstak}"
-			text="{msg.addStakeholder}"></g:InlineHyperlink> |
-		<g:InlineHyperlink targetHistoryToken="{token.getAddproj}"
-			text="{msg.addProjeto}"></g:InlineHyperlink> |
-			<g:InlineHyperlink targetHistoryToken="{token.getAddreq}"
-			text="{msg.addRequisito}"></g:InlineHyperlink>
+		<g:MenuBar>
+			<g:MenuItem text="Novo">
+				<g:MenuBar vertical="true">
+					<g:MenuItem text="Projeto" ui:field="projeto"/>
+					<g:MenuItem text="Produto" ui:field="produto"/>
+					<g:MenuItemSeparator/>
+					<g:MenuItem text="Usuario" ui:field="usuario"/>
+					<g:MenuItem text="Stakeholder" ui:field="stakeholder"/>
+				</g:MenuBar>
+			</g:MenuItem>
+			<g:MenuItemSeparator/>
+			<g:MenuItem text="Sair" ui:field="sair"/>
+		</g:MenuBar>
 	</g:HTMLPanel>
 </ui:UiBinder> 

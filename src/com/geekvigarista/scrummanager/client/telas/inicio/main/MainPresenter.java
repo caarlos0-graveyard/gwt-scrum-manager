@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.main;
 
+import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter.MainProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter.MainView;
 import com.google.gwt.event.shared.EventBus;
@@ -21,6 +22,9 @@ public class MainPresenter extends Presenter<MainView, MainProxy>
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_SetMenuContent = new Type<RevealContentHandler<?>>();
+	
 	@ProxyStandard
 	public interface MainProxy extends Proxy<MainPresenter>
 	{
@@ -30,15 +34,25 @@ public class MainPresenter extends Presenter<MainView, MainProxy>
 	{
 	}
 	
+	private final MainMenuPresenter mainmenu;
+	
 	@Inject
-	public MainPresenter(final EventBus eventBus, final MainView view, final MainProxy proxy)//, ClientPlaceManager placeManager, DispatchAsync dispatcher)
+	public MainPresenter(final EventBus eventBus, final MainView view, final MainProxy proxy, final MainMenuPresenter mainmenu)//, ClientPlaceManager placeManager, DispatchAsync dispatcher)
 	{
 		super(eventBus, view, proxy);
+		this.mainmenu = mainmenu;
 	}
 	
 	@Override
 	protected void revealInParent()
 	{
 		RevealRootContentEvent.fire(this, this);
+	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		setInSlot(TYPE_SetMenuContent, mainmenu);
 	}
 }

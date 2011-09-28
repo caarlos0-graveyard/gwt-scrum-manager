@@ -18,6 +18,9 @@ public class MainView extends ViewImpl implements MainPresenter.MainView
 	public final Widget widget;
 	
 	@UiField
+	FlowPanel menuContentPanel;
+	
+	@UiField
 	FlowPanel mainContentPanel;
 	
 	public MainView()
@@ -38,6 +41,10 @@ public class MainView extends ViewImpl implements MainPresenter.MainView
 		{
 			setMainContent(content);
 		}
+		else if(slot == MainPresenter.TYPE_SetMenuContent)
+		{
+			setMenuContent(content);
+		}
 		else
 		{
 			super.setInSlot(slot, content);
@@ -51,6 +58,16 @@ public class MainView extends ViewImpl implements MainPresenter.MainView
 		if(content != null)
 		{
 			mainContentPanel.add(content);
+		}
+	}
+	
+	private void setMenuContent(Widget content)
+	{
+		menuContentPanel.clear();
+		
+		if(content != null)
+		{
+			menuContentPanel.add(content);
 		}
 	}
 	
