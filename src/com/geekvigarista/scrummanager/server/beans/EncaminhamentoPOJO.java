@@ -5,10 +5,11 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoStakeholder;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
-import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
@@ -24,7 +25,7 @@ public class EncaminhamentoPOJO
 	@Id
 	ObjectId id;
 	
-	@Embedded
+	@Reference
 	@Indexed(name = "stakeholder")
 	private StakeholderPOJO stakeholder; // o stakeholder que recebeu o encaminhamento;
 	
@@ -100,6 +101,11 @@ public class EncaminhamentoPOJO
 		{
 			IDaoEncaminhamento dao = new DaoEncaminhamento();
 			setEncaminhamentoAnterior(new EncaminhamentoPOJO(dao.salvar(encaminhamentoAnterior.getEncaminhamento())));
+		}
+		if(stakeholder.getId() == null)
+		{
+			IDaoStakeholder daoStake = new DaoStakeholder();
+			setStakeholder(new StakeholderPOJO(daoStake.salvar(stakeholder.getStakeholder())));
 		}
 	}
 	

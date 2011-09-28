@@ -26,8 +26,7 @@ public class LoadRequisitoActionHandler implements ActionHandler<BuscarRequisito
 	@Override
 	public Class<BuscarRequisitoByIdAction> getActionType()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return BuscarRequisitoByIdAction.class;
 	}
 	
 	@Override
