@@ -15,7 +15,7 @@ public class SalvarProdutoResult implements Result {
 	}
 	
 	public SalvarProdutoResult(List<String> erros) {
-		super();
+		super(); 
 		this.erros = erros;
 	}
 	
