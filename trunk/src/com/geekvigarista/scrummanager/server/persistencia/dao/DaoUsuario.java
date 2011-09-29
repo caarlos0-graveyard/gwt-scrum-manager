@@ -122,6 +122,17 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 	}
 	
 	/**
+	 * Busca um usuario por login e senha.
+	 * Usado no login.
+	 */
+	public Usuario login(String login, String senha)
+	{
+		Query<UsuarioPOJO> query = createQuery().filter("login", login)
+												.filter("senha", senha);
+		return (this.findOne(query)).getUsuario();
+	}
+	
+	/**
 	 * 
 	 * Converte um QueryResult para uma lista de Usuario. Caso venha um queryResult vazio, retorna um array vazio de Usuario.
 	 * 

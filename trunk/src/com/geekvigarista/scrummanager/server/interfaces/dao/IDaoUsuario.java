@@ -17,4 +17,6 @@ public interface IDaoUsuario extends IDao<Usuario,UsuarioPOJO>
 	List<Usuario> buscarLike(String parametro);
 	
 	List<Usuario> buscaByLogin(String login, int limite);
+	
+	Usuario login(String login, String senha);
 }
