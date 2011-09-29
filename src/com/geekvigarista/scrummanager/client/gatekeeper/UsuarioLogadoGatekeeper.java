@@ -2,7 +2,10 @@ package com.geekvigarista.scrummanager.client.gatekeeper;
 
 import javax.inject.Inject;
 
+import com.geekvigarista.scrummanager.client.events.LoginAuthenticateEvent;
+import com.geekvigarista.scrummanager.client.events.LoginAuthenticatedEventHandler;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Singleton;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
@@ -11,19 +14,29 @@ import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 public class UsuarioLogadoGatekeeper implements Gatekeeper
 {
 	
-	private final Usuario usuario;
+	private Usuario usuario;
+	private final EventBus eventBus;
 	
 	@Inject
-	public UsuarioLogadoGatekeeper(final Usuario usuario)
+	public UsuarioLogadoGatekeeper(final EventBus eventBus)
 	{
 		super();
-		this.usuario = usuario;
+		this.eventBus = eventBus;
+		
+		this.eventBus.addHandler(LoginAuthenticateEvent.getType(), new LoginAuthenticatedEventHandler()
+		{
+			
+			@Override
+			public void onLogin(LoginAuthenticateEvent event)
+			{
+				usuario = event.getUsuario();
+			}
+		});
 	}
 	
 	@Override
 	public boolean canReveal()
 	{
-		System.out.println(usuario != null ? "nome" : null);
 		if(usuario == null || usuario.getId() == null)
 		{
 			Window.alert("você precisa logar primeiro, seu safadinho!");

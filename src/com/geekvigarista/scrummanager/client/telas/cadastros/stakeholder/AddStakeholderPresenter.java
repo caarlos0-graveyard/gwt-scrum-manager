@@ -1,19 +1,23 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-import com.geekvigarista.scrummanager.client.gatekeeper.AdminLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
-import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
-import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderByIdAction;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderObjResult;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.salvar.SalvarStakeholderAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.salvar.SalvarStakeholderResult;
+import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioAction;
+import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioListResult;
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
-import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -34,7 +38,7 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addstak)
-	@UseGatekeeper(AdminLogadoGatekeeper.class)
+	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
 	public interface AddStakeholderProxy extends ProxyPlace<AddStakeholderPresenter>
 	{
 	}
@@ -42,8 +46,6 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	public interface AddStakeholderView extends View
 	{
 		ListBox getUsuarios();
-		
-		ListBox getProjetos();
 		
 		ListBox getPapeis();
 		
@@ -56,7 +58,7 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	
 	private final DispatchAsync dispatcher;
 	private Stakeholder stakeholder;
-	private Projeto projeto;
+	private List<Usuario> usuariosSistema;
 	
 	@Inject
 	public AddStakeholderPresenter(final EventBus eventBus, final AddStakeholderView view, final AddStakeholderProxy proxy,
@@ -64,11 +66,46 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
-		
+	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		loadPapeis();
+		loadUsuarios();
+	}
+	
+	private void loadPapeis()
+	{
+		if(getView().getPapeis().getItemCount() > 0)
+			return;
 		for(PapelStakeholder p : PapelStakeholder.values())
 		{
-			getView().getPapeis().addItem(p.desc(), p.name());
+			getView().getPapeis().addItem(p.desc());
 		}
+	}
+	
+	private void loadUsuarios()
+	{
+		if(usuariosSistema != null)
+		{
+			return;
+		}
+		
+		dispatcher.execute(new BuscarUsuarioAction(""), new AbstractCallback<BuscarUsuarioListResult>()
+		{
+			@Override
+			public void onSuccess(BuscarUsuarioListResult result)
+			{
+				usuariosSistema = result.getResponse();
+				for(Usuario usuario : usuariosSistema)
+				{
+					getView().getUsuarios().addItem(usuario.getNome());
+					populaCadastro();
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -89,14 +126,17 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	{
 		Stakeholder stakeholder = new Stakeholder();
 		stakeholder.setPapel(PapelStakeholder.values()[getView().getPapeis().getSelectedIndex()]);
+		stakeholder.setUsuario(usuariosSistema.get(getView().getUsuarios().getSelectedIndex()));
+		stakeholder.setNome(getView().getNome().getValue());
+		if(getStakeholder() != null && getStakeholder().getId() != null)
+			stakeholder.setId(getStakeholder().getId());
 		
-		// TODO conversao
 		dispatcher.execute(new SalvarStakeholderAction(stakeholder), new AbstractCallback<SalvarStakeholderResult>()
 		{
 			@Override
 			public void onSuccess(SalvarStakeholderResult result)
 			{
-				// TODO Auto-generated method stub
+				setStakeholder(result.getResponse());
 			}
 		});
 	}
@@ -111,7 +151,6 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	public void prepareFromRequest(PlaceRequest request)
 	{
 		super.prepareFromRequest(request);
-		doLoadProjetoFromRequest(request.getParameter(Parameters.projid, null));
 		doLoadStakeholderFromRequest(request.getParameter(Parameters.stakid, null));
 	}
 	
@@ -120,21 +159,12 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		if(stakid == null)
 			return; //FIXME tratar essa pica aqui
 			
-		// TODO loadStakeholder action e cia.
-	}
-	
-	public void doLoadProjetoFromRequest(String projid)
-	{
-		if(projid == null)
-			return; //FIXME tratar essa pica aqui
-			
-		dispatcher.execute(new LoadProjetoAction(projid), new AbstractCallback<LoadProjetoResult>()
+		dispatcher.execute(new BuscarStakeholderByIdAction(stakid), new AbstractCallback<BuscarStakeholderObjResult>()
 		{
 			@Override
-			public void onSuccess(LoadProjetoResult result)
+			public void onSuccess(BuscarStakeholderObjResult result)
 			{
-				setProjeto(result.getProjeto());
-				doNovo();
+				setStakeholder(result.getResponse());
 			}
 		});
 	}
@@ -154,13 +184,12 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		this.stakeholder = stakeholder;
 	}
 	
-	public Projeto getProjeto()
+	public void populaCadastro()
 	{
-		return projeto;
-	}
-	
-	public void setProjeto(Projeto projeto)
-	{
-		this.projeto = projeto;
+		if(stakeholder == null)
+			return;
+		getView().getNome().setValue(stakeholder.getNome());
+		getView().getPapeis().setSelectedIndex(stakeholder.getPapel().ordinal());
+		getView().getUsuarios().setSelectedIndex(usuariosSistema.indexOf(stakeholder.getUsuario()));
 	}
 }
