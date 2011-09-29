@@ -2,6 +2,7 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder;
 
 import javax.inject.Inject;
 
+import com.geekvigarista.scrummanager.client.gatekeeper.AdminLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
@@ -24,6 +25,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -32,6 +34,7 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addstak)
+	@UseGatekeeper(AdminLogadoGatekeeper.class)
 	public interface AddStakeholderProxy extends ProxyPlace<AddStakeholderPresenter>
 	{
 	}

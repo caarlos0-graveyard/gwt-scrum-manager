@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.client.gin;
 
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
@@ -44,4 +45,6 @@ public interface ClientGinjector extends Ginjector
 	AsyncProvider<LoginPresenter> getLoginPresenter();
 	
 	AsyncProvider<MainMenuPresenter> getMainMenuPresenter();
+	
+	UsuarioLogadoGatekeeper getUsuarioLogadoGatekeeper();
 }

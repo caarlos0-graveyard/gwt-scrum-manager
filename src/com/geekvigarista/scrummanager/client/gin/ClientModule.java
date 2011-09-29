@@ -34,7 +34,7 @@ public class ClientModule extends AbstractPresenterModule
 		install(new DefaultModule(ClientPlaceManager.class));
 		
 		// constants
-		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.home);
+		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.login);
 		
 		bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
 		
