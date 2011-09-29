@@ -26,6 +26,8 @@ public class UsuarioPOJO
 	private String senha;
 	private String nome;
 	
+	private boolean administrador;
+	
 	@Transient
 	private String confirmacaoSenha;
 	
@@ -55,6 +57,7 @@ public class UsuarioPOJO
 		this.login = usuario.getLogin();
 		this.senha = usuario.getSenha();
 		this.nome = usuario.getNome();
+		this.administrador = usuario.isAdministrador();
 	}
 	
 	/**
@@ -67,12 +70,12 @@ public class UsuarioPOJO
 		// se o usuarioPojo tem id entao retorna um usuario com id
 		if(this.id != null)
 		{
-			usuario = new Usuario(this.id.toString(), this.login, this.senha, this.nome);
+			usuario = new Usuario(this.id.toString(), this.login, this.senha, this.nome, this.administrador);
 		}
 		else
 		{
 			//se o usuarioPojo NAO tem id, retorna um sem id
-			usuario = new Usuario(this.login, this.senha, this.nome);
+			usuario = new Usuario(this.login, this.senha, this.nome,this.administrador);
 		}
 		return usuario;
 	}
@@ -126,4 +129,15 @@ public class UsuarioPOJO
 	{
 		this.nome = nome;
 	}
+
+	public boolean isAdministrador()
+	{
+		return administrador;
+	}
+
+	public void setAdministrador(boolean administrador)
+	{
+		this.administrador = administrador;
+	}
+	
 }
