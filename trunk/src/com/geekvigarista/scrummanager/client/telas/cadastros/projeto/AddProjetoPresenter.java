@@ -7,7 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.converters.ProjetoConverter;
-import com.geekvigarista.scrummanager.client.gatekeeper.AdminLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
@@ -40,7 +40,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addproj)
-	@UseGatekeeper(AdminLogadoGatekeeper.class)
+	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
 	public interface AddProjetoProxy extends ProxyPlace<AddProjetoPresenter>
 	{
 	}

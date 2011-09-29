@@ -25,14 +25,6 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="{msg.projeto}"/>
-					</g:customCell>
-					<g:customCell>
-						<db:DefaultListBox ui:field="projeto"/>
-					</g:customCell>
-				</g:row>
-				<g:row>
-					<g:customCell>
 						<g:Label text="{msg.usuario}"/>
 					</g:customCell>
 					<g:customCell>

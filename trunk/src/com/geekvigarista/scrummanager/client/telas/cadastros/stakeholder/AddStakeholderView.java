@@ -31,8 +31,6 @@ public class AddStakeholderView extends ViewImpl implements AddStakeholderPresen
 	@UiField
 	ListBox usuario;
 	@UiField
-	ListBox projeto;
-	@UiField
 	Hyperlink btCancelar;
 	@UiField
 	Button btSalvar;
@@ -54,11 +52,6 @@ public class AddStakeholderView extends ViewImpl implements AddStakeholderPresen
 		return usuario;
 	}
 	
-	@Override
-	public ListBox getProjetos()
-	{
-		return projeto;
-	}
 	
 	@Override
 	public ListBox getPapeis()

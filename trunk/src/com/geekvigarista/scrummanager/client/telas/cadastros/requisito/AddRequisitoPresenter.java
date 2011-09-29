@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.geekvigarista.scrummanager.client.gatekeeper.AdminLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
@@ -56,7 +56,7 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addreq)
-	@UseGatekeeper(AdminLogadoGatekeeper.class)
+	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
 	public interface AddRequisitoProxy extends ProxyPlace<AddRequisitoPresenter>
 	{
 		
