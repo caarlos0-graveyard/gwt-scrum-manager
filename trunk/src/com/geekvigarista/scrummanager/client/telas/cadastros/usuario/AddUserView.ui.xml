@@ -40,6 +40,11 @@
 					</g:customCell>
 				</g:row>
 			</g:Grid>
+			<g:HorizontalPanel width="348px" height="28px">
+				<g:Cell horizontalAlignment="ALIGN_CENTER">
+					<g:CheckBox text="Administrador" ui:field="administrador"/>
+				</g:Cell>
+			</g:HorizontalPanel>
 			<g:Cell width="100%">
 				<g:HorizontalPanel width="348px">
 					<g:Label width="180px" />

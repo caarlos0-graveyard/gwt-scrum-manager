@@ -46,6 +46,8 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 		
 		HasValue<String> getConfSenha();
 		
+		HasValue<Boolean> getAdministrador();
+		
 		HasClickHandlers getBtSalvar();
 		
 		HasClickHandlers getBtCancelar();
@@ -77,7 +79,7 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	
 	private void salvar()
 	{
-		Usuario usuario = UsuarioConverter.convert(getView().getNome(), getView().getLogin(), getView().getSenha());
+		Usuario usuario = UsuarioConverter.convert(getView().getNome(), getView().getLogin(), getView().getSenha(),getView().getAdministrador());
 		dispatcher.execute(new SalvarUsuarioAction(usuario), new AbstractCallback<SalvarUsuarioResult>()
 		{
 			@Override
