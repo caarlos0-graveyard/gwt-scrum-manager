@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
@@ -19,6 +20,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
@@ -35,19 +37,23 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.home)
+	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
 	public interface HomeProxy extends ProxyPlace<HomePresenter>
 	{
 	}
 	
 	private final DispatchAsync dispatcher;
 	private List<Projeto> projetos;
+	private final UsuarioLogadoGatekeeper usuarioLogado;
 	
 	@Inject
-	public HomePresenter(final EventBus eventBus, final HomeView view, final HomeProxy proxy, final DispatchAsync dispatcher)
+	public HomePresenter(final EventBus eventBus, final HomeView view, final HomeProxy proxy, final DispatchAsync dispatcher, final UsuarioLogadoGatekeeper usuarioLogado)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
+		this.usuarioLogado = usuarioLogado;
 		controiInterface();
+		System.out.println(usuarioLogado.getUsuario());
 	}
 	
 	private void controiInterface()

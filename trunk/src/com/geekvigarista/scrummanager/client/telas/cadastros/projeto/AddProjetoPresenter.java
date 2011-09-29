@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.converters.ProjetoConverter;
+import com.geekvigarista.scrummanager.client.gatekeeper.AdminLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
@@ -29,6 +30,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
@@ -38,6 +40,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addproj)
+	@UseGatekeeper(AdminLogadoGatekeeper.class)
 	public interface AddProjetoProxy extends ProxyPlace<AddProjetoPresenter>
 	{
 	}
@@ -89,8 +92,10 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			public void onClick(ClickEvent event)
 			{
 				System.out.println("AddProjetoPresenter.onBind().new ClickHandler() {...}.onClick()");
-				List<Requisito> requisitos = (getProjeto() == null || getProjeto().getId() == null) ? new ArrayList<Requisito>() : getProjeto().getRequisitos();
-				List<Stakeholder> stakeholders = (getProjeto() == null || getProjeto().getId() == null) ?  new ArrayList<Stakeholder>() : getProjeto().getStakeholders();
+				List<Requisito> requisitos = (getProjeto() == null || getProjeto().getId() == null) ? new ArrayList<Requisito>() : getProjeto()
+						.getRequisitos();
+				List<Stakeholder> stakeholders = (getProjeto() == null || getProjeto().getId() == null) ? new ArrayList<Stakeholder>() : getProjeto()
+						.getStakeholders();
 				Projeto projeto = ProjetoConverter.convert(getView().getNome(), getView().getDtInicio(), getView().getDtFim(), requisitos,
 						stakeholders); // TODO mehlorar conversao
 				
@@ -115,9 +120,9 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			@Override
 			public void onClick(ClickEvent event)
 			{
-								PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
-								placeManager.revealPlace(pr);
-//				RevealRootPopupContentEvent.fire(this, AddRequisitoPresenter.class);
+				PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
+				placeManager.revealPlace(pr);
+				//				RevealRootPopupContentEvent.fire(this, AddRequisitoPresenter.class);
 			}
 		});
 	}
