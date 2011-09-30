@@ -11,6 +11,8 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStak
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderView;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserView;
+import com.geekvigarista.scrummanager.client.telas.erros.Erro404ViewImpl;
+import com.geekvigarista.scrummanager.client.telas.erros.Error404Presenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenu;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
@@ -57,5 +59,10 @@ public class ClientModule extends AbstractPresenterModule
 		bindPresenter(LoginPresenter.class, LoginPresenter.LoginView.class, LoginViewImpl.class, LoginPresenter.LoginProxy.class);
 		
 		bindPresenter(MainMenuPresenter.class, MainMenuPresenter.MainMenuView.class, MainMenu.class, MainMenuPresenter.MainMenuProxy.class);
+		
+		bindPresenter(Error404Presenter.class, Error404Presenter.Erro404View.class, Erro404ViewImpl.class, Error404Presenter.Erro404Proxy.class);
+		
+		
+		
 	}
 }

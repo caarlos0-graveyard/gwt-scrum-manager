@@ -2,6 +2,7 @@ package com.geekvigarista.scrummanager.client.place;
 
 public class NameTokens
 {
+	public static final String erro404 = "!404";
 	
 	public static final String home = "!home";
 	public static final String adduser = "!adduser";
@@ -56,6 +57,11 @@ public class NameTokens
 	public static String getAddenc()
 	{
 		return addenc;
+	}
+	
+	public static String getErro404()
+	{
+		return erro404;
 	}
 	
 }

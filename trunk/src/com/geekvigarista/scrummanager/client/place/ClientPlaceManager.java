@@ -28,7 +28,9 @@ public class ClientPlaceManager extends PlaceManagerImpl
 	}
 	
 	@Override
-	  public void revealErrorPlace(String invalidHistoryToken) {
-	    super.revealErrorPlace(invalidHistoryToken);
-	  }
+	public void revealErrorPlace(String invalidHistoryToken)
+	{
+//		super.revealErrorPlace(invalidHistoryToken);
+		revealPlace(new PlaceRequest(NameTokens.erro404));
+	}
 }

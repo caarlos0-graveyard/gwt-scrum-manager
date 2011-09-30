@@ -71,7 +71,7 @@ public class SalvarUsuarioActionHandler implements ActionHandler<SalvarUsuarioAc
 			{
 				erros.add("Escolha pelomenos uma senha.");
 			}
-			else if(u.getSenha().length() < 6)
+			else if(u.getSenha().length() <= 6)
 			{
 				erros.add("A senha deve ter pelo menos 6 caracteres");
 			}

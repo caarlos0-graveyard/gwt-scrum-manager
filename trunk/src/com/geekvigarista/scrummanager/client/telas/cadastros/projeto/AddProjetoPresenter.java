@@ -1,12 +1,10 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.projeto;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import com.geekvigarista.scrummanager.client.converters.ProjetoConverter;
+import com.geekvigarista.scrummanager.client.converters.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
@@ -17,8 +15,6 @@ import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoRe
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoResult;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
-import com.geekvigarista.scrummanager.shared.vos.Requisito;
-import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -64,15 +60,17 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	
 	private final DispatchAsync dispatch;
 	private final PlaceManager placeManager;
+	private final IProjetoConverter converter;
 	private Projeto projeto;
 	
 	@Inject
 	public AddProjetoPresenter(final EventBus eventBus, final AddProjetoView view, final AddProjetoProxy proxy, final DispatchAsync dispatch,
-			final PlaceManager placeManager)
+			final PlaceManager placeManager, final IProjetoConverter converter)
 	{
 		super(eventBus, view, proxy);
 		this.dispatch = dispatch;
 		this.placeManager = placeManager;
+		this.converter = converter;
 	}
 	
 	@Override
@@ -91,20 +89,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				System.out.println("AddProjetoPresenter.onBind().new ClickHandler() {...}.onClick()");
-				List<Requisito> requisitos = (getProjeto() == null || getProjeto().getId() == null) ? new ArrayList<Requisito>() : getProjeto()
-						.getRequisitos();
-				List<Stakeholder> stakeholders = (getProjeto() == null || getProjeto().getId() == null) ? new ArrayList<Stakeholder>() : getProjeto()
-						.getStakeholders();
-				Projeto projeto = ProjetoConverter.convert(getView().getNome(), getView().getDtInicio(), getView().getDtFim(), requisitos,
-						stakeholders); // TODO mehlorar conversao
-				
-				if(getProjeto() != null)
-				{
-					projeto.setId(getProjeto().getId());
-				}
-				
-				dispatch.execute(new SalvarProjetoAction(projeto), new AbstractCallback<SalvarProjetoResult>()
+				Projeto projetoConvertido = converter.convert(getView(), getProjeto());
+				dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
 				{
 					@Override
 					public void onSuccess(SalvarProjetoResult result)
