@@ -85,6 +85,7 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 			@Override
 			public void onSuccess(SalvarUsuarioResult result)
 			{
+				Window.alert("LOL " + result.getErros()); //TODO
 				Window.alert("LOL " + result.getResponse().getNome()); //TODO
 			}
 		});

@@ -1,10 +1,12 @@
 package com.geekvigarista.scrummanager.client.gin;
 
+import com.geekvigarista.scrummanager.client.converters.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
+import com.geekvigarista.scrummanager.client.telas.erros.Error404Presenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
@@ -18,7 +20,7 @@ import com.google.inject.Provider;
 import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
-@GinModules({DispatchAsyncModule.class, ClientModule.class})
+@GinModules({DispatchAsyncModule.class, ClientModule.class, ViewBeanConverterModule.class})
 public interface ClientGinjector extends Ginjector
 {
 	PlaceManager getPlaceManager();
@@ -26,7 +28,7 @@ public interface ClientGinjector extends Ginjector
 	EventBus getEventBus();
 	
 	/*
-	 * Providers 
+	 * Providers das presenters
 	 */
 	Provider<MainPresenter> getMainPresenter();
 	
@@ -46,5 +48,17 @@ public interface ClientGinjector extends Ginjector
 	
 	AsyncProvider<MainMenuPresenter> getMainMenuPresenter();
 	
+	Provider<Error404Presenter> getError404Presenter();
+	
+	
+	/*
+	 * Providers de gatekeepers
+	 */
 	UsuarioLogadoGatekeeper getUsuarioLogadoGatekeeper();
+	
+	/*
+	 * providers dos conversores
+	 */
+	IProjetoConverter getProjetoConverter();
+	
 }

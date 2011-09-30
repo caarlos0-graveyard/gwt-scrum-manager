@@ -3,7 +3,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 
 	<g:HTMLPanel>
-		<g:FlowPanel ui:field="menuContentPanel" />
-		<g:FlowPanel ui:field="mainContentPanel" />
+		<g:VerticalPanel width="100%">
+			<g:FlowPanel ui:field="menuContentPanel" />
+			<g:Cell horizontalAlignment="ALIGN_CENTER">
+				<g:FlowPanel ui:field="mainContentPanel" />
+			</g:Cell>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
