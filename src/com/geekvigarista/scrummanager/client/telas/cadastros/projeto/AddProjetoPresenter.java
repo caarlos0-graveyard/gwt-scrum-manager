@@ -4,7 +4,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import com.geekvigarista.scrummanager.client.converters.IProjetoConverter;
+import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
@@ -89,7 +89,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				Projeto projetoConvertido = converter.convert(getView(), getProjeto());
+				Projeto projetoConvertido = converter.convert(getProjeto(), getView());
 				dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
 				{
 					@Override
@@ -108,7 +108,6 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			{
 				PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
 				placeManager.revealPlace(pr);
-				//				RevealRootPopupContentEvent.fire(this, AddRequisitoPresenter.class);
 			}
 		});
 	}
@@ -143,18 +142,6 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	public void setProjeto(Projeto projeto)
 	{
 		this.projeto = projeto;
-		if(projeto != null)
-		{
-			getView().getDtFim().setValue(projeto.getDataFim());
-			getView().getDtInicio().setValue(projeto.getDataInicio());
-			getView().getNome().setValue(projeto.getNome());
-			getView().getAddRequisitos().setEnabled(true);
-			getView().getAddStakeholders().setEnabled(true);
-		}
-		else
-		{
-			getView().getAddRequisitos().setEnabled(false);
-			getView().getAddStakeholders().setEnabled(false);
-		}
+		converter.updateView(projeto, getView());
 	}
 }

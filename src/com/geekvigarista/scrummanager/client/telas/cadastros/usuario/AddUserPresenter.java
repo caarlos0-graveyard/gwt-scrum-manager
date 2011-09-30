@@ -1,6 +1,6 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.usuario;
 
-import com.geekvigarista.scrummanager.client.converters.UsuarioConverter;
+import com.geekvigarista.scrummanager.client.converters.interfaces.IUsuarioConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
@@ -55,12 +55,17 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	}
 	
 	private final DispatchAsync dispatcher;
+	private final IUsuarioConverter converter;
+	private Usuario usuario;
 	
 	@Inject
-	public AddUserPresenter(final EventBus eventBus, final AddUserView view, final AddUserProxy proxy, final DispatchAsync dispatcher)
+	public AddUserPresenter(final EventBus eventBus, final AddUserView view, final AddUserProxy proxy, final DispatchAsync dispatcher,
+			final IUsuarioConverter converter)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
+		this.converter = converter;
+		this.usuario = new Usuario();
 	}
 	
 	@Override
@@ -79,7 +84,7 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	
 	private void salvar()
 	{
-		Usuario usuario = UsuarioConverter.convert(getView().getNome(), getView().getLogin(), getView().getSenha(),getView().getAdministrador());
+		Usuario usuario = converter.convert(getUsuario(), getView());
 		dispatcher.execute(new SalvarUsuarioAction(usuario), new AbstractCallback<SalvarUsuarioResult>()
 		{
 			@Override
@@ -97,4 +102,14 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
 	}
 	
+	public Usuario getUsuario()
+	{
+		return usuario;
+	}
+	
+	public void setUsuario(Usuario usuario)
+	{
+		this.usuario = usuario;
+		converter.updateView(usuario, getView());
+	}
 }
