@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter.AddProjetoView;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
@@ -12,7 +13,7 @@ import com.google.gwt.user.client.ui.HasValue;
 
 public class ProjetoConverter implements IProjetoConverter
 {
-	public Projeto convert(HasValue<String> nome, HasValue<Date> dataInicio, HasValue<Date> dataFim, List<Requisito> requisitos,
+	private Projeto convert(HasValue<String> nome, HasValue<Date> dataInicio, HasValue<Date> dataFim, List<Requisito> requisitos,
 			List<Stakeholder> stakeholders)
 	{
 		Projeto p = new Projeto();
@@ -25,7 +26,7 @@ public class ProjetoConverter implements IProjetoConverter
 	}
 	
 	@Override
-	public Projeto convert(AddProjetoView v, Projeto projeto)
+	public Projeto convert(Projeto projeto, AddProjetoView v)
 	{
 		boolean projetoNull = projeto == null || projeto.getId() == null;
 		List<Requisito> requisitos = projetoNull ? new ArrayList<Requisito>() : projeto.getRequisitos();
@@ -39,10 +40,21 @@ public class ProjetoConverter implements IProjetoConverter
 	}
 	
 	@Override
-	@Deprecated
-	public Projeto convert(AddProjetoView u)
+	public void updateView(Projeto t, AddProjetoView u)
 	{
-		return null;
+		if(t != null)
+		{
+			u.getDtFim().setValue(t.getDataFim());
+			u.getDtInicio().setValue(t.getDataInicio());
+			u.getNome().setValue(t.getNome());
+			u.getAddRequisitos().setEnabled(true);
+			u.getAddStakeholders().setEnabled(true);
+		}
+		else
+		{
+			u.getAddRequisitos().setEnabled(false);
+			u.getAddStakeholders().setEnabled(false);
+		}
 	}
 	
 }

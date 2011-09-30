@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
@@ -57,15 +58,17 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	}
 	
 	private final DispatchAsync dispatcher;
+	private final IStakeholderConverter converter;
 	private Stakeholder stakeholder;
 	private List<Usuario> usuariosSistema;
 	
 	@Inject
 	public AddStakeholderPresenter(final EventBus eventBus, final AddStakeholderView view, final AddStakeholderProxy proxy,
-			final DispatchAsync dispatcher)
+			final DispatchAsync dispatcher, final IStakeholderConverter converter)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
+		this.converter = converter;
 	}
 	
 	@Override
@@ -124,14 +127,9 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	
 	private void doSalvar()
 	{
-		Stakeholder stakeholder = new Stakeholder();
-		stakeholder.setPapel(PapelStakeholder.values()[getView().getPapeis().getSelectedIndex()]);
-		stakeholder.setUsuario(usuariosSistema.get(getView().getUsuarios().getSelectedIndex()));
-		stakeholder.setNome(getView().getNome().getValue());
-		if(getStakeholder() != null && getStakeholder().getId() != null)
-			stakeholder.setId(getStakeholder().getId());
 		
-		dispatcher.execute(new SalvarStakeholderAction(stakeholder), new AbstractCallback<SalvarStakeholderResult>()
+		Stakeholder stakeholderConvertido = converter.convert(getStakeholder(), getView(), usuariosSistema);
+		dispatcher.execute(new SalvarStakeholderAction(stakeholderConvertido), new AbstractCallback<SalvarStakeholderResult>()
 		{
 			@Override
 			public void onSuccess(SalvarStakeholderResult result)
@@ -186,10 +184,6 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	
 	public void populaCadastro()
 	{
-		if(stakeholder == null)
-			return;
-		getView().getNome().setValue(stakeholder.getNome());
-		getView().getPapeis().setSelectedIndex(stakeholder.getPapel().ordinal());
-		getView().getUsuarios().setSelectedIndex(usuariosSistema.indexOf(stakeholder.getUsuario()));
+		converter.updateView(getStakeholder(), getView(), usuariosSistema);
 	}
 }
