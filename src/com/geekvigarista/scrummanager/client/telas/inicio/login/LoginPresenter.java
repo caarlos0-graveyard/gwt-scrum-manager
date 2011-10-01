@@ -3,8 +3,8 @@ package com.geekvigarista.scrummanager.client.telas.inicio.login;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.events.LoginAuthenticateEvent;
-import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
+import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioObjResult;
 import com.geekvigarista.scrummanager.shared.commands.usuario.login.LoginUsuarioAction;
@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -78,6 +79,18 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 	protected void revealInParent()
 	{
 		RevealRootContentEvent.fire(this, this);
+	}
+	
+	@Override
+	public void prepareFromRequest(PlaceRequest request)
+	{
+		super.prepareFromRequest(request);
+		String r = request.getParameter(Parameters.u, null);
+		if(r != null)
+		{
+			// FIXME quando criar a tela de msg bonitnha :D
+			Window.alert("voce nao possui permissao para acessar " + r + ". Efetue login e tente novamente!");
+		}
 	}
 	
 	@Override

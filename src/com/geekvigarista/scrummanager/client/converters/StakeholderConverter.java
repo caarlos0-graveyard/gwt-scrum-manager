@@ -2,8 +2,6 @@ package com.geekvigarista.scrummanager.client.converters;
 
 import java.util.List;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderConverter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter.AddStakeholderView;
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
@@ -41,14 +39,15 @@ public class StakeholderConverter implements IStakeholderConverter
 	@Deprecated
 	public Stakeholder convert(Stakeholder t, AddStakeholderView u)
 	{
-		throw new NotImplementedException();
+//		throw new NotImplementedException();
+		return null;
 	}
 	
 	@Override
 	@Deprecated
 	public void updateView(Stakeholder t, AddStakeholderView u)
 	{
-		throw new NotImplementedException();
+//		throw new NotImplementedException();
 	}
 	
 }

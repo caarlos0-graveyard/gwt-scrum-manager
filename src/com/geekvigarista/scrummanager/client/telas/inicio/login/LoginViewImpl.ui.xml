@@ -8,33 +8,39 @@
 		
 	</ui:style>
 	<g:HTMLPanel ui:field="conteudo">
-		<g:Label text="{msg.efetuarlogin}" styleName="titulo1"></g:Label>
-		<hr />
-		<g:Grid>
-			<g:row>
-				<g:customCell>
-					<g:Label text="{msg.usuario}" />
-				</g:customCell>
-				<g:customCell>
-					<g:TextBox ui:field="login" />
-				</g:customCell>
-			</g:row>
-			<g:row>
-				<g:customCell>
-					<g:Label text="{msg.senha}" />
-				</g:customCell>
-				<g:customCell>
-					<g:PasswordTextBox ui:field="passwd" />
-				</g:customCell>
-			</g:row>
-			<g:row>
-				<g:customCell>
-					<g:Label></g:Label>
-				</g:customCell>
-				<g:customCell>
-					<g:Button ui:field="btlogin" text="{msg.login}"></g:Button>
-				</g:customCell>
-			</g:row>
-		</g:Grid>
+		<g:VerticalPanel width="100%" height="300px"
+			horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" ui:field="vpTudo">
+			<g:DecoratorPanel>
+				<g:VerticalPanel>
+					<g:Label text="{msg.efetuarlogin}" styleName="titulo1"></g:Label>
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:Label text="{msg.usuario}" />
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="login" />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="{msg.senha}" />
+							</g:customCell>
+							<g:customCell>
+								<g:PasswordTextBox ui:field="passwd" />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label></g:Label>
+							</g:customCell>
+							<g:customCell>
+								<g:Button ui:field="btlogin" text="{msg.login}"></g:Button>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+				</g:VerticalPanel>
+			</g:DecoratorPanel>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
