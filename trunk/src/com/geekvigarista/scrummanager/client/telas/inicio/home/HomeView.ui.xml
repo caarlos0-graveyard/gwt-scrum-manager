@@ -4,17 +4,15 @@
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
 	<g:HTMLPanel>
-		<g:HorizontalSplitPanel splitPosition="210px">
-			<g:DecoratorPanel width="">
+		<g:HorizontalSplitPanel splitPosition="210px"
+			height="500px" ui:field="splitPanel">
+			<g:DecoratorPanel>
 				<p1:CellList ui:field="cellListProjetos" width="200px" />
 			</g:DecoratorPanel>
-
-			<g:DecoratorPanel>
-				<g:HorizontalPanel ui:field="panelScrum">
-				</g:HorizontalPanel>
-			</g:DecoratorPanel>
+			<g:HorizontalPanel ui:field="panelScrum" width="100%"
+				horizontalAlignment="ALIGN_CENTER">
+				<g:Label text="Selecione um projeto" styleName="titulo1"></g:Label>
+			</g:HorizontalPanel>
 		</g:HorizontalSplitPanel>
-
-
 	</g:HTMLPanel>
 </ui:UiBinder>

@@ -8,25 +8,28 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ColunaQuadroScrum extends Composite
 {
 	
 	private static ColunaQuadroScrumUiBinder uiBinder = GWT.create(ColunaQuadroScrumUiBinder.class);
-	@UiField
-	Label titulo;
-	@UiField
-	VerticalPanel vprequisitos;
 	
 	interface ColunaQuadroScrumUiBinder extends UiBinder<Widget, ColunaQuadroScrum>
 	{
 	}
 	
-	public ColunaQuadroScrum(List<Requisito> requisitos)
+	@UiField
+	Label titulo;
+
+	@UiField
+	VerticalPanel vprequisitos;
+	
+	public ColunaQuadroScrum(List<Requisito> requisitos, String titulo)
 	{
 		initWidget(uiBinder.createAndBindUi(this));
+		this.titulo.setText(titulo);
 		for(Requisito requisito : requisitos)
 		{
 			vprequisitos.add(new RequisitoQuadro(requisito));

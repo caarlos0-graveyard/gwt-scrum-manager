@@ -4,6 +4,7 @@ import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.encaminham
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.encaminhamento.SalvarEncaminhamentoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.LoadProdutoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.SalvarProdutoActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.BuscarProjetosByUsuarioActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.LoadProjetoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.SalvarProjetoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.requisito.ExcluirRequisitoActionHandler;
@@ -22,6 +23,7 @@ import com.geekvigarista.scrummanager.shared.commands.encaminhamento.excluir.Exc
 import com.geekvigarista.scrummanager.shared.commands.encaminhamento.salvar.SalvarEncaminhamentoAction;
 import com.geekvigarista.scrummanager.shared.commands.produto.load.LoadProdutoAction;
 import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdutoAction;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetosByUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoByIdAction;
@@ -79,6 +81,7 @@ public class ServerModule extends HandlerModule
 	{
 		bindHandler(SalvarProjetoAction.class, SalvarProjetoActionHandler.class);
 		bindHandler(LoadProjetoAction.class, LoadProjetoActionHandler.class);
+		bindHandler(BuscarProjetosByUsuarioAction.class, BuscarProjetosByUsuarioActionHandler.class);
 	}
 	
 	private void configureProduto()

@@ -7,7 +7,11 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
+import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetoListResult;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetosByUsuarioAction;
+import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
@@ -28,7 +32,7 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 {
 	public interface HomeView extends View
 	{
-		void setProjetos(List<Projeto> projetos);
+		void setProjetos(List<ProjetoStakeholderDTO> projetos);
 		
 		HorizontalPanel panelScrum();
 		
@@ -43,7 +47,7 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 	}
 	
 	private final DispatchAsync dispatcher;
-	private List<Projeto> projetos;
+	private List<ProjetoStakeholderDTO> projetos;
 	private final UsuarioLogadoGatekeeper usuarioLogado;
 	
 	@Inject
@@ -59,9 +63,18 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 	private void controiInterface()
 	{
 		// FIXME vai ter que ter o usuario logado aqui!!!
-		Usuario u = null;
+		Usuario u = usuarioLogado.getUsuario();
 		
-		getView().setProjetos(new ArrayList<Projeto>());
+		dispatcher.execute(new BuscarProjetosByUsuarioAction(u), new AbstractCallback<BuscarProjetoListResult>()
+		{
+			@Override
+			public void onSuccess(BuscarProjetoListResult result)
+			{
+				getView().setProjetos(result.getProjetos());
+			}
+		});
+		
+		
 	}
 	
 	
@@ -75,7 +88,7 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
-				Projeto projeto = getView().factory().getSelectionModel().getSelectedObject();
+				Projeto projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto();
 				getView().panelScrum().clear();
 				for(StatusRequisito sr : StatusRequisito.values())
 				{
@@ -87,7 +100,7 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 							requisitos.add(r);
 						}
 					}
-					getView().panelScrum().add(new ColunaQuadroScrum(requisitos));
+					getView().panelScrum().add(new ColunaQuadroScrum(requisitos, sr.desc()));
 				}
 			}
 		});

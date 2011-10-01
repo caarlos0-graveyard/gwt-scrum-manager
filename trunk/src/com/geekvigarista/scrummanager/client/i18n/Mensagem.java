@@ -121,4 +121,6 @@ public interface Mensagem extends Constants
 	public String sair();
 	
 	public String inicio();
+	
+	public String cadastroDe();
 }

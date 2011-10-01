@@ -5,13 +5,15 @@
 		
 	</ui:style>
 	<g:HTMLPanel>
-		<g:DecoratorPanel>
-			<g:VerticalPanel>
-				<g:cell>
+		<g:SimplePanel width="150px">
+			<g:VerticalPanel width="100%" spacing="10">
+				<g:cell horizontalAlignment="ALIGN_CENTER">
 					<g:Label text="Titulo Coluna" ui:field="titulo" styleName="titulo2" />
 				</g:cell>
-				<g:VerticalPanel ui:field="vprequisitos"/>
+				<g:Cell width="100%" horizontalAlignment="ALIGN_CENTER">
+					<g:VerticalPanel ui:field="vprequisitos"/>
+				</g:Cell>
 			</g:VerticalPanel>
-		</g:DecoratorPanel>
+		</g:SimplePanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
