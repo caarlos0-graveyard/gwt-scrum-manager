@@ -1,16 +1,12 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home;
 
-import java.util.List;
-
-import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -22,20 +18,11 @@ public class HomeView extends ViewImpl implements HomePresenter.HomeView
 	{
 	}
 	
-	private ProjetoCellFactory factory;
+	@UiField
+	SimplePanel panelProjetos;
 	
 	@UiField
-	CellList<ProjetoStakeholderDTO> cellListProjetos;
-	
-	@UiFactory
-	CellList<ProjetoStakeholderDTO> buildCellListProjetos()
-	{
-		factory = new ProjetoCellFactory();
-		return factory.getProjetos();
-	}
-	
-	@UiField
-	HorizontalPanel panelScrum;
+	SimplePanel panelQuadro;
 	
 	@UiField
 	HorizontalSplitPanel splitPanel;
@@ -55,20 +42,38 @@ public class HomeView extends ViewImpl implements HomePresenter.HomeView
 	}
 	
 	@Override
-	public void setProjetos(List<ProjetoStakeholderDTO> projetos)
+	public void setInSlot(Object slot, Widget content)
 	{
-		factory.setData(projetos);
+		if(slot == HomePresenter.TYPE_SetProjetosContent)
+		{
+			setProjetos(content);
+		}
+		else if(slot == HomePresenter.TYPE_SetQuadroScrumContent)
+		{
+			setQuadro(content);
+		}
+		else
+		{
+			super.setInSlot(slot, content);
+		}
 	}
 	
-	@Override
-	public HorizontalPanel panelScrum()
+	private void setProjetos(Widget content)
 	{
-		return panelScrum;
+		panelProjetos.clear();
+		if(content != null)
+		{
+			panelProjetos.setWidget(content);
+		}
 	}
 	
-	@Override
-	public ProjetoCellFactory factory()
+	private void setQuadro(Widget content)
 	{
-		return factory;
+		panelQuadro.clear();
+		if(content != null)
+		{
+			panelQuadro.setWidget(content);
+		}
 	}
+	
 }

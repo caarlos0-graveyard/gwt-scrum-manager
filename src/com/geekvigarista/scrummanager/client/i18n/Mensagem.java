@@ -40,6 +40,8 @@ public interface Mensagem extends Constants
 	
 	public String data();
 	
+	public String selecionarProjeto();
+	
 	/*
 	 * Home
 	 */

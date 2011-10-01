@@ -11,6 +11,8 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPres
 import com.geekvigarista.scrummanager.client.telas.erros.Error404Presenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoPresenter;
@@ -52,6 +54,9 @@ public interface ClientGinjector extends Ginjector
 	
 	Provider<Error404Presenter> getError404Presenter();
 	
+	AsyncProvider<QuadroScrumPresenter> getQuadroScrumPresenter();
+	
+	AsyncProvider<ListaProjetosUsuarioPresenter> getListaProjetosUsuarioPresenter();
 	
 	/*
 	 * Providers de gatekeepers
