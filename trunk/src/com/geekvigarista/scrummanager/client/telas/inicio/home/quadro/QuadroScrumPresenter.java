@@ -52,6 +52,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.usuarioLogado = usuarioLogado;
+		getView().setColunas(null);
 	}
 	
 	@Override
