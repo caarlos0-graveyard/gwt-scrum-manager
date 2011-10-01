@@ -1,42 +1,29 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
-import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
-import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetoListResult;
-import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetosByUsuarioAction;
-import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
-import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
-import com.geekvigarista.scrummanager.shared.vos.Projeto;
-import com.geekvigarista.scrummanager.shared.vos.Requisito;
-import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresenter.HomeProxy>
 {
 	public interface HomeView extends View
 	{
-		void setProjetos(List<ProjetoStakeholderDTO> projetos);
-		
-		HorizontalPanel panelScrum();
-		
-		ProjetoCellFactory factory();
 	}
 	
 	@ProxyCodeSplit
@@ -46,71 +33,47 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 	{
 	}
 	
+	// slots :D
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_SetProjetosContent = new Type<RevealContentHandler<?>>();
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_SetQuadroScrumContent = new Type<RevealContentHandler<?>>();
+	
 	private final DispatchAsync dispatcher;
-	private List<ProjetoStakeholderDTO> projetos;
 	private final UsuarioLogadoGatekeeper usuarioLogado;
+	private QuadroScrumPresenter quadro;
+	private ListaProjetosUsuarioPresenter projetos;
 	
 	@Inject
-	public HomePresenter(final EventBus eventBus, final HomeView view, final HomeProxy proxy, final DispatchAsync dispatcher, final UsuarioLogadoGatekeeper usuarioLogado)
+	public HomePresenter(final EventBus eventBus, final HomeView view, final HomeProxy proxy, final DispatchAsync dispatcher,
+			final UsuarioLogadoGatekeeper usuarioLogado, ListaProjetosUsuarioPresenter projetos, QuadroScrumPresenter quadro)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.usuarioLogado = usuarioLogado;
-		controiInterface();
+		this.projetos = projetos;
+		this.quadro = quadro;
 		System.out.println(usuarioLogado.getUsuario());
 	}
 	
-	private void controiInterface()
-	{
-		// FIXME vai ter que ter o usuario logado aqui!!!
-		Usuario u = usuarioLogado.getUsuario();
-		
-		dispatcher.execute(new BuscarProjetosByUsuarioAction(u), new AbstractCallback<BuscarProjetoListResult>()
-		{
-			@Override
-			public void onSuccess(BuscarProjetoListResult result)
-			{
-				getView().setProjetos(result.getProjetos());
-			}
-		});
-		
-		
-	}
-	
-	
-
 	@Override
 	protected void onBind()
 	{
 		super.onBind();
-		getView().factory().getSelectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler()
-		{
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event)
-			{
-				Projeto projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto();
-				getView().panelScrum().clear();
-				for(StatusRequisito sr : StatusRequisito.values())
-				{
-					List<Requisito> requisitos = new ArrayList<Requisito>();
-					for(Requisito r : projeto.getRequisitos())
-					{
-						if(r.getEncaminhamentos().get(r.getEncaminhamentos().size() - 1).getStatus().equals(sr))
-						{
-							requisitos.add(r);
-						}
-					}
-					getView().panelScrum().add(new ColunaQuadroScrum(requisitos, sr.desc()));
-				}
-			}
-		});
 	}
-
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		setInSlot(TYPE_SetProjetosContent, projetos);
+		setInSlot(TYPE_SetQuadroScrumContent, quadro);
+	}
+	
 	@Override
 	protected void revealInParent()
 	{
 		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
 	}
-	
 	
 }

@@ -6,13 +6,8 @@
 	<g:HTMLPanel>
 		<g:HorizontalSplitPanel splitPosition="210px"
 			height="500px" ui:field="splitPanel">
-			<g:DecoratorPanel>
-				<p1:CellList ui:field="cellListProjetos" width="200px" />
-			</g:DecoratorPanel>
-			<g:HorizontalPanel ui:field="panelScrum" width="100%"
-				horizontalAlignment="ALIGN_CENTER">
-				<g:Label text="Selecione um projeto" styleName="titulo1"></g:Label>
-			</g:HorizontalPanel>
+			<g:SimplePanel ui:field="panelProjetos"></g:SimplePanel>
+			<g:SimplePanel ui:field="panelQuadro"></g:SimplePanel>
 		</g:HorizontalSplitPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

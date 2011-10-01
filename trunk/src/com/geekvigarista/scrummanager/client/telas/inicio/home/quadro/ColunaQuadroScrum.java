@@ -1,4 +1,4 @@
-package com.geekvigarista.scrummanager.client.telas.inicio.home;
+package com.geekvigarista.scrummanager.client.telas.inicio.home.quadro;
 
 import java.util.List;
 

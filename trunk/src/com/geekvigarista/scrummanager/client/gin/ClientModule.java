@@ -17,6 +17,14 @@ import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.M
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomeView;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter.ListaProjetosProxy;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter.ListaProjetosView;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioView;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumProxy;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumView;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumViewImpl;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginViewImpl;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
@@ -62,7 +70,9 @@ public class ClientModule extends AbstractPresenterModule
 		
 		bindPresenter(Error404Presenter.class, Error404Presenter.Erro404View.class, Erro404ViewImpl.class, Error404Presenter.Erro404Proxy.class);
 		
+		bindPresenter(ListaProjetosUsuarioPresenter.class, ListaProjetosView.class, ListaProjetosUsuarioView.class, ListaProjetosProxy.class);
 		
+		bindPresenter(QuadroScrumPresenter.class, QuadroScrumView.class, QuadroScrumViewImpl.class, QuadroScrumProxy.class);
 		
 	}
 }

@@ -13,6 +13,7 @@ public class NameTokens
 	public static final String addenc = "!addenc";
 	public static final String visreq = "!req";
 	public static final String login = "!login";
+	public static final String scrum = "!scrum";
 	
 	public static String getVisreq()
 	{
@@ -64,4 +65,8 @@ public class NameTokens
 		return erro404;
 	}
 	
+	public static String getScrum()
+	{
+		return scrum;
+	}
 }

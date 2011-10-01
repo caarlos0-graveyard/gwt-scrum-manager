@@ -1,4 +1,4 @@
-package com.geekvigarista.scrummanager.client.telas.inicio.home;
+package com.geekvigarista.scrummanager.client.telas.inicio.home.quadro;
 
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
