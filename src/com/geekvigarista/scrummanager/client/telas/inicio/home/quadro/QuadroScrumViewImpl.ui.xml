@@ -7,7 +7,6 @@
 	<g:HTMLPanel>
 		<g:HorizontalPanel ui:field="panelScrum" width="100%"
 			horizontalAlignment="ALIGN_CENTER">
-			<g:Label text="Selecione um projeto" styleName="titulo1"></g:Label>
 		</g:HorizontalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
