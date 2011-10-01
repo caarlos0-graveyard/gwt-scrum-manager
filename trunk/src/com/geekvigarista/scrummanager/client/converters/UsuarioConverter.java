@@ -12,7 +12,7 @@ public class UsuarioConverter implements IUsuarioConverter
 		Usuario u = new Usuario();
 		u.setNome(nome.getValue());
 		u.setLogin(login.getValue());
-		u.setSenha(login.getValue());
+		u.setSenha(senha.getValue());
 		u.setAdministrador(administrador.getValue());
 		return u;
 	}

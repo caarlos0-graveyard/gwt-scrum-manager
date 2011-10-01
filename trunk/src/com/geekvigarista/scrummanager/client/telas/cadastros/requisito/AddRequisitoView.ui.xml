@@ -6,6 +6,8 @@
 		field="msg"></ui:with>
 
 	<g:HTMLPanel ui:field="conteudo">
+		<g:Label text="{msg.cadastroDe}{msg.requisitos}" styleName="titulo1" />
+		<hr />
 		<g:HorizontalPanel width="">
 			<g:VerticalPanel spacing="10">
 				<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
@@ -54,7 +56,7 @@
 						</g:customCell>
 						<g:customCell>
 							<g:HorizontalPanel>
-								<d:DefaultIntegerBox ui:field="tempoEstimado" />
+								<d:DefaultIntegerBox ui:field="tempoEstimado" width="235px" />
 								<g:Cell verticalAlignment="ALIGN_MIDDLE"
 									horizontalAlignment="ALIGN_CENTER">
 									<g:Label text="{msg.horas}" />
@@ -64,12 +66,13 @@
 					</g:row>
 					<g:row>
 						<g:customCell>
-							<g:Label text="{msg.anexos}" />
+							<g:Label text="{msg.descricao}" />
 						</g:customCell>
 						<g:customCell>
-							<d:DefaultTextBox ui:field="anexos" />
+							<g:RichTextArea ui:field="descricao" width="239px"/>
 						</g:customCell>
 					</g:row>
+					<g:row/>
 				</g:Grid>
 				<g:Cell width="600px">
 					<g:HorizontalPanel width="348px">

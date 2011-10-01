@@ -16,6 +16,7 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
@@ -75,5 +76,14 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 	{
 		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
 	}
+
+	@Override
+	public void prepareFromRequest(PlaceRequest request)
+	{
+		super.prepareFromRequest(request);
+		
+		System.out.println("HomePresenter.prepareFromRequest()");
+	}
+	
 	
 }
