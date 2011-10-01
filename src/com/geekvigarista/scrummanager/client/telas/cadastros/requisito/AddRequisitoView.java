@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.gwtplatform.mvp.client.ViewImpl;
+import com.google.gwt.user.client.ui.RichTextArea;
 
 public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.AddRequisitoView
 {
@@ -63,6 +64,9 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	
 	@UiField
 	Button btRm;
+	
+	@UiField
+	RichTextArea descricao;
 	
 	private RequisitoItemsFactory requisitosFactory = null;
 	
@@ -145,5 +149,11 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	public Button btRm()
 	{
 		return btRm;
+	}
+	
+	@Override
+	public RichTextArea descricao()
+	{
+		return descricao;
 	}
 }

@@ -1,11 +1,10 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.requisito;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import com.geekvigarista.scrummanager.client.converters.interfaces.IRequisitoConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
@@ -18,7 +17,6 @@ import com.geekvigarista.scrummanager.shared.commands.requisito.excluir.ExcluirR
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoResult;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
-import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -33,6 +31,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -72,6 +71,8 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		
 		TextBox titulo();
 		
+		RichTextArea descricao();
+		
 		ListBox prioridade();
 		
 		HasClickHandlers getBtCancelar();
@@ -88,12 +89,15 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	private final DispatchAsync dispatcher;
 	private Projeto projeto;
 	private Requisito requisito;
+	private final IRequisitoConverter converter;
 	
 	@Inject
-	public AddRequisitoPresenter(final EventBus eventBus, final AddRequisitoView view, final AddRequisitoProxy proxy, final DispatchAsync dispatcher)
+	public AddRequisitoPresenter(final EventBus eventBus, final AddRequisitoView view, final AddRequisitoProxy proxy, final DispatchAsync dispatcher,
+			final IRequisitoConverter converter)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
+		this.converter = converter;
 		for(PrioridadeRequisito p : PrioridadeRequisito.values())
 		{
 			getView().prioridade().addItem(p.desc(), p.name());
@@ -176,6 +180,8 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	public void setProjeto(Projeto projeto)
 	{
 		this.projeto = projeto;
+		System.out.println(projeto);
+		System.out.println(projeto.getRequisitos());
 		getView().setData(projeto.getRequisitos());
 	}
 	
@@ -191,9 +197,8 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		{
 			requisito = new Requisito();
 		}
-		getView().titulo().setText(requisito.getTitulo());
-		getView().tempoEstimado().setValue(requisito.getTempoEstimado());
-		getView().prioridade().setSelectedIndex(requisito.getPrioridade().ordinal());
+		
+		converter.updateView(requisito, getView());
 		
 		getView().titulo().setFocus(true);
 	}
@@ -232,25 +237,7 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	
 	public void doSalvar()
 	{
-		Requisito req = new Requisito();
-		req.setPrioridade(PrioridadeRequisito.values()[(getView().prioridade().getSelectedIndex())]);
-		req.setTempoEstimado(getView().tempoEstimado().getValue());
-		req.setEncaminhamentos(new ArrayList<Encaminhamento>());
-		req.setTitulo(getView().titulo().getValue());
-		
-		if(getRequisito() != null && getRequisito().getId() != null)
-		{
-			req.setId(getRequisito().getId());
-			req.setDataCadastro(getRequisito().getDataCadastro());
-			req.setTempoTotal(getRequisito().getTempoTotal());
-		}
-		else
-		{
-			req.setDataCadastro(new Date());
-			req.setTempoTotal(0);
-		}
-		
-		// FIXME pegar o usuario 
+		Requisito req = converter.convert(getRequisito(), getView());
 		
 		dispatcher.execute(new SalvarRequisitoAction(req, getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
 		{

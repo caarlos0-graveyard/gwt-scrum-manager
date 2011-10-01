@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home.projetos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
@@ -109,6 +110,10 @@ public class ProjetoCellFactory
 	
 	public void setData(List<ProjetoStakeholderDTO> projs)
 	{
+		if(projs == null)
+		{
+			projs = new ArrayList<ProjetoStakeholderDTO>();
+		}
 		dataProvider.setList(projs);
 		dataProvider.refresh();
 	}

@@ -5,30 +5,32 @@
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
 	<g:HTMLPanel ui:field="conteudo">
+		<g:Label text="{msg.cadastroDe}{msg.stakeholders}" styleName="titulo1" />
+		<hr />
 		<g:VerticalPanel>
 			<g:Grid>
 				<g:row>
 					<g:customCell>
-						<g:Label text="{msg.nome}"/>
+						<g:Label text="{msg.nome}" />
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultTextBox ui:field="nome"/>
-					</g:customCell>
-				</g:row>
-				<g:row>
-					<g:customCell>
-						<g:Label text="{msg.papelStakeholder}"/>
-					</g:customCell>
-					<g:customCell>
-						<db:DefaultListBox ui:field="papelStakeholder"/>
+						<db:DefaultTextBox ui:field="nome" />
 					</g:customCell>
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="{msg.usuario}"/>
+						<g:Label text="{msg.papelStakeholder}" />
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultListBox ui:field="usuario"/>
+						<db:DefaultListBox ui:field="papelStakeholder" />
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
+						<g:Label text="{msg.usuario}" />
+					</g:customCell>
+					<g:customCell>
+						<db:DefaultListBox ui:field="usuario" />
 					</g:customCell>
 				</g:row>
 			</g:Grid>
@@ -47,6 +49,6 @@
 				</g:HorizontalPanel>
 			</g:Cell>
 		</g:VerticalPanel>
-		
+
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -1,0 +1,26 @@
+.sucesso {
+	color: green;
+}
+
+.erro {
+	color: red;
+}
+
+.msg {
+	font-size: 2em;
+	font-weight: bold;
+	text-shadow: 0 0 4px #fff;
+	text-align: center;
+}
+
+.emoticonSucesso {
+	color: green;
+	font-size: 8em;
+	font-weight: bold;
+}
+
+.emoticonErro {
+	color: red;
+	font-weight: bold;
+	font-size: 8em;
+}

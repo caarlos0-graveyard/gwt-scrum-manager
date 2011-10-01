@@ -63,7 +63,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		String id = request.getParameter(Parameters.projid, null);
 		if(id == null)
 		{
-			getView().setColunas(new ArrayList<ColunaQuadroScrum>());
+			getView().setColunas(null);
 			return;
 		}
 		
@@ -80,6 +80,8 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	
 	private List<ColunaQuadroScrum> constroiColunas(Projeto projeto)
 	{
+		if(projeto == null || projeto.getRequisitos() == null)
+			return null;
 		List<ColunaQuadroScrum> colunas = new ArrayList<ColunaQuadroScrum>();
 		for(StatusRequisito sr : StatusRequisito.values())
 		{

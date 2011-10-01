@@ -1,6 +1,7 @@
 package com.geekvigarista.scrummanager.client.gin;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
+import com.geekvigarista.scrummanager.client.converters.interfaces.IRequisitoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IUsuarioConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
@@ -71,4 +72,6 @@ public interface ClientGinjector extends Ginjector
 	IStakeholderConverter getStakeholderConverter();
 	
 	IUsuarioConverter getUsuarioConverter();
+	
+	IRequisitoConverter getIRequisitoConverter();
 }
