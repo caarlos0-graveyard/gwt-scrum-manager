@@ -1,12 +1,56 @@
 * {
-	font-family: "lucida grande",tahoma,verdana,arial,sans-serif !important;
+	font-family: "lucida grande", tahoma, verdana, arial,
+		sans-serif !important;
 	color: 363636;
 }
 
-.titulo1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  text-aling: center;
+.tituloGigante {
+	font-size: 4em;
+	font-weight: bold;
+	color: #363636;
+	text-aling: center;
 }
 
+.titulo1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	text-aling: center;
+}
+
+.titulo2 {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #777777;
+	text-aling: center;
+}
+
+.titulo3 {
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #666;
+	text-aling: center;
+}
+
+.tituloCell {
+	font-size: 1.2em;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.mensagemVazio {
+	color: #777;
+	font-weight: bold;
+	font-size: 3em;
+	margin-top: 90px;
+	text-align: center;
+	text-shadow: 0 0 6px silver;
+}
+
+.mensagemVazioSecundaria {
+	color: #777;
+	font-weight: bold;
+	font-size: 1.5em;
+	text-align: center;
+	text-shadow: 0 0 6px silver;
+}
