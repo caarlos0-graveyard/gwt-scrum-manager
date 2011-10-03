@@ -7,7 +7,9 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProjeto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoEncaminhamento;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProjeto;
 import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
@@ -17,6 +19,7 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.PrePersist;
+import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 
 @Entity("requisitos")
@@ -35,6 +38,10 @@ public class RequisitoPOJO
 	private List<EncaminhamentoPOJO> encaminhamentos;
 	private Date dataCadastro;
 	private int tempoTotal; // horas
+	
+	@Reference
+	@Indexed(name = "projeto")
+	private ProjetoPOJO projeto;
 	
 	@Transient
 	private Requisito requisito;
@@ -67,6 +74,7 @@ public class RequisitoPOJO
 		
 		this.dataCadastro = requisito.getDataCadastro();
 		this.tempoTotal = requisito.getTempoTotal();
+		this.projeto = new ProjetoPOJO(requisito.getProjeto());
 	}
 	
 	public Requisito getRequisito()
@@ -80,7 +88,7 @@ public class RequisitoPOJO
 			}
 		}
 		requisito = new Requisito((this.id == null) ? null : this.id.toString(), titulo,descricao, prioridade, tempoEstimado, (encaminhamentos == null) ? null
-				: encaminhamentos, dataCadastro, tempoTotal);
+				: encaminhamentos, dataCadastro, tempoTotal, projeto.getProjeto());
 		
 		return requisito;
 	}
@@ -107,8 +115,24 @@ public class RequisitoPOJO
 			encs.add(new EncaminhamentoPOJO(dao.salvar(e)));
 			setEncaminhamentos(encs);
 		}
+		
+		if(projeto.getId() == null)
+		{
+			IDaoProjeto daoP = new DaoProjeto();
+			setProjeto(new ProjetoPOJO(daoP.salvar(projeto.getProjeto())));
+		}
 	}
 	
+	public ProjetoPOJO getProjeto()
+	{
+		return projeto;
+	}
+
+	public void setProjeto(ProjetoPOJO projeto)
+	{
+		this.projeto = projeto;
+	}
+
 	public ObjectId getId()
 	{
 		return id;

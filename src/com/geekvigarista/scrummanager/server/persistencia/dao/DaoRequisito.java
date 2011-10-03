@@ -5,13 +5,16 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.beans.ProjetoPOJO;
 import com.geekvigarista.scrummanager.server.beans.RequisitoPOJO;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
 import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
+import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
 import com.google.code.morphia.dao.BasicDAO;
+import com.google.code.morphia.query.Query;
 import com.google.code.morphia.query.QueryResults;
 import com.google.inject.Inject;
 
@@ -73,6 +76,13 @@ public class DaoRequisito extends BasicDAO<RequisitoPOJO, ObjectId> implements I
 			return null;
 		}
 		return reqPojo.getRequisito();
+	}
+	
+	@Override
+	public List<Requisito> buscarByProjeto(Projeto projeto)
+	{
+		Query<RequisitoPOJO> query = createQuery().filter("projeto", new ProjetoPOJO(projeto));
+		return toValueObject(this.find(query));
 	}
 	
 	/**
