@@ -32,7 +32,7 @@ public class SalvarProjetoActionHandler implements ActionHandler<SalvarProjetoAc
 		{
 			return new SalvarProjetoResult(rv.getErros());
 		}
-		dao.salvar(p);
+		p = dao.salvar(p);
 		return new SalvarProjetoResult(p);
 	}
 	
