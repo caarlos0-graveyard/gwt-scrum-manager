@@ -19,6 +19,8 @@ public class Requisito implements Serializable
 	private Date dataCadastro;
 	private int tempoTotal; // horas
 	
+	private Projeto projeto;
+	
 	public Requisito()
 	{
 		// isso evita erros variados na view, visto que um Enum nao pode ser null.
@@ -26,7 +28,7 @@ public class Requisito implements Serializable
 	}
 	
 	public Requisito(String id, String titulo, String descricao, PrioridadeRequisito prioridade, int tempoEstimado, List<Encaminhamento> encaminhamentos,
-			Date dataCadastro, int tempoTotal)
+			Date dataCadastro, int tempoTotal, Projeto projeto)
 	{
 		super();
 		if(id != null)
@@ -43,6 +45,7 @@ public class Requisito implements Serializable
 		}
 		this.dataCadastro = dataCadastro;
 		this.tempoTotal = tempoTotal;
+		this.projeto = projeto;
 	}
 	
 	public String getId()
@@ -65,19 +68,21 @@ public class Requisito implements Serializable
 		this.titulo = titulo;
 	}
 	
-	
-	
-	/**
-	 * @return the descricao
-	 */
+	public Projeto getProjeto()
+	{
+		return projeto;
+	}
+
+	public void setProjeto(Projeto projeto)
+	{
+		this.projeto = projeto;
+	}
+
 	public String getDescricao()
 	{
 		return descricao;
 	}
 
-	/**
-	 * @param descricao the descricao to set
-	 */
 	public void setDescricao(String descricao)
 	{
 		this.descricao = descricao;

@@ -11,7 +11,6 @@ import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.server.validacoes.RetornoValidacao;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoResult;
-import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -32,16 +31,13 @@ public class SalvarRequisitoActionHandler implements ActionHandler<SalvarRequisi
 	public SalvarRequisitoResult execute(SalvarRequisitoAction arg0, ExecutionContext arg1) throws ActionException
 	{
 		Requisito req = arg0.getRequisito();
-		Projeto proj = arg0.getProjeto();
 		RetornoValidacao rv = valida(req);
 		if(!rv.isOk())
 		{
 			return new SalvarRequisitoResult(rv.getErros());
 		}
-		proj.getRequisitos().add(req);
-		
-		daop.salvar(proj);
-		return new SalvarRequisitoResult(req, proj);
+		dao.salvar(req);
+		return new SalvarRequisitoResult(req, req.getProjeto());
 	}
 	
 	private RetornoValidacao valida(Requisito r)
