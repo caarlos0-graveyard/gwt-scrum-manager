@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -38,7 +39,7 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	
 	public interface AddUserView extends View
 	{
-		HasValue<String> getNome();
+		TextBox getNome();
 		
 		HasValue<String> getLogin();
 		
@@ -111,5 +112,12 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	{
 		this.usuario = usuario;
 		converter.updateView(usuario, getView());
+	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		getView().getNome().setFocus(true);
 	}
 }

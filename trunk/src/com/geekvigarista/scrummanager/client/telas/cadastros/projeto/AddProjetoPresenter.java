@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -43,7 +44,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	
 	public interface AddProjetoView extends View
 	{
-		HasValue<String> getNome();
+		TextBox getNome();
 		
 		HasValue<Date> getDtInicio();
 		
@@ -143,5 +144,12 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	{
 		this.projeto = projeto;
 		converter.updateView(projeto, getView());
+	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		getView().getNome().setFocus(true);
 	}
 }

@@ -23,8 +23,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -50,7 +50,7 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		
 		ListBox getPapeis();
 		
-		HasValue<String> getNome();
+		TextBox getNome();
 		
 		HasClickHandlers getBtSalvar();
 		
@@ -77,6 +77,7 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		super.onReveal();
 		loadPapeis();
 		loadUsuarios();
+		getView().getNome().setFocus(true);
 	}
 	
 	private void loadPapeis()

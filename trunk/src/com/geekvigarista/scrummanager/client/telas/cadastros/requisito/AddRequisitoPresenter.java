@@ -268,4 +268,11 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		}
 		
 	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		getView().titulo().setFocus(true);
+	}
 }
