@@ -45,7 +45,7 @@ public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserVie
 	}
 	
 	@Override
-	public HasValue<String> getNome()
+	public TextBox getNome()
 	{
 		return nome;
 	}

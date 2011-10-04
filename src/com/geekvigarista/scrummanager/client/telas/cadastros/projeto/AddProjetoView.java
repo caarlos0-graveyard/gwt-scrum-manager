@@ -53,7 +53,7 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 	}
 	
 	@Override
-	public HasValue<String> getNome()
+	public TextBox getNome()
 	{
 		return nome;
 	}

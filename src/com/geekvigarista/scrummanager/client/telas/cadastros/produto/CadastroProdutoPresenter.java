@@ -73,4 +73,11 @@ public class CadastroProdutoPresenter extends Presenter<CadProdutoView, CadProdu
 		this.produto = produto;
 		converter.updateView(produto, getView());
 	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		getView().descricao().setFocus(true);
+	}
 }

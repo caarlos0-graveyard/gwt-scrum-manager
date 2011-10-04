@@ -80,6 +80,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 	protected void revealInParent()
 	{
 		RevealRootContentEvent.fire(this, this);
+		getView().login().setFocus(true);
 	}
 	
 	@Override
