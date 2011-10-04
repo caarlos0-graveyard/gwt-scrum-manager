@@ -31,10 +31,6 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 	@UiField
 	DateBox dataFim;
 	@UiField
-	Button addRequisitos;
-	@UiField
-	Button addStakeholders;
-	@UiField
 	Button btSalvar;
 	@UiField
 	Hyperlink btCancelar;
@@ -82,16 +78,16 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 		return btCancelar;
 	}
 	
-	@Override
-	public Button getAddRequisitos()
-	{
-		return addRequisitos;
-	}
-	
-	@Override
-	public Button getAddStakeholders()
-	{
-		return addStakeholders;
-	}
+//	@Override
+//	public Button getAddRequisitos()
+//	{
+//		return addRequisitos;
+//	}
+//	
+//	@Override
+//	public Button getAddStakeholders()
+//	{
+//		return addStakeholders;
+//	}
 	
 }

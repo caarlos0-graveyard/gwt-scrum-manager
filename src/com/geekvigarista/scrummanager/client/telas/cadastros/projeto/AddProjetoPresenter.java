@@ -19,8 +19,10 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -51,9 +53,9 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		
 		HasValue<Date> getDtFim();
 		
-		Button getAddRequisitos();
-		
-		Button getAddStakeholders();
+		//		Button getAddRequisitos();
+		//		
+		//		Button getAddStakeholders();
 		
 		HasClickHandlers getBtCancelar();
 		
@@ -64,6 +66,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	private final PlaceManager placeManager;
 	private final IProjetoConverter converter;
 	private Projeto projeto;
+	private SalvarAction action;
 	
 	@Inject
 	public AddProjetoPresenter(final EventBus eventBus, final AddProjetoView view, final AddProjetoProxy proxy, final DispatchAsync dispatch,
@@ -73,6 +76,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		this.dispatch = dispatch;
 		this.placeManager = placeManager;
 		this.converter = converter;
+		action = new SalvarAction();
 	}
 	
 	@Override
@@ -85,48 +89,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	protected void onBind()
 	{
 		super.onBind();
-		
-		getView().getBtSalvar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doSalvar();
-			}
-		});
-		
-		getView().getAddRequisitos().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
-				placeManager.revealPlace(pr);
-			}
-		});
-	}
-	
-	public void doSalvar()
-	{
-		Projeto projetoConvertido = converter.convert(getProjeto(), getView());
-		dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
-		{
-			@Override
-			public void onSuccess(SalvarProjetoResult result)
-			{
-				if(result.getErros() == null || result.getErros().isEmpty())
-				{
-					setProjeto(result.getResponse());
-					
-					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
-					new MsgBox(msg, false);
-				}
-				else
-				{
-					new MsgBox(result.getErros(), true);
-				}
-			}
-		});
+		getView().getBtSalvar().addClickHandler(action);
+		getView().getNome().addKeyUpHandler(action);
 	}
 	
 	@Override
@@ -167,5 +131,54 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	{
 		super.onReveal();
 		getView().getNome().setFocus(true);
+	}
+	
+	private class SalvarAction implements KeyUpHandler, ClickHandler
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			doSalvar();
+		}
+		
+		@Override
+		public void onKeyUp(KeyUpEvent event)
+		{
+			if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+			{
+				doSalvar();
+			}
+		}
+	}
+	
+	public void doAvancar()
+	{
+		PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
+		placeManager.revealPlace(pr);
+	}
+	
+	public void doSalvar()
+	{
+		Projeto projetoConvertido = converter.convert(getProjeto(), getView());
+		dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
+		{
+			@Override
+			public void onSuccess(SalvarProjetoResult result)
+			{
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
+					setProjeto(result.getResponse());
+					
+					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
+					new MsgBox(msg, false);
+					doAvancar();
+				}
+				else
+				{
+					new MsgBox(result.getErros(), true);
+				}
+				
+			}
+		});
 	}
 }

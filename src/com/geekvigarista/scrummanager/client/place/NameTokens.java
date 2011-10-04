@@ -8,6 +8,7 @@ public class NameTokens
 	public static final String adduser = "!adduser";
 	public static final String addproj = "!addproj";
 	public static final String addprod = "!addprod";
+	public static final String addstaktoproj = "!addstakroproj";
 	public static final String addstak = "!addstak";
 	public static final String addreq = "!addreq";
 	public static final String addenc = "!addenc";
@@ -23,6 +24,11 @@ public class NameTokens
 	public static String getLogin()
 	{
 		return login;
+	}
+	
+	public static String getAddstaktoproj()
+	{
+		return addstaktoproj;
 	}
 	
 	public static String getHome()
