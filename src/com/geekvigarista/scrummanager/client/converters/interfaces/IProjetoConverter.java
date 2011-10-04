@@ -1,6 +1,6 @@
 package com.geekvigarista.scrummanager.client.converters.interfaces;
 
-import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.one.AddProjetoPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 
 
