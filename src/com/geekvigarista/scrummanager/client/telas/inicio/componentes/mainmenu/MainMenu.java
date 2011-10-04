@@ -70,4 +70,10 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	{
 		return inicio;
 	}
+	
+	@Override
+	public MenuItem sair()
+	{
+		return sair;
+	}
 }
