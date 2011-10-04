@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProduto;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
+import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProduto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
@@ -39,6 +41,9 @@ public class ProjetoPOJO
 	@Reference
 	private List<StakeholderPOJO> stakeholders;
 	
+	@Indexed(name = "produto")
+	private ProdutoPOJO produto;
+	
 	@Transient
 	private List<RequisitoPOJO> requisitos;
 	
@@ -57,7 +62,7 @@ public class ProjetoPOJO
 		this.dataFim = projeto.getDataFim();
 		this.dataInicio = projeto.getDataInicio();
 		this.nome = projeto.getNome();
-		
+		this.produto = new ProdutoPOJO(projeto.getProduto());
 		if(projeto.getRequisitos() != null)
 		{
 			this.requisitos = new ArrayList<RequisitoPOJO>();
@@ -87,6 +92,11 @@ public class ProjetoPOJO
 	@PrePersist
 	void prePersist()
 	{
+		if(produto != null && produto.getId() == null)
+		{
+			IDaoProduto daoP = new DaoProduto();
+			setProduto(new ProdutoPOJO(daoP.salvar(produto.getProduto())));
+		}
 		//		if(requisitos != null && !requisitos.isEmpty())
 		//		{
 		//			IDaoRequisito daoR = new DaoRequisito();
@@ -160,16 +170,16 @@ public class ProjetoPOJO
 			//XXX só para teste, este if nao vai ter...
 			if(this.requisitos == null)
 			{
-				this.projeto = new Projeto(nome, dataInicio, dataFim, stakeholders);
+				this.projeto = new Projeto(nome, dataInicio, dataFim, stakeholders, produto.getProduto());
 			}
 			else
 			{
-				this.projeto = new Projeto(nome, dataInicio, dataFim, stakeholders, requisitos);
+				this.projeto = new Projeto(nome, dataInicio, dataFim, stakeholders, requisitos, produto.getProduto());
 			}
 		}
 		else
 		{
-			this.projeto = new Projeto(this.id.toString(), nome, dataInicio, dataFim, stakeholders, requisitos);
+			this.projeto = new Projeto(this.id.toString(), nome, dataInicio, dataFim, stakeholders, requisitos, produto.getProduto());
 		}
 		return this.projeto;
 	}
@@ -237,5 +247,15 @@ public class ProjetoPOJO
 	public void setRequisitos(List<RequisitoPOJO> requisitos)
 	{
 		this.requisitos = requisitos;
+	}
+
+	public ProdutoPOJO getProduto()
+	{
+		return produto;
+	}
+
+	public void setProduto(ProdutoPOJO produto)
+	{
+		this.produto = produto;
 	}
 }
