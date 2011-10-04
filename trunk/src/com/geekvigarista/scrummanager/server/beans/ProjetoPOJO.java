@@ -87,39 +87,49 @@ public class ProjetoPOJO
 	@PrePersist
 	void prePersist()
 	{
-//		if(requisitos != null && !requisitos.isEmpty())
-//		{
-//			IDaoRequisito daoR = new DaoRequisito();
-//			List<RequisitoPOJO> requisitos = new ArrayList<RequisitoPOJO>();
-//			for(RequisitoPOJO r : this.requisitos)
-//			{
-//				if(r.getId() == null)
-//				{
-//					Requisito rSalvo = daoR.salvar(r.getRequisito());
-//					requisitos.add(new RequisitoPOJO(rSalvo));
-//				}
-//				else
-//				{
-//					requisitos.add(r);
-//				}
-//			}
-//			if(!requisitos.isEmpty())
-//			{
-//				this.requisitos.clear();
-//				this.requisitos = requisitos;
-//			}
-//			
-//		}
+		//		if(requisitos != null && !requisitos.isEmpty())
+		//		{
+		//			IDaoRequisito daoR = new DaoRequisito();
+		//			List<RequisitoPOJO> requisitos = new ArrayList<RequisitoPOJO>();
+		//			for(RequisitoPOJO r : this.requisitos)
+		//			{
+		//				if(r.getId() == null)
+		//				{
+		//					Requisito rSalvo = daoR.salvar(r.getRequisito());
+		//					requisitos.add(new RequisitoPOJO(rSalvo));
+		//				}
+		//				else
+		//				{
+		//					requisitos.add(r);
+		//				}
+		//			}
+		//			if(!requisitos.isEmpty())
+		//			{
+		//				this.requisitos.clear();
+		//				this.requisitos = requisitos;
+		//			}
+		//			
+		//		}
 	}
 	
 	@PostLoad
 	void postLoad()
 	{
-		IDaoRequisito daoR = new DaoRequisito();
-		List<Requisito> requisitos = daoR.buscarByProjeto(getProjeto());
-		for(Requisito r : requisitos)
+		try
 		{
-			projeto.getRequisitos().add(r);
+			IDaoRequisito daoR = new DaoRequisito();
+			List<Requisito> requisitos = daoR.buscarByProjeto(projeto);
+			if(requisitos != null)
+			{
+				for(Requisito r : requisitos)
+				{
+					projeto.getRequisitos().add(r);
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
@@ -136,14 +146,14 @@ public class ProjetoPOJO
 		}
 		
 		List<Requisito> requisitos = new ArrayList<Requisito>();
-		if(this.requisitos != null)
-		{
-			for(RequisitoPOJO r : this.requisitos)
-			{
-				Requisito req = r.getRequisito();
-				requisitos.add(req);
-			}
-		}
+		//		if(this.requisitos != null)
+		//		{
+		//			for(RequisitoPOJO r : this.requisitos)
+		//			{
+		//				Requisito req = r.getRequisito();
+		//				requisitos.add(req);
+		//			}
+		//		}
 		
 		if(this.id == null)
 		{
