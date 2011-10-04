@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
-import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter.AddProjetoView;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.one.AddProjetoPresenter.AddProjetoView;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
