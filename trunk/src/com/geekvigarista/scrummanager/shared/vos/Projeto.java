@@ -13,12 +13,13 @@ public class Projeto implements Serializable
 	private Date dataFim;
 	private List<Stakeholder> stakeholders;
 	private List<Requisito> requisitos;
+	private Produto produto;
 	
 	public Projeto()
 	{
 	}
 	
-	public Projeto(String nome, Date dataInicio, Date dataFim, List<Stakeholder> stakeholders, List<Requisito> requisitos)
+	public Projeto(String nome, Date dataInicio, Date dataFim, List<Stakeholder> stakeholders, List<Requisito> requisitos, Produto produto)
 	{
 		super();
 		this.nome = nome;
@@ -26,18 +27,20 @@ public class Projeto implements Serializable
 		this.dataFim = dataFim;
 		this.stakeholders = stakeholders;
 		this.requisitos = requisitos;
+		this.produto = produto;
 	}
 	
-	public Projeto(String nome, Date dataInicio, Date dataFim, List<Stakeholder> stakeholders)
+	public Projeto(String nome, Date dataInicio, Date dataFim, List<Stakeholder> stakeholders, Produto produto)
 	{
 		super();
 		this.nome = nome;
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
 		this.stakeholders = stakeholders;
+		this.produto = produto;
 	}
 	
-	public Projeto(String id, String nome, Date dataInicio, Date dataFim, List<Stakeholder> stakeholders, List<Requisito> requisitos)
+	public Projeto(String id, String nome, Date dataInicio, Date dataFim, List<Stakeholder> stakeholders, List<Requisito> requisitos, Produto produto)
 	{
 		super();
 		this.id = id;
@@ -46,6 +49,7 @@ public class Projeto implements Serializable
 		this.dataFim = dataFim;
 		this.stakeholders = stakeholders;
 		this.requisitos = requisitos;
+		this.produto = produto;
 	}
 	
 	public String getId()
@@ -107,5 +111,17 @@ public class Projeto implements Serializable
 	{
 		this.requisitos = requisitos;
 	}
+
+	public Produto getProduto()
+	{
+		return produto;
+	}
+
+	public void setProduto(Produto produto)
+	{
+		this.produto = produto;
+	}
+	
+	
 	
 }
