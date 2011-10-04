@@ -11,6 +11,7 @@ import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.server.validacoes.RetornoValidacao;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoResult;
+import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -26,18 +27,29 @@ public class SalvarRequisitoActionHandler implements ActionHandler<SalvarRequisi
 	IDaoProjeto daop = inj.getInstance(DaoProjeto.class);
 	IDaoRequisito dao = inj.getInstance(DaoRequisito.class);
 	
-	
 	@Override
 	public SalvarRequisitoResult execute(SalvarRequisitoAction arg0, ExecutionContext arg1) throws ActionException
 	{
-		Requisito req = arg0.getRequisito();
-		RetornoValidacao rv = valida(req);
-		if(!rv.isOk())
+		try
 		{
-			return new SalvarRequisitoResult(rv.getErros());
+			
+			Requisito req = arg0.getRequisito();
+			Projeto proj = arg0.getProjeto();
+			req.setProjeto(proj);
+			RetornoValidacao rv = valida(req);
+			if(!rv.isOk())
+			{
+				return new SalvarRequisitoResult(rv.getErros());
+			}
+			req = dao.salvar(req);
+			proj.setRequisitos(dao.buscarByProjeto(proj));
+			return new SalvarRequisitoResult(req, proj);
 		}
-		dao.salvar(req);
-		return new SalvarRequisitoResult(req, req.getProjeto());
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return new SalvarRequisitoResult(null);
+		}
 	}
 	
 	private RetornoValidacao valida(Requisito r)
@@ -46,7 +58,8 @@ public class SalvarRequisitoActionHandler implements ActionHandler<SalvarRequisi
 		if(r == null)
 		{
 			erros.add("Que coisa, seu requisito tava nulo.");
-		}else
+		}
+		else
 		{
 			if(r.getTitulo() == null || r.getTitulo().isEmpty())
 			{
@@ -69,7 +82,7 @@ public class SalvarRequisitoActionHandler implements ActionHandler<SalvarRequisi
 				erros.add("Ei manolo, coloque um tempo total também !");
 			}
 		}
-		RetornoValidacao rv = (erros.isEmpty())?new RetornoValidacao(true):new RetornoValidacao(false,erros);
+		RetornoValidacao rv = (erros.isEmpty()) ? new RetornoValidacao(true) : new RetornoValidacao(false, erros);
 		return rv;
 	}
 	
