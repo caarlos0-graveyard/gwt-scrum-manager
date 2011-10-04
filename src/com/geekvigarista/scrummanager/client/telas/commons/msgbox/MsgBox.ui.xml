@@ -1,14 +1,16 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:d="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.defaultbox">
 	<ui:style>
 		
 	</ui:style>
 	<g:HTMLPanel>
-		<g:PopupPanel animationEnabled="true" autoHideEnabled="true"
-			autoHideOnHistoryEventsEnabled="true" glassEnabled="true" modal="true"
-			ui:field="popup" styleName="msg">
-			<g:HorizontalPanel ui:field="horizontalPanel" width="600px" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_TOP"></g:HorizontalPanel>
-			</g:PopupPanel>
+		<d:DefaultDialogBox animationEnabled="true"
+			autoHideEnabled="true" autoHideOnHistoryEventsEnabled="true"
+			glassEnabled="true" modal="true" ui:field="popup" styleName="msg">
+			<g:HorizontalPanel ui:field="horizontalPanel"
+				width="600px" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_TOP"></g:HorizontalPanel>
+		</d:DefaultDialogBox>
 	</g:HTMLPanel>
 </ui:UiBinder> 

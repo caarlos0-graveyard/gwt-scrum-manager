@@ -48,7 +48,7 @@ public class LoginHandler implements ActionHandler<LoginUsuarioAction, BuscarUsu
 			if(login == null || login.isEmpty())
 			{
 				System.out.println("Ei, tire a mão do macaco.");
-				throw new ActionException("Digite pelo menos o login, se voce ainda quizer logar.");
+				throw new ActionException("Digite pelo menos o login, se você ainda quiser logar.");
 			}
 			
 			Usuario user = isUsuarioValido(login, senha);
@@ -59,7 +59,6 @@ public class LoginHandler implements ActionHandler<LoginUsuarioAction, BuscarUsu
 				return new BuscarUsuarioObjResult(erros);
 			}
 			
-			//XXX nao sei se isso funciona, teoriacamente guarda o cara na session
 			requestProvider.get().getSession().setAttribute("USUARIO", user);
 			
 			return new BuscarUsuarioObjResult(user);

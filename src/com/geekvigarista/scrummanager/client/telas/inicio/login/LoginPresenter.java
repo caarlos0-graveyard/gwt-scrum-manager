@@ -16,7 +16,9 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -40,6 +42,8 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 		TextBox login();
 		
 		TextBox passwd();
+		
+		CheckBox lembrar();
 		
 		HasClickHandlers btlogin();
 	}
@@ -108,6 +112,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 	{
 		String login = getView().login().getValue();
 		String senha = getView().passwd().getValue();
+		final boolean lembrar = getView().lembrar().getValue().booleanValue();
 		dispatcher.execute(new LoginUsuarioAction(login, senha), new AbstractCallback<BuscarUsuarioObjResult>()
 		{
 			@Override
@@ -116,7 +121,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 				if(result.getResponse() != null)
 				{
 					setUsuario(result.getResponse());
-					getEventBus().fireEvent(new LoginAuthenticateEvent(getUsuario()));
+					getEventBus().fireEvent(new LoginAuthenticateEvent(getUsuario(), lembrar));
 					if(caminhoAnterior != null)
 					{
 						History.newItem(caminhoAnterior);
@@ -146,6 +151,15 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 			doLogin();
 		}
 		
+	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		getView().login().setText(Cookies.getCookie("user"));
+		getView().passwd().setText(Cookies.getCookie("senha"));
+		getView().lembrar().setValue(true);
 	}
 	
 	public Usuario getUsuario()

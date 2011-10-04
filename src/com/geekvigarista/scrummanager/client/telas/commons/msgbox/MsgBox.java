@@ -3,9 +3,13 @@ package com.geekvigarista.scrummanager.client.telas.commons.msgbox;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultDialogBox;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -20,7 +24,7 @@ public class MsgBox extends Composite
 	private static MsgBoxUiBinder uiBinder = GWT.create(MsgBoxUiBinder.class);
 	
 	@UiField
-	PopupPanel popup;
+	DefaultDialogBox popup;
 	
 	@UiField
 	HorizontalPanel horizontalPanel;
@@ -87,5 +91,4 @@ public class MsgBox extends Composite
 		};
 		t.schedule(60000);
 	}
-	
 }
