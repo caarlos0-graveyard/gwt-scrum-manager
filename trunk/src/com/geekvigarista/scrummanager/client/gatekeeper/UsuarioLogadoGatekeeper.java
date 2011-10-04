@@ -6,6 +6,9 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.events.LoginAuthenticateEvent;
 import com.geekvigarista.scrummanager.client.events.LoginAuthenticatedEventHandler;
+import com.geekvigarista.scrummanager.client.events.LogoutEvent;
+import com.geekvigarista.scrummanager.client.events.LogoutEventHandler;
+import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioObjResult;
 import com.geekvigarista.scrummanager.shared.commands.usuario.login.VerificaUsuarioLogadoAction;
@@ -17,6 +20,8 @@ import com.google.inject.Singleton;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.dispatch.shared.DispatchRequest;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 @Singleton
 public class UsuarioLogadoGatekeeper implements Gatekeeper
@@ -25,16 +30,16 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 	private Usuario usuario;
 	private final EventBus eventBus;
 	private final DispatchAsync dispatcher;
-	
-	private static final String useridcookie = "uid";
+	private final PlaceManager placeManager;
 	
 	@Inject
-	public UsuarioLogadoGatekeeper(final EventBus eventBus, final DispatchAsync dispatcher)
+	public UsuarioLogadoGatekeeper(final EventBus eventBus, final DispatchAsync dispatcher, final PlaceManager placeManager)
 	{
 		super();
 		System.out.println("UsuarioLogadoGatekeeper.UsuarioLogadoGatekeeper()");
 		this.eventBus = eventBus;
 		this.dispatcher = dispatcher;
+		this.placeManager = placeManager;
 		this.eventBus.addHandler(LoginAuthenticateEvent.getType(), new LoginAuthenticatedEventHandler()
 		{
 			@Override
@@ -54,6 +59,18 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 					Cookies.removeCookie("user");
 					Cookies.removeCookie("senha");
 				}
+			}
+		});
+		
+		this.eventBus.addHandler(LogoutEvent.getType(), new LogoutEventHandler()
+		{
+			@Override
+			public void onLogout(LogoutEvent logoutEvent)
+			{
+				System.out.println("Aqui no gatekeepper porra caralho");
+				usuario = null;
+				PlaceRequest pr = new PlaceRequest(NameTokens.login);
+				placeManager.revealPlace(pr);
 			}
 		});
 	}
