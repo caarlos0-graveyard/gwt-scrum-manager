@@ -1,9 +1,11 @@
 package com.geekvigarista.scrummanager.client.gin;
 
+import com.geekvigarista.scrummanager.client.converters.ProdutoConverter;
 import com.geekvigarista.scrummanager.client.converters.ProjetoConverter;
 import com.geekvigarista.scrummanager.client.converters.RequisitoConverter;
 import com.geekvigarista.scrummanager.client.converters.StakeholderConverter;
 import com.geekvigarista.scrummanager.client.converters.UsuarioConverter;
+import com.geekvigarista.scrummanager.client.converters.interfaces.IProdutoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IRequisitoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderConverter;
@@ -23,6 +25,8 @@ public class ViewBeanConverterModule extends AbstractGinModule
 		bind(IUsuarioConverter.class).to(UsuarioConverter.class);
 		
 		bind(IRequisitoConverter.class).to(RequisitoConverter.class);
+		
+		bind(IProdutoConverter.class).to(ProdutoConverter.class);
 	}
 	
 }
