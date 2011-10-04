@@ -34,24 +34,6 @@
 						<db:DefaultDateBox ui:field="dataFim"></db:DefaultDateBox>
 					</g:customCell>
 				</g:row>
-				<g:row>
-					<g:customCell>
-						<g:Label />
-					</g:customCell>
-					<g:customCell>
-						<g:Button ui:field="addRequisitos" text="{msg.addRequisitos}"
-							width="150px" enabled="false" title="{msg.necessarioSalvarProjeto}"></g:Button>
-					</g:customCell>
-				</g:row>
-				<g:row>
-					<g:customCell>
-						<g:Label text="" />
-					</g:customCell>
-					<g:customCell>
-						<g:Button ui:field="addStakeholders" text="{msg.addStakeholders}"
-							width="150px" enabled="false" title="{msg.necessarioSalvarProjeto}"></g:Button>
-					</g:customCell>
-				</g:row>
 			</g:Grid>
 			<g:Cell width="100%">
 				<g:HorizontalPanel width="348px">
@@ -63,7 +45,7 @@
 					</g:Cell>
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">
-						<g:Button text="{msg.salvar}" ui:field="btSalvar"></g:Button>
+						<g:Button text="{msg.avancar}" ui:field="btSalvar"></g:Button>
 					</g:Cell>
 				</g:HorizontalPanel>
 			</g:Cell>

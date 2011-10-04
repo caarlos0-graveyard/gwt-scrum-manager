@@ -47,13 +47,6 @@ public class ProjetoConverter implements IProjetoConverter
 			u.getDtFim().setValue(t.getDataFim());
 			u.getDtInicio().setValue(t.getDataInicio());
 			u.getNome().setValue(t.getNome());
-			u.getAddRequisitos().setEnabled(true);
-			u.getAddStakeholders().setEnabled(true);
-		}
-		else
-		{
-			u.getAddRequisitos().setEnabled(false);
-			u.getAddStakeholders().setEnabled(false);
 		}
 	}
 	

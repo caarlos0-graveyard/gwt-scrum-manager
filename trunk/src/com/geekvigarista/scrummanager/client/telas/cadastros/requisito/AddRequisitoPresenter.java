@@ -10,6 +10,7 @@ import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultRichTextArea;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
@@ -27,12 +28,10 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -42,6 +41,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -72,11 +72,15 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		
 		TextBox titulo();
 		
-		RichTextArea descricao();
+		DefaultRichTextArea descricao();
 		
 		ListBox prioridade();
 		
 		HasClickHandlers getBtCancelar();
+		
+		HasClickHandlers getBtAvancar();
+		
+		HasClickHandlers getBtVoltar();
 		
 		HasClickHandlers getBtSalvar();
 		
@@ -88,17 +92,19 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 	}
 	
 	private final DispatchAsync dispatcher;
+	private final PlaceManager placeManager;
 	private Projeto projeto;
 	private Requisito requisito;
 	private final IRequisitoConverter converter;
 	
 	@Inject
 	public AddRequisitoPresenter(final EventBus eventBus, final AddRequisitoView view, final AddRequisitoProxy proxy, final DispatchAsync dispatcher,
-			final IRequisitoConverter converter)
+			final IRequisitoConverter converter, final PlaceManager placeManager)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.converter = converter;
+		this.placeManager = placeManager;
 		for(PrioridadeRequisito p : PrioridadeRequisito.values())
 		{
 			getView().prioridade().addItem(p.desc(), p.name());
@@ -133,6 +139,22 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		getView().prioridade().addKeyUpHandler(handler);
 		getView().titulo().addKeyUpHandler(handler);
 		getView().tempoEstimado().addKeyUpHandler(handler);
+		getView().getBtVoltar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doVoltar();
+			}
+		});
+		getView().getBtAvancar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doAvancar();
+			}
+		});
 		getView().selectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler()
 		{
 			@Override
@@ -217,10 +239,16 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 			@Override
 			public void onSuccess(ExcluirRequisitoResult result)
 			{
-				Window.alert("WIN");
-				// TODO tem que alterar pra ter no result o projeto atualizado, ou a lista de requisitos atulizada.
-				getProjeto().getRequisitos().remove(req);
-				setProjeto(getProjeto());
+				if(result.getResponse())
+				{
+					setProjeto(getProjeto());
+					doNovo();
+					new MsgBox("Excluido com sucesso!", false); //FIXME msg
+				}
+				else
+				{
+					new MsgBox("Ocorreu um erro ao excluir", true); //FIXME msg
+				}
 			}
 		});
 	}
@@ -236,6 +264,18 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 		setRequisito(getView().selectionModel().getSelectedObject());
 	}
 	
+	public void doAvancar()
+	{
+		PlaceRequest pr = new PlaceRequest(NameTokens.addstaktoproj).with(Parameters.projid, projeto != null ? projeto.getId() : "null");
+		placeManager.revealPlace(pr);
+	}
+	
+	public void doVoltar()
+	{
+		PlaceRequest pr = new PlaceRequest(NameTokens.addproj).with(Parameters.projid, projeto != null ? projeto.getId() : "null");
+		placeManager.revealPlace(pr);
+	}
+	
 	public void doSalvar()
 	{
 		Requisito req = converter.convert(getRequisito(), getView());
@@ -245,13 +285,16 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 			@Override
 			public void onSuccess(SalvarRequisitoResult result)
 			{
-				if(result.getErros() == null || result.getErros().isEmpty()){
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
 					setRequisito(result.getResponse());
 					setProjeto(result.getProjeto());
 					
 					String msg = "Requisito " + result.getResponse().getTitulo() + " salvo com sucesso";
 					new MsgBox(msg, false);
-				}else{
+				}
+				else
+				{
 					new MsgBox(result.getErros(), true);
 				}
 			}

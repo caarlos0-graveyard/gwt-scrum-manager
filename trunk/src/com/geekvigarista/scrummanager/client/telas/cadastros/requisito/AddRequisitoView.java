@@ -2,6 +2,7 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.requisito;
 
 import java.util.List;
 
+import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultRichTextArea;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -19,7 +20,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.gwtplatform.mvp.client.ViewImpl;
-import com.google.gwt.user.client.ui.RichTextArea;
 
 public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.AddRequisitoView
 {
@@ -48,6 +48,12 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	ListBox prioridade;
 	
 	@UiField
+	Button btAvancar;
+	
+	@UiField
+	Button btVoltar;
+	
+	@UiField
 	Button btSalvar;
 	
 	@UiField
@@ -66,7 +72,7 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	Button btRm;
 	
 	@UiField
-	RichTextArea descricao;
+	DefaultRichTextArea descricao;
 	
 	private RequisitoItemsFactory requisitosFactory = null;
 	
@@ -104,12 +110,6 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	}
 	
 	@Override
-	public HasClickHandlers getBtSalvar()
-	{
-		return btSalvar;
-	}
-	
-	@Override
 	public IntegerBox tempoEstimado()
 	{
 		return tempoEstimado;
@@ -140,6 +140,12 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	}
 	
 	@Override
+	public DefaultRichTextArea descricao()
+	{
+		return descricao;
+	}
+	
+	@Override
 	public Button btAdd()
 	{
 		return btAdd;
@@ -152,8 +158,20 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	}
 	
 	@Override
-	public RichTextArea descricao()
+	public HasClickHandlers getBtAvancar()
 	{
-		return descricao;
+		return btAvancar;
+	}
+	
+	@Override
+	public HasClickHandlers getBtVoltar()
+	{
+		return btVoltar;
+	}
+	
+	@Override
+	public HasClickHandlers getBtSalvar()
+	{
+		return btSalvar;
 	}
 }

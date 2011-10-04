@@ -46,6 +46,12 @@ public interface Mensagem extends Constants
 	
 	public String lembrarme();
 	
+	public String avancar();
+	
+	public String voltar();
+	
+	public String requisito();
+	
 	/*
 	 * Home
 	 */
@@ -113,7 +119,7 @@ public interface Mensagem extends Constants
 	public String anexos();
 	
 	public String semRequisitos();
-
+	
 	public String status();
 	
 	public String efetuarlogin();
