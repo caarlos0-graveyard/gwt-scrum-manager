@@ -10,6 +10,7 @@ public class Usuario implements Serializable
 	private String senha;
 	private String nome;
 	
+	private String confirmacaoSenha;
 	private boolean administrador;
 	
 	public Usuario()
@@ -75,17 +76,25 @@ public class Usuario implements Serializable
 	{
 		this.nome = nome;
 	}
-
+	
 	public boolean isAdministrador()
 	{
 		return administrador;
 	}
-
+	
 	public void setAdministrador(boolean administrador)
 	{
 		this.administrador = administrador;
 	}
 	
+	public String getConfirmacaoSenha()
+	{
+		return confirmacaoSenha;
+	}
 	
+	public void setConfirmacaoSenha(String confirmacaoSenha)
+	{
+		this.confirmacaoSenha = confirmacaoSenha;
+	}
 	
 }

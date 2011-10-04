@@ -74,6 +74,12 @@ public class SalvarUsuarioActionHandler implements ActionHandler<SalvarUsuarioAc
 			else if(u.getSenha().length() <= 6)
 			{
 				erros.add("A senha deve ter pelo menos 6 caracteres");
+			}else if(u.getConfirmacaoSenha() == null || u.getConfirmacaoSenha().isEmpty())
+			{
+				erros.add("O campo de confirmação de senha deve ser preenchido, animal !");
+			}else if(!u.getSenha().equals(u.getConfirmacaoSenha()))
+			{
+				erros.add("A senha deve ser igual a confirmação de senha.");
 			}
 		}
 		

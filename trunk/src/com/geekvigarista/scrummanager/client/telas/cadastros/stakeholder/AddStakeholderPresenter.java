@@ -9,6 +9,7 @@ import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderObjResult;
@@ -135,7 +136,18 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 			@Override
 			public void onSuccess(SalvarStakeholderResult result)
 			{
-				setStakeholder(result.getResponse());
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
+					setStakeholder(result.getResponse());
+					
+					String msg = "Stakeholder " + stakeholder.getNome() + " salvo com sucesso";
+					new MsgBox(msg, false);
+				}
+				else
+				{
+					new MsgBox(result.getErros(), true);
+				}
+				
 			}
 		});
 	}
