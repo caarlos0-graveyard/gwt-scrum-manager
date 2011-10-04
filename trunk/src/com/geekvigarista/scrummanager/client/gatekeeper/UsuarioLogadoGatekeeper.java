@@ -12,8 +12,10 @@ import com.geekvigarista.scrummanager.shared.commands.usuario.login.VerificaUsua
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Timer;
 import com.google.inject.Singleton;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
+import com.gwtplatform.dispatch.shared.DispatchRequest;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 
 @Singleton
@@ -40,9 +42,18 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 			{
 				usuario = event.getUsuario();
 				
-				final long DURATION = 1000 * 60 * 60 * 24 * 14; // duas semanas
-				Date expires = new Date(System.currentTimeMillis() + DURATION);
-				Cookies.setCookie(useridcookie, usuario.getId(), expires, null, "/", false);
+				if(event.isLembrar())
+				{
+					final long DURATION = 1000 * 60 * 60 * 24 * 14; // duas semanas
+					Date expires = new Date(System.currentTimeMillis() + DURATION);
+					Cookies.setCookie("user", usuario.getLogin(), expires, null, "/", false);
+					Cookies.setCookie("senha", usuario.getSenha(), expires, null, "/", false);
+				}
+				else
+				{
+					Cookies.removeCookie("user");
+					Cookies.removeCookie("senha");
+				}
 			}
 		});
 	}
@@ -61,20 +72,31 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 	{
 		if(usuario == null || usuario.getId() == null)
 		{
-			usuario = new Usuario();
-//			usuario.setId(Cookies.getCookie(useridcookie));
-			dispatcher.execute(new VerificaUsuarioLogadoAction(), new AbstractCallback<BuscarUsuarioObjResult>()
+			usuario = null;
+			final DispatchRequest request = dispatcher.execute(new VerificaUsuarioLogadoAction(), new AbstractCallback<BuscarUsuarioObjResult>()
 			{
-
+				
 				@Override
 				public void onSuccess(BuscarUsuarioObjResult result)
 				{
 					usuario = result.getResponse();
-					System.out.println("UsuarioLogadoGatekeeper.getUsuario().new AbstractCallback() {...}.onSuccess() " + usuario);
 				}
 			});
+			
+			new Timer()
+			{
+				@Override
+				public void run()
+				{
+					if(!request.isPending())
+					{
+						this.cancel();
+					}
+				}
+			}.scheduleRepeating(100);
 		}
 		
+		System.out.println("UsuarioLogadoGatekeeper.getUsuario() return " + usuario != null ? usuario.getNome() : "null");
 		return usuario;
 	}
 }

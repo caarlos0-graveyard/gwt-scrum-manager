@@ -35,7 +35,12 @@
 								<g:Label></g:Label>
 							</g:customCell>
 							<g:customCell>
-								<g:Button ui:field="btlogin" text="{msg.login}"></g:Button>
+								<g:HorizontalPanel spacing="3">
+									<g:Button ui:field="btlogin" text="{msg.login}"></g:Button>
+									<g:Cell verticalAlignment="ALIGN_MIDDLE">
+										<g:CheckBox text="{msg.lembrarme}" ui:field="lembrar"/>
+									</g:Cell>
+								</g:HorizontalPanel>
 							</g:customCell>
 						</g:row>
 					</g:Grid>

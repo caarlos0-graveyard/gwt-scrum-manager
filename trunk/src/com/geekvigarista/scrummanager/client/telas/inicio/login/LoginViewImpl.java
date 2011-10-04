@@ -8,6 +8,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -34,6 +35,9 @@ public class LoginViewImpl extends ViewImpl implements LoginPresenter.LoginView
 	
 	@UiField
 	Button btlogin;
+	
+	@UiField
+	CheckBox lembrar;
 	
 	@UiField
 	VerticalPanel vpTudo;
@@ -74,6 +78,12 @@ public class LoginViewImpl extends ViewImpl implements LoginPresenter.LoginView
 	public HasClickHandlers btlogin()
 	{
 		return btlogin;
+	}
+	
+	@Override
+	public CheckBox lembrar()
+	{
+		return lembrar;
 	}
 	
 }

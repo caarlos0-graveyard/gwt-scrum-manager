@@ -44,6 +44,7 @@ public interface Mensagem extends Constants
 	
 	public String seusProjetos();
 	
+	public String lembrarme();
 	
 	/*
 	 * Home

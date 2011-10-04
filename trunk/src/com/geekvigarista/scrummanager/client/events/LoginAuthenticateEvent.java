@@ -14,21 +14,28 @@ public class LoginAuthenticateEvent extends GwtEvent<LoginAuthenticatedEventHand
 		return TYPE;
 	}
 	
-	public static void fire(EventBus eventBus, Usuario currentUser)
+	public static void fire(EventBus eventBus, Usuario currentUser, boolean lembrar)
 	{
-		eventBus.fireEvent(new LoginAuthenticateEvent(currentUser));
+		eventBus.fireEvent(new LoginAuthenticateEvent(currentUser, lembrar));
 	}
 	
 	private final Usuario currentUser;
+	private final boolean lembrar;
 	
-	public LoginAuthenticateEvent(Usuario currentUser)
+	public LoginAuthenticateEvent(Usuario currentUser, boolean lembrar)
 	{
 		this.currentUser = currentUser;
+		this.lembrar = lembrar;
 	}
 	
 	public Usuario getUsuario()
 	{
 		return currentUser;
+	}
+	
+	public boolean isLembrar()
+	{
+		return lembrar;
 	}
 	
 	@Override
