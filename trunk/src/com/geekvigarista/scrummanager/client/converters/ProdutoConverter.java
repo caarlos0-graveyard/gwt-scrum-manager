@@ -19,7 +19,7 @@ public class ProdutoConverter implements IProdutoConverter
 			produto.setId(t.getId());
 		}
 		
-		produto.setDescricao(t.getDescricao());
+		produto.setDescricao(v.descricao().getValue());
 		
 		return produto;
 	}

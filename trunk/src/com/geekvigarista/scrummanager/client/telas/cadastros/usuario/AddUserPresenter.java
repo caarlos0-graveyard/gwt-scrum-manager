@@ -93,9 +93,12 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 			{
 				if(result.getErros() == null || result.getErros().isEmpty())
 				{
-					String msg = "Usuario " + result.getResponse().getNome() + " salvo com sucesso";;
+					String msg = "Usuario " + result.getResponse().getNome() + " salvo com sucesso";
 					new MsgBox(msg, false);
-				}else{
+					setUsuario(result.getResponse());
+				}
+				else
+				{
 					new MsgBox(result.getErros(), true);
 				}
 			}

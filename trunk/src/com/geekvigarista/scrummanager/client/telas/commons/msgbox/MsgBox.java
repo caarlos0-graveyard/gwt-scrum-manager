@@ -5,16 +5,12 @@ import java.util.List;
 
 import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultDialogBox;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -87,8 +83,9 @@ public class MsgBox extends Composite
 			public void run()
 			{
 				popup.hide();
+				this.cancel();
 			}
 		};
-		t.schedule(60000);
+		t.schedule(error ? 15000 : 5000);
 	}
 }
