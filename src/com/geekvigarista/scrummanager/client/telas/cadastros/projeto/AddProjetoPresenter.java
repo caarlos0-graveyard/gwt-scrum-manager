@@ -9,6 +9,7 @@ import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
@@ -90,15 +91,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				Projeto projetoConvertido = converter.convert(getProjeto(), getView());
-				dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
-				{
-					@Override
-					public void onSuccess(SalvarProjetoResult result)
-					{
-						setProjeto(result.getResponse());
-					}
-				});
+				doSalvar();
 			}
 		});
 		
@@ -109,6 +102,29 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 			{
 				PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
 				placeManager.revealPlace(pr);
+			}
+		});
+	}
+	
+	public void doSalvar()
+	{
+		Projeto projetoConvertido = converter.convert(getProjeto(), getView());
+		dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
+		{
+			@Override
+			public void onSuccess(SalvarProjetoResult result)
+			{
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
+					setProjeto(result.getResponse());
+					
+					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
+					new MsgBox(msg, false);
+				}
+				else
+				{
+					new MsgBox(result.getErros(), true);
+				}
 			}
 		});
 	}

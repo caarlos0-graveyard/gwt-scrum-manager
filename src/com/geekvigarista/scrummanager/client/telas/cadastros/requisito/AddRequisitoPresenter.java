@@ -9,6 +9,7 @@ import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
@@ -244,9 +245,15 @@ public class AddRequisitoPresenter extends Presenter<AddRequisitoPresenter.AddRe
 			@Override
 			public void onSuccess(SalvarRequisitoResult result)
 			{
-				setRequisito(result.getResponse());
-				setProjeto(result.getProjeto());
-				System.out.println("LULZ");
+				if(result.getErros() == null || result.getErros().isEmpty()){
+					setRequisito(result.getResponse());
+					setProjeto(result.getProjeto());
+					
+					String msg = "Requisito " + result.getResponse().getTitulo() + " salvo com sucesso";
+					new MsgBox(msg, false);
+				}else{
+					new MsgBox(result.getErros(), true);
+				}
 			}
 		});
 	}
