@@ -39,35 +39,42 @@ public class LoginHandler implements ActionHandler<LoginUsuarioAction, BuscarUsu
 	@Override
 	public BuscarUsuarioObjResult execute(LoginUsuarioAction action, ExecutionContext context) throws ActionException
 	{
-		
-		String login = action.getLogin();
-		String senha = action.getSenha();
-		
-		// Verify that the input is valid.
-		if(login == null || login.isEmpty())
+		try
 		{
-			// If the input is not valid, throw an IllegalArgumentException back
-			// to
-			// the client.
-			System.out.println("Ei, tire a mão do macaco.");
-			throw new ActionException("Digite pelo menos o login, se voce ainda quizer logar.");
+			
+			String login = action.getLogin();
+			String senha = action.getSenha();
+			
+			if(login == null || login.isEmpty())
+			{
+				System.out.println("Ei, tire a mão do macaco.");
+				throw new ActionException("Digite pelo menos o login, se voce ainda quizer logar.");
+			}
+			
+			Usuario user = isUsuarioValido(login, senha);
+			if(user == null)
+			{
+				List<String> erros = new ArrayList<String>();
+				erros.add("Deu erro ao logar. Verifique seu login e senha");
+				return new BuscarUsuarioObjResult(erros);
+			}
+			
+			//XXX nao sei se isso funciona, teoriacamente guarda o cara na session
+			requestProvider.get().getSession().setAttribute("USUARIO", user);
+			
+			return new BuscarUsuarioObjResult(user);
 		}
-		
-		Usuario user = isUsuarioValido(login, senha);
-		if(user == null)
+		catch(NullPointerException e1)
 		{
-			List<String> erros = new ArrayList<String>();
-			erros.add("Deu erro ao logar. Verifique seu login e senha");
-			return new BuscarUsuarioObjResult(erros);
+			throw new ActionException("Ops, parece que seu usuário e/ou senha estão erradas...");
 		}
-		
-		//XXX nao sei se isso funciona, teoriacamente guarda o cara na session
-		requestProvider.get().getSession().setAttribute("USUARIO", user);
-		
-		return new BuscarUsuarioObjResult(user);
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			throw new ActionException("Bad, bad server, no donuts for you.");
+		}
 	}
 	
-	/* This method should be using spring-security or something like that */
 	private Usuario isUsuarioValido(String username, String password)
 	{
 		Usuario user = dao.login(username, password);
