@@ -65,7 +65,11 @@ public class EncaminhamentoPOJO
 		else
 		{
 			this.encaminhamento = encaminhamento;
-			this.stakeholder = new StakeholderPOJO(encaminhamento.getStakeholder());
+			
+			if(encaminhamento.getStakeholder() != null)
+			{
+				this.stakeholder = new StakeholderPOJO(encaminhamento.getStakeholder());
+			}
 			
 			if(encaminhamento.getEncaminhamentoAnterior() != null)
 			{
@@ -102,7 +106,7 @@ public class EncaminhamentoPOJO
 			IDaoEncaminhamento dao = new DaoEncaminhamento();
 			setEncaminhamentoAnterior(new EncaminhamentoPOJO(dao.salvar(encaminhamentoAnterior.getEncaminhamento())));
 		}
-		if(stakeholder.getId() == null)
+		if(stakeholder != null && stakeholder.getId() == null)
 		{
 			IDaoStakeholder daoStake = new DaoStakeholder();
 			setStakeholder(new StakeholderPOJO(daoStake.salvar(stakeholder.getStakeholder())));
