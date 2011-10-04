@@ -95,8 +95,6 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 				}
 			}.scheduleRepeating(100);
 		}
-		
-		System.out.println("UsuarioLogadoGatekeeper.getUsuario() return " + usuario != null ? usuario.getNome() : "null");
 		return usuario;
 	}
 }
