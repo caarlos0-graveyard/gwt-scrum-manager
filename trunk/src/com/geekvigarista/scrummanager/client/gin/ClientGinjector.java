@@ -1,10 +1,12 @@
 package com.geekvigarista.scrummanager.client.gin;
 
+import com.geekvigarista.scrummanager.client.converters.interfaces.IProdutoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IRequisitoConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderConverter;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IUsuarioConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
@@ -59,6 +61,8 @@ public interface ClientGinjector extends Ginjector
 	
 	AsyncProvider<ListaProjetosUsuarioPresenter> getListaProjetosUsuarioPresenter();
 	
+	AsyncProvider<CadastroProdutoPresenter> getCadastroProdutoPresenter();
+	
 	/*
 	 * Providers de gatekeepers
 	 */
@@ -72,6 +76,8 @@ public interface ClientGinjector extends Ginjector
 	IStakeholderConverter getStakeholderConverter();
 	
 	IUsuarioConverter getUsuarioConverter();
+	
+	IProdutoConverter getProdutoConverter();
 	
 	IRequisitoConverter getIRequisitoConverter();
 }
