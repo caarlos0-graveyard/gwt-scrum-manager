@@ -19,6 +19,7 @@ import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.Ex
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.LoadUsuarioActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.SalvarUsuarioActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.login.LoginHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.usuario.login.VerificaUsuarioLogadoHandler;
 import com.geekvigarista.scrummanager.shared.commands.encaminhamento.excluir.ExcluirEncaminhamentoAction;
 import com.geekvigarista.scrummanager.shared.commands.encaminhamento.salvar.SalvarEncaminhamentoAction;
 import com.geekvigarista.scrummanager.shared.commands.produto.load.LoadProdutoAction;
@@ -37,6 +38,7 @@ import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuar
 import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.excluir.ExcluirUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.login.LoginUsuarioAction;
+import com.geekvigarista.scrummanager.shared.commands.usuario.login.VerificaUsuarioLogadoAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
@@ -75,6 +77,7 @@ public class ServerModule extends HandlerModule
 		bindHandler(ExcluirUsuarioAction.class, ExcluirUsuarioActionHandler.class);
 		bindHandler(BuscarUsuarioAction.class, BuscarUsuarioActionHandler.class);
 		bindHandler(LoginUsuarioAction.class, LoginHandler.class);
+		bindHandler(VerificaUsuarioLogadoAction.class, VerificaUsuarioLogadoHandler.class);
 	}
 	
 	private void configureProjeto()
