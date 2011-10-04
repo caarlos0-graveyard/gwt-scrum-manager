@@ -4,6 +4,14 @@
 	color: 363636;
 }
 
+#carregando {
+	with: 100%;
+	text-align: center;
+	font-size: 3em;
+	color: #777;
+	text-shadow: 0 0 10px #f0f0f0;
+}
+
 .tituloGigante {
 	font-size: 4em;
 	font-weight: bold;
