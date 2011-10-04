@@ -28,9 +28,6 @@ public class UsuarioPOJO
 	
 	private boolean administrador;
 	
-	@Transient
-	private String confirmacaoSenha;
-	
 	/**
 	 * Construtor vazio de UsuarioPojo.
 	 * @deprecated nao instanciar, usar o outro construtor recebendo usuario.
@@ -88,16 +85,6 @@ public class UsuarioPOJO
 	public void setId(ObjectId id)
 	{
 		this.id = id;
-	}
-	
-	public String getConfirmacaoSenha()
-	{
-		return confirmacaoSenha;
-	}
-	
-	public void setConfirmacaoSenha(String confirmacaoSenha)
-	{
-		this.confirmacaoSenha = confirmacaoSenha;
 	}
 	
 	public String getLogin()

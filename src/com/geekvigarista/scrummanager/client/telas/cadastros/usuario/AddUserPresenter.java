@@ -6,6 +6,7 @@ import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserView;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;
@@ -14,7 +15,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
@@ -91,8 +91,13 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 			@Override
 			public void onSuccess(SalvarUsuarioResult result)
 			{
-				Window.alert("LOL " + result.getErros()); //TODO
-				Window.alert("LOL " + result.getResponse().getNome()); //TODO
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
+					String msg = "Usuario " + result.getResponse().getNome() + " salvo com sucesso";;
+					new MsgBox(msg, false);
+				}else{
+					new MsgBox(result.getErros(), true);
+				}
 			}
 		});
 	}

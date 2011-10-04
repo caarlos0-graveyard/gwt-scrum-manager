@@ -22,7 +22,7 @@ public class StakeholderConverter implements IStakeholderConverter
 			stakeholder.setId(stakeholderAnterior.getId());
 		}
 		
-		return null;
+		return stakeholder;
 	}
 	
 	@Override
