@@ -7,7 +7,7 @@ import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderC
 import com.geekvigarista.scrummanager.client.converters.interfaces.IUsuarioConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter;
-import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.one.AddProjetoPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
