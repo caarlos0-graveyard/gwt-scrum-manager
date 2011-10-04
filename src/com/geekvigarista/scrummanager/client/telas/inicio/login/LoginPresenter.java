@@ -16,7 +16,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -58,6 +58,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 	private final DispatchAsync dispatcher;
 	private Usuario usuario;
 	private final PlaceManager placeManager;
+	private String caminhoAnterior;
 	
 	/*
 	 * Construtores
@@ -88,8 +89,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 		String r = request.getParameter(Parameters.u, null);
 		if(r != null)
 		{
-			// FIXME quando criar a tela de msg bonitnha :D
-			Window.alert("voce nao possui permissao para acessar " + r + ". Efetue login e tente novamente!");
+			caminhoAnterior = r;
 		}
 	}
 	
@@ -112,9 +112,19 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 			@Override
 			public void onSuccess(BuscarUsuarioObjResult result)
 			{
-				setUsuario(result.getResponse());
-				getEventBus().fireEvent(new LoginAuthenticateEvent(getUsuario()));
-				placeManager.revealPlace(new PlaceRequest(NameTokens.home));
+				if(result.getResponse() != null)
+				{
+					setUsuario(result.getResponse());
+					getEventBus().fireEvent(new LoginAuthenticateEvent(getUsuario()));
+					if(caminhoAnterior != null)
+					{
+						History.newItem(caminhoAnterior);
+					}
+					else
+					{
+						placeManager.revealPlace(new PlaceRequest(NameTokens.home));
+					}
+				}
 			}
 		});
 	}

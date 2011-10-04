@@ -36,5 +36,4 @@ public abstract class AbstractCallback<T> implements AsyncCallback<T>
 		}
 		new MsgBox(mensagens, true);
 	}
-	
 }

@@ -1,5 +1,6 @@
 package com.geekvigarista.scrummanager.client.telas.commons.msgbox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -33,11 +34,28 @@ public class MsgBox extends Composite
 	{
 	}
 	
+	public MsgBox(String mensagem, boolean error)
+	{
+		List<String> mensagens = new ArrayList<String>();
+		mensagens.add(mensagem);
+		buildMsgBox(mensagens, error);
+	}
+	
 	public MsgBox(List<String> mensagens, boolean error)
 	{
+		buildMsgBox(mensagens, error);
+	}
+	
+	private void buildMsgBox(List<String> mensagens, boolean error)
+	{
+		// bind inicial
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		// vertical panel
 		VerticalPanel vpmsgs = new VerticalPanel();
 		Label l;
+		
+		// itera as msgs adicionando os labels...
 		for(String m : mensagens)
 		{
 			l = new Label(m);
@@ -47,16 +65,18 @@ public class MsgBox extends Composite
 			l.setWidth("490px");
 		}
 		
+		// add elas
 		horizontalPanel.add(vpmsgs);
 		
+		// cria o label do emoticon :)
 		l = new Label(error ? ":(" : ":)");
 		l.addStyleName(error ? resources.css().emoticonErro() : resources.css().emoticonSucesso());
 		horizontalPanel.add(l);
 		
-		System.out.println(l.getText());
-		
+		// centraliza o popup
 		popup.center();
 		
+		// fecha o popup automagicamente depois de 1min
 		Timer t = new Timer()
 		{
 			@Override

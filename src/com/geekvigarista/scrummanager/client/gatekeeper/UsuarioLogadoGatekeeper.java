@@ -6,10 +6,14 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.events.LoginAuthenticateEvent;
 import com.geekvigarista.scrummanager.client.events.LoginAuthenticatedEventHandler;
+import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioObjResult;
+import com.geekvigarista.scrummanager.shared.commands.usuario.login.VerificaUsuarioLogadoAction;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.inject.Singleton;
+import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 
 @Singleton
@@ -18,15 +22,17 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 	
 	private Usuario usuario;
 	private final EventBus eventBus;
+	private final DispatchAsync dispatcher;
 	
 	private static final String useridcookie = "uid";
 	
 	@Inject
-	public UsuarioLogadoGatekeeper(final EventBus eventBus)
+	public UsuarioLogadoGatekeeper(final EventBus eventBus, final DispatchAsync dispatcher)
 	{
 		super();
 		System.out.println("UsuarioLogadoGatekeeper.UsuarioLogadoGatekeeper()");
 		this.eventBus = eventBus;
+		this.dispatcher = dispatcher;
 		this.eventBus.addHandler(LoginAuthenticateEvent.getType(), new LoginAuthenticatedEventHandler()
 		{
 			@Override
@@ -56,7 +62,17 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 		if(usuario == null || usuario.getId() == null)
 		{
 			usuario = new Usuario();
-			usuario.setId(Cookies.getCookie(useridcookie));
+//			usuario.setId(Cookies.getCookie(useridcookie));
+			dispatcher.execute(new VerificaUsuarioLogadoAction(), new AbstractCallback<BuscarUsuarioObjResult>()
+			{
+
+				@Override
+				public void onSuccess(BuscarUsuarioObjResult result)
+				{
+					usuario = result.getResponse();
+					System.out.println("UsuarioLogadoGatekeeper.getUsuario().new AbstractCallback() {...}.onSuccess() " + usuario);
+				}
+			});
 		}
 		
 		return usuario;
