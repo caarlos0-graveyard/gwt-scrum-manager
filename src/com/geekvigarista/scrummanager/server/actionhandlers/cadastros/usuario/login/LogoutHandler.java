@@ -37,8 +37,7 @@ public class LogoutHandler implements ActionHandler<LogoutUsuarioAction, BuscarU
 	{
 		try
 		{
-			System.out.println("Tirou o malaco da session caraio");
-			requestProvider.get().removeAttribute("USUARIO");
+			requestProvider.get().getSession().removeAttribute("USUARIO");
 			return new BuscarUsuarioObjResult(new Usuario());
 		}
 		catch(Exception e)

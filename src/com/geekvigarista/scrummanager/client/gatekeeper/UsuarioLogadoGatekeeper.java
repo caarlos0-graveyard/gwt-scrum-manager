@@ -36,7 +36,6 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 	public UsuarioLogadoGatekeeper(final EventBus eventBus, final DispatchAsync dispatcher, final PlaceManager placeManager)
 	{
 		super();
-		System.out.println("UsuarioLogadoGatekeeper.UsuarioLogadoGatekeeper()");
 		this.eventBus = eventBus;
 		this.dispatcher = dispatcher;
 		this.placeManager = placeManager;
@@ -67,7 +66,6 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 			@Override
 			public void onLogout(LogoutEvent logoutEvent)
 			{
-				System.out.println("Aqui no gatekeepper porra caralho");
 				usuario = null;
 				PlaceRequest pr = new PlaceRequest(NameTokens.login);
 				placeManager.revealPlace(pr);
