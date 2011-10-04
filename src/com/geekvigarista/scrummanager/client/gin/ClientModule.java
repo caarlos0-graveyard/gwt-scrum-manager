@@ -7,8 +7,8 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.produto.AddProdutoV
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter.CadProdutoProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter.CadProdutoView;
-import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
-import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoView;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.one.AddProjetoPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.one.AddProjetoView;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoView;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
