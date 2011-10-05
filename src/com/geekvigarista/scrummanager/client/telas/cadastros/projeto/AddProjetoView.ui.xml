@@ -20,6 +20,14 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
+						<g:Label text="Produto"/>
+					</g:customCell>
+					<g:customCell>
+						<db:DefaultListBox ui:field="produtos"/>
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
 						<g:Label text="{msg.dataInicio}" />
 					</g:customCell>
 					<g:customCell>

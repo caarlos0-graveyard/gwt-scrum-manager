@@ -1,6 +1,8 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.projeto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -10,11 +12,15 @@ import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultListBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.shared.commands.produto.busca.BuscaTodosProdutosAction;
+import com.geekvigarista.scrummanager.shared.commands.produto.busca.BuscarProdutoListResult;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoResult;
+import com.geekvigarista.scrummanager.shared.vos.Produto;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -57,6 +63,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		//		
 		//		Button getAddStakeholders();
 		
+		DefaultListBox getLBProdutos();
+		
 		HasClickHandlers getBtCancelar();
 		
 		HasClickHandlers getBtSalvar();
@@ -67,6 +75,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	private final IProjetoConverter converter;
 	private Projeto projeto;
 	private SalvarAction action;
+	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	@Inject
 	public AddProjetoPresenter(final EventBus eventBus, final AddProjetoView view, final AddProjetoProxy proxy, final DispatchAsync dispatch,
@@ -115,21 +124,11 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		});
 	}
 	
-	public Projeto getProjeto()
-	{
-		return projeto;
-	}
-	
-	public void setProjeto(Projeto projeto)
-	{
-		this.projeto = projeto;
-		converter.updateView(projeto, getView());
-	}
-	
 	@Override
 	protected void onReveal()
 	{
 		super.onReveal();
+		doReloadProdutos();
 		getView().getNome().setFocus(true);
 	}
 	
@@ -157,9 +156,21 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		placeManager.revealPlace(pr);
 	}
 	
+	public void doReloadProdutos()
+	{
+		dispatch.execute(new BuscaTodosProdutosAction(), new AbstractCallback<BuscarProdutoListResult>()
+		{
+			@Override
+			public void onSuccess(BuscarProdutoListResult result)
+			{
+				setProdutos(result.getResponse());
+			}
+		});
+	}
+	
 	public void doSalvar()
 	{
-		Projeto projetoConvertido = converter.convert(getProjeto(), getView());
+		Projeto projetoConvertido = converter.convert(getProjeto(), getView(), getProdutos());
 		dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
 		{
 			@Override
@@ -177,8 +188,45 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 				{
 					new MsgBox(result.getErros(), true);
 				}
-				
 			}
 		});
 	}
+	
+	public Projeto getProjeto()
+	{
+		return projeto;
+	}
+	
+	public void setProjeto(Projeto projeto)
+	{
+		this.projeto = projeto;
+		converter.updateView(projeto, getView());
+	}
+	
+	public List<Produto> getProdutos()
+	{
+		return produtos;
+	}
+	
+	public void setProdutos(List<Produto> produtos)
+	{
+		this.produtos = produtos;
+		for(Produto p : produtos)
+		{
+			getView().getLBProdutos().addItem(p.getDescricao());
+		}
+		if(getProjeto() != null && getProjeto().getProduto() != null)
+		{
+			int index = -1;
+			for(Produto p : produtos)
+			{
+				if(projeto.getProduto().getDescricao() != null &&  p.getDescricao() != null && p.getDescricao().equals(projeto.getProduto().getDescricao()))
+				{
+					index = produtos.indexOf(p);
+				}
+			}
+			getView().getLBProdutos().setSelectedIndex(index);
+		}
+	}
+	
 }
