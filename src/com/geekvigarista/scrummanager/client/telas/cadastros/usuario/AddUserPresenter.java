@@ -3,6 +3,7 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.usuario;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IUsuarioConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
+import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserView;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
@@ -19,15 +20,16 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
+public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserProxy>
 {
 	
 	@ProxyCodeSplit
@@ -53,20 +55,24 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 		
 		HasClickHandlers getBtCancelar();
 		
+		HasClickHandlers getNovo();
+		
 	}
 	
 	private final DispatchAsync dispatcher;
 	private final IUsuarioConverter converter;
+	private final PlaceManager placeManager;
 	private Usuario usuario;
 	
 	@Inject
 	public AddUserPresenter(final EventBus eventBus, final AddUserView view, final AddUserProxy proxy, final DispatchAsync dispatcher,
-			final IUsuarioConverter converter)
+			final IUsuarioConverter converter, final PlaceManager placeManager)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.converter = converter;
 		this.usuario = new Usuario();
+		this.placeManager = placeManager;
 	}
 	
 	@Override
@@ -78,31 +84,28 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				salvar();
+				doSalvar();
 			}
 		}));
-	}
-	
-	private void salvar()
-	{
-		Usuario usuario = converter.convert(getUsuario(), getView());
-		dispatcher.execute(new SalvarUsuarioAction(usuario), new AbstractCallback<SalvarUsuarioResult>()
+		
+		getView().getNovo().addClickHandler(new ClickHandler()
 		{
 			@Override
-			public void onSuccess(SalvarUsuarioResult result)
+			public void onClick(ClickEvent event)
 			{
-				if(result.getErros() == null || result.getErros().isEmpty())
-				{
-					String msg = "Usuario " + result.getResponse().getNome() + " salvo com sucesso";
-					new MsgBox(msg, false);
-					setUsuario(result.getResponse());
-				}
-				else
-				{
-					new MsgBox(result.getErros(), true);
-				}
+				doNovo();
 			}
 		});
+		
+		getView().getBtCancelar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doCancelar();
+			}
+		});
+		
 	}
 	
 	@Override
@@ -127,5 +130,40 @@ public class AddUserPresenter extends Presenter<AddUserView, AddUserProxy>
 	{
 		super.onReveal();
 		getView().getNome().setFocus(true);
+	}
+	
+	@Override
+	public void doSalvar()
+	{
+		Usuario usuario = converter.convert(getUsuario(), getView());
+		dispatcher.execute(new SalvarUsuarioAction(usuario), new AbstractCallback<SalvarUsuarioResult>()
+		{
+			@Override
+			public void onSuccess(SalvarUsuarioResult result)
+			{
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
+					String msg = "Usuario " + result.getResponse().getNome() + " salvo com sucesso";
+					new MsgBox(msg, false);
+					setUsuario(result.getResponse());
+				}
+				else
+				{
+					new MsgBox(result.getErros(), true);
+				}
+			}
+		});
+	}
+
+	@Override
+	public void doNovo()
+	{
+		setUsuario(new Usuario());
+	}
+
+	@Override
+	public void doCancelar()
+	{
+		placeManager.revealPlace(new PlaceRequest(NameTokens.home));
 	}
 }

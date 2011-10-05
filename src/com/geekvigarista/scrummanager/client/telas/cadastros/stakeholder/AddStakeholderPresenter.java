@@ -8,6 +8,7 @@ import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderC
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
+import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
@@ -27,16 +28,16 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.AddStakeholderView, AddStakeholderPresenter.AddStakeholderProxy>
+public class AddStakeholderPresenter extends SimpleCadPresenter<AddStakeholderPresenter.AddStakeholderView, AddStakeholderPresenter.AddStakeholderProxy>
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addstak)
@@ -56,20 +57,24 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		HasClickHandlers getBtSalvar();
 		
 		HasClickHandlers getBtCancelar();
+		
+		HasClickHandlers getBtNovo();
 	}
 	
 	private final DispatchAsync dispatcher;
 	private final IStakeholderConverter converter;
 	private Stakeholder stakeholder;
 	private List<Usuario> usuariosSistema;
+	private final PlaceManager placeManager;
 	
 	@Inject
 	public AddStakeholderPresenter(final EventBus eventBus, final AddStakeholderView view, final AddStakeholderProxy proxy,
-			final DispatchAsync dispatcher, final IStakeholderConverter converter)
+			final DispatchAsync dispatcher, final IStakeholderConverter converter, PlaceManager placeManager)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.converter = converter;
+		this.placeManager = placeManager;
 	}
 	
 	@Override
@@ -125,9 +130,26 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 				doSalvar();
 			}
 		});
+		getView().getBtCancelar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doCancelar();
+			}
+		});
+		getView().getBtNovo().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doNovo();
+			}
+		});
 	}
 	
-	private void doSalvar()
+	@Override
+	public void doSalvar()
 	{
 		
 		Stakeholder stakeholderConvertido = converter.convert(getStakeholder(), getView(), usuariosSistema);
@@ -180,9 +202,16 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 		});
 	}
 	
+	@Override
 	public void doNovo()
 	{
-		// TODO
+		setStakeholder(new Stakeholder());
+	}
+	
+	@Override
+	public void doCancelar()
+	{
+		placeManager.revealPlace(new PlaceRequest(NameTokens.home));
 	}
 	
 	public Stakeholder getStakeholder()
@@ -192,7 +221,14 @@ public class AddStakeholderPresenter extends Presenter<AddStakeholderPresenter.A
 	
 	public void setStakeholder(Stakeholder stakeholder)
 	{
-		this.stakeholder = stakeholder;
+		if(stakeholder == null)
+		{
+			this.stakeholder = new Stakeholder();
+		}else{
+			this.stakeholder = stakeholder;
+		}
+		converter.updateView(stakeholder, getView(),usuariosSistema);
+		getView().getNome().setFocus(true);
 	}
 	
 	public void populaCadastro()
