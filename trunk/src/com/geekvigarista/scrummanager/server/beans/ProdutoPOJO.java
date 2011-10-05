@@ -19,11 +19,19 @@ public class ProdutoPOJO
 	
 	public ProdutoPOJO(Produto produto)
 	{
-		if(produto.getId() != null)
+		if(produto == null)
 		{
-			this.id = new ObjectId(produto.getId());
+			this.id = null;
+			this.descricao = null;
 		}
-		this.descricao = produto.getDescricao();
+		else
+		{
+			if(produto.getId() != null)
+			{
+				this.id = new ObjectId(produto.getId());
+			}
+			this.descricao = produto.getDescricao();
+		}
 	}
 	
 	public Produto getProduto()

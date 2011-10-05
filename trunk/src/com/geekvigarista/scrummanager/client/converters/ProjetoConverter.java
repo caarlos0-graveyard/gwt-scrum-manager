@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConverter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter.AddProjetoView;
+import com.geekvigarista.scrummanager.shared.vos.Produto;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
@@ -26,6 +27,7 @@ public class ProjetoConverter implements IProjetoConverter
 	}
 	
 	@Override
+	@Deprecated
 	public Projeto convert(Projeto projeto, AddProjetoView v)
 	{
 		boolean projetoNull = projeto == null || projeto.getId() == null;
@@ -48,6 +50,21 @@ public class ProjetoConverter implements IProjetoConverter
 			u.getDtInicio().setValue(t.getDataInicio());
 			u.getNome().setValue(t.getNome());
 		}
+	}
+	
+	@Override
+	public Projeto convert(Projeto t, AddProjetoView v, List<Produto> produtos)
+	{
+		Projeto p = convert(t, v);
+		p.setProduto(produtos.get(v.getLBProdutos().getSelectedIndex()));
+		return p;
+	}
+	
+	@Override
+	public void updateView(Projeto t, AddProjetoView u, List<Produto> produtos)
+	{
+		updateView(t, u);
+		u.getLBProdutos().setSelectedIndex(produtos.indexOf(t.getProduto()));
 	}
 	
 }

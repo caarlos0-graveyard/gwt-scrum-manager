@@ -2,6 +2,7 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.projeto;
 
 import java.util.Date;
 
+import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultListBox;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -36,6 +37,7 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 	Hyperlink btCancelar;
 	@UiField
 	HTMLPanel conteudo;
+	@UiField DefaultListBox produtos;
 	
 	public AddProjetoView()
 	{
@@ -76,6 +78,12 @@ public class AddProjetoView extends ViewImpl implements AddProjetoPresenter.AddP
 	public HasClickHandlers getBtCancelar()
 	{
 		return btCancelar;
+	}
+
+	@Override
+	public DefaultListBox getLBProdutos()
+	{
+		return produtos;
 	}
 	
 //	@Override

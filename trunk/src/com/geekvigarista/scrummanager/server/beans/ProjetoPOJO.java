@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
-import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProduto;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
-import com.geekvigarista.scrummanager.server.persistencia.dao.DaoProduto;
 import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
@@ -58,6 +56,8 @@ public class ProjetoPOJO
 	{
 		// TODO avoid nullpointers
 		super();
+		if(projeto == null)
+			projeto = new Projeto();
 		this.projeto = projeto;
 		this.dataFim = projeto.getDataFim();
 		this.dataInicio = projeto.getDataInicio();
@@ -89,38 +89,38 @@ public class ProjetoPOJO
 		
 	}
 	
-	@PrePersist
-	void prePersist()
-	{
-		if(produto != null && produto.getId() == null)
-		{
-			IDaoProduto daoP = new DaoProduto();
-			setProduto(new ProdutoPOJO(daoP.salvar(produto.getProduto())));
-		}
-		//		if(requisitos != null && !requisitos.isEmpty())
-		//		{
-		//			IDaoRequisito daoR = new DaoRequisito();
-		//			List<RequisitoPOJO> requisitos = new ArrayList<RequisitoPOJO>();
-		//			for(RequisitoPOJO r : this.requisitos)
-		//			{
-		//				if(r.getId() == null)
-		//				{
-		//					Requisito rSalvo = daoR.salvar(r.getRequisito());
-		//					requisitos.add(new RequisitoPOJO(rSalvo));
-		//				}
-		//				else
-		//				{
-		//					requisitos.add(r);
-		//				}
-		//			}
-		//			if(!requisitos.isEmpty())
-		//			{
-		//				this.requisitos.clear();
-		//				this.requisitos = requisitos;
-		//			}
-		//			
-		//		}
-	}
+//	@PrePersist
+//	void prePersist()
+//	{
+//		if(produto != null && produto.getId() == null)
+//		{
+////			IDaoProduto daoP = new DaoProduto();
+//			setProduto(new ProdutoPOJO(produto.getProduto()));
+//		}
+//		//		if(requisitos != null && !requisitos.isEmpty())
+//		//		{
+//		//			IDaoRequisito daoR = new DaoRequisito();
+//		//			List<RequisitoPOJO> requisitos = new ArrayList<RequisitoPOJO>();
+//		//			for(RequisitoPOJO r : this.requisitos)
+//		//			{
+//		//				if(r.getId() == null)
+//		//				{
+//		//					Requisito rSalvo = daoR.salvar(r.getRequisito());
+//		//					requisitos.add(new RequisitoPOJO(rSalvo));
+//		//				}
+//		//				else
+//		//				{
+//		//					requisitos.add(r);
+//		//				}
+//		//			}
+//		//			if(!requisitos.isEmpty())
+//		//			{
+//		//				this.requisitos.clear();
+//		//				this.requisitos = requisitos;
+//		//			}
+//		//			
+//		//		}
+//	}
 	
 	@PostLoad
 	void postLoad()

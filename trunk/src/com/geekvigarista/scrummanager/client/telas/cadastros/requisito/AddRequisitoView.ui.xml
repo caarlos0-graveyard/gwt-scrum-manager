@@ -5,7 +5,7 @@
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
 
-	<g:HTMLPanel ui:field="conteudo">
+	<g:HTMLPanel ui:field="conteudo" width="900px">
 		<g:Label text="{msg.cadastroDe}{msg.requisitos}" styleName="titulo1" />
 		<hr />
 		<g:HorizontalPanel width="">
@@ -79,10 +79,10 @@
 				</g:Grid>
 				<g:Cell>
 					<g:Button text="{msg.salvar} {msg.requisito}" ui:field="btSalvar"
-								width="100px"></g:Button>
+						width="150px"></g:Button>
 				</g:Cell>
 				<g:Cell>
-					<g:HorizontalPanel>
+					<g:HorizontalPanel width="" horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" styleName="marginBotoesRequisitos">
 						<g:Label />
 						<g:Cell verticalAlignment="ALIGN_MIDDLE">
 							<g:Anchor text="{msg.cancelar}" ui:field="btCancelar"
