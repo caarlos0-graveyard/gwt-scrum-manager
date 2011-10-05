@@ -33,6 +33,8 @@ public class AddStakeholderView extends ViewImpl implements AddStakeholderPresen
 	Hyperlink btCancelar;
 	@UiField
 	Button btSalvar;
+	@UiField 
+	Button btNovo;
 	
 	public AddStakeholderView()
 	{
@@ -76,4 +78,9 @@ public class AddStakeholderView extends ViewImpl implements AddStakeholderPresen
 		return btCancelar;
 	}
 	
+	@Override
+	public HasClickHandlers getBtNovo()
+	{
+		return btNovo;
+	}
 }

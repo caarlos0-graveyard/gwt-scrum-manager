@@ -15,13 +15,15 @@
 						<g:Label text="{msg.descricao}" />
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultTextBox ui:field="descricao" />
+						<db:DefaultTextBox ui:field="descricao" width="278px" />
 					</g:customCell>
 				</g:row>
 			</g:Grid>
 			<g:Cell width="100%">
 				<g:HorizontalPanel width="348px">
-					<g:Label width="180px" />
+					<g:Label width="20px" height="4px"/>
+					<g:Button styleName="botaoNovo" ui:field="btNovo">+</g:Button>
+					<g:Label width="102px" height="7px" />
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">
 						<g:Anchor text="{msg.cancelar}" ui:field="btCancelar" />

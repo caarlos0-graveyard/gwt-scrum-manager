@@ -35,6 +35,9 @@ public class AddProdutoView extends ViewImpl implements CadProdutoView
 	@UiField
 	Button btSalvar;
 	
+	@UiField
+	Button btNovo;
+	
 	@Override
 	public Widget asWidget()
 	{
@@ -57,6 +60,12 @@ public class AddProdutoView extends ViewImpl implements CadProdutoView
 	public Button salvar()
 	{
 		return btSalvar;
+	}
+	
+	@Override
+	public Button novo()
+	{
+		return btNovo;
 	}
 	
 }

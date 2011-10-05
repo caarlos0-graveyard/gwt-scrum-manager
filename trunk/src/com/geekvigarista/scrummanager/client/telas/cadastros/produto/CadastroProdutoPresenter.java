@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProdutoConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
+import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter.CadProdutoProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter.CadProdutoView;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
@@ -23,7 +24,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -33,7 +33,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class CadastroProdutoPresenter extends Presenter<CadProdutoView, CadProdutoProxy>
+public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView, CadProdutoProxy>
 {
 	public interface CadProdutoView extends View
 	{
@@ -42,6 +42,8 @@ public class CadastroProdutoPresenter extends Presenter<CadProdutoView, CadProdu
 		Anchor cancelar();
 		
 		Button salvar();
+		
+		Button novo();
 	}
 	
 	@ProxyCodeSplit
@@ -104,12 +106,37 @@ public class CadastroProdutoPresenter extends Presenter<CadProdutoView, CadProdu
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				placeManager.revealPlace(new PlaceRequest(NameTokens.home));
+				doCancelar();
+			}
+		});
+		getView().novo().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doNovo();
 			}
 		});
 	}
 	
-	private void doSalvar()
+	private class SalvarHandler implements ClickHandler, KeyUpHandler
+	{
+		@Override
+		public void onKeyUp(KeyUpEvent event)
+		{
+			if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				doSalvar();
+		}
+		
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			doSalvar();
+		}
+	}
+
+	@Override
+	public void doSalvar()
 	{
 		Produto p = converter.convert(getProduto(), getView());
 		dispatch.execute(new SalvarProdutoAction(p), new AbstractCallback<SalvarProdutoResult>()
@@ -130,21 +157,23 @@ public class CadastroProdutoPresenter extends Presenter<CadProdutoView, CadProdu
 			}
 		});
 	}
-	
-	private class SalvarHandler implements ClickHandler, KeyUpHandler
+
+	@Override
+	public void doNovo()
 	{
-		@Override
-		public void onKeyUp(KeyUpEvent event)
-		{
-			if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
-				doSalvar();
-		}
-		
-		@Override
-		public void onClick(ClickEvent event)
-		{
-			doSalvar();
-		}
+		setProduto(new Produto());
+	}
+
+	@Override
+	public void doCancelar()
+	{
+		placeManager.revealPlace(new PlaceRequest(NameTokens.home));
+	}
+
+	@Override
+	public void doExcluir()
+	{
+		// TODO vai excluir ?
 		
 	}
 }

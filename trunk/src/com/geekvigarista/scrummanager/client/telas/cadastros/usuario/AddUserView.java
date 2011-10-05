@@ -38,6 +38,8 @@ public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserVie
 	Hyperlink btCancelar;
 	@UiField
 	Button btSalvar;
+	@UiField 
+	Button btNovo;
 	
 	public AddUserView()
 	{
@@ -90,6 +92,12 @@ public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserVie
 	public HasValue<Boolean> getAdministrador()
 	{
 		return administrador;
+	}
+	
+	@Override
+	public HasClickHandlers getNovo()
+	{
+		return btNovo;
 	}
 	
 }
