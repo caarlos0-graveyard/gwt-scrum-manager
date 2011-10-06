@@ -30,7 +30,7 @@
 					</g:Cell>
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">
-						<g:Button text="{msg.salvar}" ui:field="btSalvar"></g:Button>
+						<g:Button text="{msg.salvar}" ui:field="btSalvar" styleName="button"></g:Button>
 					</g:Cell>
 				</g:HorizontalPanel>
 			</g:Cell>
