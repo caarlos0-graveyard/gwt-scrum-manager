@@ -143,6 +143,7 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 					
 					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
 					new MsgBox(msg, false);
+					placeManager.revealPlace(new PlaceRequest(NameTokens.scrum).with(Parameters.projid, result.getResponse().getId()));
 				}
 				else
 				{
