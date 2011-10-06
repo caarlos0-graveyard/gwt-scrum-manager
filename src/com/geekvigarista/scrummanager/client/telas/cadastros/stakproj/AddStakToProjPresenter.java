@@ -11,13 +11,19 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCa
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjView;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
+import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoAction;
+import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoResult;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderAction;
 import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderListResult;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -37,6 +43,10 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 	{
 		void updateStakes(List<Stakeholder> stakeholders);
 		
+		HasClickHandlers btAvancar();
+		
+		HasClickHandlers btVoltar();
+		
 		List<Stakeholder> getSelecionados();
 	}
 	
@@ -51,7 +61,6 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 	private final PlaceManager placeManager;
 	private Projeto projeto;
 	private List<Stakeholder> stakeholders;
-	private List<Stakeholder> stakeholdersSelecionados;
 	private DispatchRequest loadProjeto;
 	
 	@Inject
@@ -78,21 +87,7 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 		{
 			return;
 		}
-		
 		doLoadProjeto(id);
-	}
-	
-	private void doLoadProjeto(String id)
-	{
-		loadProjeto = dispatch.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
-		{
-			@Override
-			public void onSuccess(LoadProjetoResult result)
-			{
-				setProjeto(result.getProjeto());
-				stakeholdersSelecionados = projeto.getStakeholders();
-			}
-		});
 	}
 	
 	@Override
@@ -104,8 +99,75 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 			@Override
 			public void onSuccess(BuscarStakeholderListResult result)
 			{
-				Window.alert(result.getResponse().size()+"");
 				setStakeholders(result.getResponse());
+			}
+		});
+	}
+	
+	@Override
+	protected void onBind()
+	{
+		super.onBind();
+		getView().btVoltar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doVoltar();
+			}
+		});
+		getView().btAvancar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				doSalvar();
+			}
+		});
+	}
+	
+	@Override
+	public void doSalvar()
+	{
+		List<Stakeholder> stakeSelecionados = getView().getSelecionados();
+		projeto.setStakeholders(stakeSelecionados);
+		
+		dispatch.execute(new SalvarProjetoAction(projeto), new AbstractCallback<SalvarProjetoResult>()
+		{
+			@Override
+			public void onSuccess(SalvarProjetoResult result)
+			{
+				if(result.getErros() == null || result.getErros().isEmpty())
+				{
+					setProjeto(result.getResponse());
+					
+					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
+					new MsgBox(msg, false);
+					//					doAvancar();
+				}
+				else
+				{
+					new MsgBox(result.getErros(), true);
+				}
+			}
+		});
+		
+	}
+	
+	public void doVoltar()
+	{
+		PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null");
+		placeManager.revealPlace(pr);
+	}
+	
+	private void doLoadProjeto(String id)
+	{
+		loadProjeto = dispatch.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
+		{
+			@Override
+			public void onSuccess(LoadProjetoResult result)
+			{
+				setProjeto(result.getProjeto());
 			}
 		});
 	}
@@ -127,18 +189,8 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 	
 	public void setStakeholders(List<Stakeholder> stakeholders)
 	{
-		System.out.println(stakeholders);
 		this.stakeholders = stakeholders;
-	}
-	
-	public List<Stakeholder> getStakeholdersSelecionados()
-	{
-		return stakeholdersSelecionados;
-	}
-	
-	public void setStakeholdersSelecionados(List<Stakeholder> stakeholdersSelecionados)
-	{
-		this.stakeholdersSelecionados = stakeholdersSelecionados;
+		getView().updateStakes(stakeholders);
 	}
 	
 }

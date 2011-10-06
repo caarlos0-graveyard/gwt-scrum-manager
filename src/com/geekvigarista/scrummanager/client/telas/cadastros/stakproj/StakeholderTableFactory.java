@@ -13,7 +13,7 @@ import com.google.gwt.view.client.ProvidesKey;
 
 public class StakeholderTableFactory
 {
-	private final CellTable<Stakeholder> tabela;
+	private final CellTable<Stakeholder> cellTable;
 	private final ListDataProvider<Stakeholder> dataProvider;
 	private final ProvidesKey<Stakeholder> KEY_PROVIDER;
 	private final MultiSelectionModel<Stakeholder> selectionModel;
@@ -31,11 +31,11 @@ public class StakeholderTableFactory
 		
 		selectionModel = new MultiSelectionModel<Stakeholder>();
 		dataProvider = new ListDataProvider<Stakeholder>();
-		tabela = new CellTable<Stakeholder>(KEY_PROVIDER);
-		dataProvider.addDataDisplay(tabela);
-		tabela.setSelectionModel(selectionModel);
-		tabela.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		tabela.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		cellTable = new CellTable<Stakeholder>(KEY_PROVIDER);
+		dataProvider.addDataDisplay(cellTable);
+		cellTable.setSelectionModel(selectionModel);
+		cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		initColumns();
 	}
 	
@@ -55,17 +55,17 @@ public class StakeholderTableFactory
 			@Override
 			public String getValue(Stakeholder object)
 			{
-				return object.getNome() + " (" + (object.getUsuario() != null ? object.getUsuario().getLogin() : "null") + ")";
+				return object.getNome() + " (" + (object.getUsuario() != null ? object.getUsuario().getLogin() : "null") + ") " + object.getId();
 			}
 		};
 		
-		tabela.addColumn(checkColumn);
-		tabela.addColumn(nomeColumn, "Nome sstakeholder - Usuario");
+		cellTable.addColumn(checkColumn);
+		cellTable.addColumn(nomeColumn, "Nome sstakeholder - Usuario");
 	}
 	
 	public CellTable<Stakeholder> getTabela()
 	{
-		return tabela;
+		return cellTable;
 	}
 	
 	public ListDataProvider<Stakeholder> getDataProvider()
