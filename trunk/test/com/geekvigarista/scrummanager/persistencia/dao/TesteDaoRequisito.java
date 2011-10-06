@@ -33,7 +33,7 @@ public class TesteDaoRequisito
 		Stakeholder stk = new Stakeholder();
 		stk.setNome("rushahaha");
 		stk.setPapel(PapelStakeholder.DESENVOLVEDOR);
-		stk.setUsuario(new Usuario("rushahaha", "rushahaha", "rushahaha"));
+//		stk.setUsuario(new Usuario("rushahaha", "rushahaha", "rushahaha"));
 		
 		Encaminhamento e = new Encaminhamento();
 		e.setData( new Date());
