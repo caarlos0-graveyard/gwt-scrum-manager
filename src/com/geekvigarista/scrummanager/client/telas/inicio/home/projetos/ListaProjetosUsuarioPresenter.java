@@ -82,6 +82,7 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
 				String projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto().getId();
+				System.out.println("projeto : " + projeto);
 				PlaceRequest pr = new PlaceRequest(NameTokens.scrum).with(Parameters.projid, projeto);
 				placemanager.revealPlace(pr);
 			}

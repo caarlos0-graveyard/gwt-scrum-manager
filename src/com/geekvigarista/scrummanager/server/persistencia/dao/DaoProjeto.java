@@ -8,10 +8,12 @@ import org.bson.types.ObjectId;
 import com.geekvigarista.scrummanager.server.beans.ProjetoPOJO;
 import com.geekvigarista.scrummanager.server.beans.StakeholderPOJO;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoProjeto;
+import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
 import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoStakeholder;
 import com.geekvigarista.scrummanager.server.persistencia.utils.MongoConnection;
 import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
+import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.code.morphia.Datastore;
@@ -135,6 +137,22 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 		
 		return projetosRetorno;
 		
+	}
+	
+	@Override
+	public Projeto carregarRequisitos(Projeto projeto)
+	{
+		if(projeto == null || projeto.getId() == null)
+		{
+			return null;
+		}
+		
+		IDaoRequisito daoR = new DaoRequisito();
+		Projeto retorno = new Projeto();
+		
+		List<Requisito> reqs = daoR.buscarByProjeto(projeto);
+		retorno.setRequisitos(reqs);
+		return retorno;
 	}
 	
 	@Override

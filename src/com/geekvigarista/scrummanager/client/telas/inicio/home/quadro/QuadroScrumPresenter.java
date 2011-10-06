@@ -12,6 +12,7 @@ import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumView;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.CarregarRequisitosNoProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
@@ -72,30 +73,39 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{
-				List<ColunaQuadroScrum> colunas = constroiColunas(result.getProjeto());
-				getView().setColunas(colunas);
+				constroiColunas(result.getProjeto());
 			}
 		});
 	}
 	
-	private List<ColunaQuadroScrum> constroiColunas(Projeto projeto)
+	private void constroiColunas(Projeto projeto)
 	{
-		if(projeto == null || projeto.getRequisitos() == null)
-			return null;
-		List<ColunaQuadroScrum> colunas = new ArrayList<ColunaQuadroScrum>();
-		for(StatusRequisito sr : StatusRequisito.values())
+		if(projeto == null || projeto.getId() == null)
 		{
-			List<Requisito> requisitos = new ArrayList<Requisito>();
-			for(Requisito r : projeto.getRequisitos())
-			{
-				if(r.getEncaminhamentos().get(r.getEncaminhamentos().size() - 1).getStatus().equals(sr))
-				{
-					requisitos.add(r);
-				}
-			}
-			colunas.add(new ColunaQuadroScrum(requisitos, sr.desc()));
+			return;
 		}
-		return colunas;
+		
+		dispatcher.execute(new CarregarRequisitosNoProjetoAction(projeto), new AbstractCallback<LoadProjetoResult>()
+		{
+			@Override
+			public void onSuccess(LoadProjetoResult result)
+			{
+				List<ColunaQuadroScrum> colunas = new ArrayList<ColunaQuadroScrum>();
+				for(StatusRequisito sr : StatusRequisito.values())
+				{
+					List<Requisito> requisitos = new ArrayList<Requisito>();
+					for(Requisito r : result.getProjeto().getRequisitos())
+					{
+						if(r.getEncaminhamentos().get(r.getEncaminhamentos().size() - 1).getStatus().equals(sr))
+						{
+							requisitos.add(r);
+						}
+					}
+					colunas.add(new ColunaQuadroScrum(requisitos, sr.desc()));
+				}
+				getView().setColunas(colunas);
+			}
+		});
 	}
 	
 	@Override
@@ -103,4 +113,5 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	{
 		RevealContentEvent.fire(this, HomePresenter.TYPE_SetQuadroScrumContent, this);
 	}
+	
 }

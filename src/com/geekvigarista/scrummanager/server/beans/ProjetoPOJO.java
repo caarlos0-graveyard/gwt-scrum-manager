@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 
-import com.geekvigarista.scrummanager.server.interfaces.dao.IDaoRequisito;
-import com.geekvigarista.scrummanager.server.persistencia.dao.DaoRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
@@ -15,7 +13,6 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.PostLoad;
-import com.google.code.morphia.annotations.PrePersist;
 import com.google.code.morphia.annotations.Reference;
 import com.google.code.morphia.annotations.Transient;
 import com.google.code.morphia.utils.IndexDirection;
@@ -125,22 +122,24 @@ public class ProjetoPOJO
 	@PostLoad
 	void postLoad()
 	{
-		try
-		{
-			IDaoRequisito daoR = new DaoRequisito();
-			List<Requisito> requisitos = daoR.buscarByProjeto(projeto);
-			if(requisitos != null)
-			{
-				for(Requisito r : requisitos)
-				{
-					projeto.getRequisitos().add(r);
-				}
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+//		try
+//		{
+//			IDaoRequisito daoR = new DaoRequisito();
+//			Projeto p = new Projeto();
+//			p.setId(this.id.toString());
+//			List<Requisito> requisitos = daoR.buscarByProjeto(p);
+//			if(requisitos != null)
+//			{
+//				for(Requisito r : requisitos)
+//				{
+//					projeto.getRequisitos().add(r);
+//				}
+//			}
+//		}
+//		catch(Exception e)
+//		{
+//			e.printStackTrace();
+//		}
 	}
 	
 	public Projeto getProjeto()
