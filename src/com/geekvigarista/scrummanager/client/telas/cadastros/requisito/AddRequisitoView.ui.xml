@@ -5,8 +5,8 @@
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
 
-	<g:HTMLPanel ui:field="conteudo" width="900px">
-		<g:Label text="{msg.cadastroDe}{msg.requisitos}" styleName="titulo1" />
+	<g:HTMLPanel ui:field="conteudo" styleName="conteudo" width="900px">
+		<g:Label text="{msg.addRequisitos}" styleName="titulo1" />
 		<hr />
 		<g:HorizontalPanel width="">
 			<g:VerticalPanel spacing="10">

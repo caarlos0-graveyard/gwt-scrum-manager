@@ -1,7 +1,7 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.stakproj;
 
+import com.geekvigarista.scrummanager.client.i18n.Mensagem;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
-import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -41,26 +41,39 @@ public class StakeholderTableFactory
 	
 	public void initColumns()
 	{
-		Column<Stakeholder, Boolean> checkColumn = new Column<Stakeholder, Boolean>(new CheckboxCell(true, false))
-		{
-			@Override
-			public Boolean getValue(Stakeholder object)
-			{
-				return selectionModel.isSelected(object);
-			}
-		};
-		
 		Column<Stakeholder, String> nomeColumn = new Column<Stakeholder, String>(new TextCell())
 		{
 			@Override
 			public String getValue(Stakeholder object)
 			{
-				return object.getNome() + " (" + (object.getUsuario() != null ? object.getUsuario().getLogin() : "null") + ") " + object.getId();
+				return object.getNome() != null && !object.getNome().trim().isEmpty() ? object.getNome() : Mensagem.get.naoAssociado();
 			}
 		};
 		
-		cellTable.addColumn(checkColumn);
-		cellTable.addColumn(nomeColumn, "Nome sstakeholder - Usuario");
+		Column<Stakeholder, String> userColumn = new Column<Stakeholder, String>(new TextCell())
+		{
+			@Override
+			public String getValue(Stakeholder object)
+			{
+				return (object.getUsuario() != null ? (object.getUsuario().getNome() != null && !object.getUsuario().getNome().trim().isEmpty() ? object
+						.getUsuario().getNome() : Mensagem.get.naoAssociado())
+						: Mensagem.get.naoAssociado());
+			}
+		};
+		
+		Column<Stakeholder, String> papelColumn = new Column<Stakeholder, String>(new TextCell())
+		{
+			@Override
+			public String getValue(Stakeholder object)
+			{
+				return object.getPapel() != null ? object.getPapel().desc() : Mensagem.get.naoAssociado();
+			}
+		};
+		
+		cellTable.addColumn(nomeColumn, Mensagem.get.nome());
+		cellTable.addColumn(userColumn, Mensagem.get.usuario());
+		cellTable.addColumn(papelColumn, Mensagem.get.papelStakeholder());
+		
 	}
 	
 	public CellTable<Stakeholder> getTabela()

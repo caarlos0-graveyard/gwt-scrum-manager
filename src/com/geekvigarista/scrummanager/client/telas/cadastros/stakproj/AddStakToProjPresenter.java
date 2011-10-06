@@ -143,7 +143,6 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 					
 					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
 					new MsgBox(msg, false);
-					//					doAvancar();
 				}
 				else
 				{

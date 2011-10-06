@@ -24,6 +24,8 @@ public interface Mensagem extends Constants
 	 */
 	public String salvar();
 	
+	public String concluir();
+	
 	public String cancelar();
 	
 	public String nome();
@@ -51,6 +53,10 @@ public interface Mensagem extends Constants
 	public String voltar();
 	
 	public String requisito();
+	
+	public String naoAssociado();
+	
+	public String multiSelecaoDica();
 	
 	/*
 	 * Home
