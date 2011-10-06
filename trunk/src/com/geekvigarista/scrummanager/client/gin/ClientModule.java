@@ -13,6 +13,10 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequis
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoView;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderView;
+import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjProxy;
+import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjView;
+import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjViewImpl;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserView;
 import com.geekvigarista.scrummanager.client.telas.erros.Erro404ViewImpl;
@@ -80,5 +84,6 @@ public class ClientModule extends AbstractPresenterModule
 		
 		bindPresenter(CadastroProdutoPresenter.class, CadProdutoView.class, AddProdutoView.class, CadProdutoProxy.class);
 		
+		bindPresenter(AddStakToProjPresenter.class, AddStakToProjView.class, AddStakToProjViewImpl.class, AddStakToProjProxy.class);
 	}
 }

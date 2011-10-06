@@ -51,11 +51,11 @@ public class StakeholderPOJO
 	{
 		if(this.id != null)
 		{
-			stakeholder = new Stakeholder(id.toString(),nome, papel, usuario.getUsuario());
+			stakeholder = new Stakeholder(id.toString(),nome, papel, usuario != null ? usuario.getUsuario() : null);
 		}
 		else
 		{
-			stakeholder = new Stakeholder(nome, papel, usuario.getUsuario());
+			stakeholder = new Stakeholder(nome, papel, usuario != null ? usuario.getUsuario() : null);
 		}
 		return stakeholder;
 	}

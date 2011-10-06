@@ -1,9 +1,30 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:d="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.defaultbox">
+	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
+		field="msg"></ui:with>
 	<ui:style>
 		
 	</ui:style>
 	<g:HTMLPanel>
+		
+		<g:Label text="{msg.addStakeholders}" styleName="titulo1" />
+		<hr />
+		<g:VerticalPanel>
+			<c:CellTable ui:field="tabelaStakeholders"/>
+			<g:Cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE">
+				<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
+					<g:Label width="300px"/>
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Anchor text="{msg.cancelar}" ui:field="btCancelar"
+								width="" />
+				</g:Cell>
+				<g:Button text="{msg.voltar}" ui:field="btVoltar" width="100px"></g:Button>
+				<g:Button text="{msg.avancar}" ui:field="btAvancar"
+								width="100px"></g:Button>
+			</g:HorizontalPanel>
+			</g:Cell>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

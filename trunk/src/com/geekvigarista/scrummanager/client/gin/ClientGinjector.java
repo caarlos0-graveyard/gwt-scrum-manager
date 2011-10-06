@@ -10,6 +10,7 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroPro
 import com.geekvigarista.scrummanager.client.telas.cadastros.projeto.AddProjetoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.requisito.AddRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakeholder.AddStakeholderPresenter;
+import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter;
 import com.geekvigarista.scrummanager.client.telas.erros.Error404Presenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
@@ -62,6 +63,8 @@ public interface ClientGinjector extends Ginjector
 	AsyncProvider<ListaProjetosUsuarioPresenter> getListaProjetosUsuarioPresenter();
 	
 	AsyncProvider<CadastroProdutoPresenter> getCadastroProdutoPresenter();
+	
+	AsyncProvider<AddStakToProjPresenter> getAddStakToProjPresenter();
 	
 	/*
 	 * Providers de gatekeepers

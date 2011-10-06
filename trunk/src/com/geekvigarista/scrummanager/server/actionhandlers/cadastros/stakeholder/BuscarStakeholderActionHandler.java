@@ -22,23 +22,31 @@ public class BuscarStakeholderActionHandler implements ActionHandler<BuscarStake
 	IDaoStakeholder dao = inj.getInstance(DaoStakeholder.class);
 	
 	/**
-	 * Busca stakeholders de acordo com o parametro.
-	 * Se vem vazio ou nulo, busca todos.
+	 * Busca stakeholders de acordo com o parametro. Se vem vazio ou nulo, busca todos.
 	 */
 	@Override
 	public BuscarStakeholderListResult execute(BuscarStakeholderAction arg0, ExecutionContext arg1) throws ActionException
 	{
-		String parametro = arg0.getParametro();
-		if(parametro == null || parametro.isEmpty())
+		try
 		{
-			List<Stakeholder> retorno = dao.buscarTodos();
+			
+			String parametro = arg0.getParametro();
+			if(parametro == null || parametro.isEmpty())
+			{
+				List<Stakeholder> retorno = dao.buscarTodos();
+				return new BuscarStakeholderListResult(retorno);
+			}
+			
+			List<Stakeholder> retorno = dao.buscarLike(parametro);
 			return new BuscarStakeholderListResult(retorno);
 		}
-		
-		List<Stakeholder> retorno = dao.buscarLike(parametro);
-		return new BuscarStakeholderListResult(retorno);
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
-		
+	
 	@Override
 	public Class<BuscarStakeholderAction> getActionType()
 	{
