@@ -25,7 +25,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Timer;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.dispatch.shared.DispatchRequest;
 import com.gwtplatform.mvp.client.View;
@@ -39,6 +39,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView, AddStakToProjProxy>
 {
+	
 	public interface AddStakToProjView extends View
 	{
 		void updateStakes(List<Stakeholder> stakeholders);
@@ -48,6 +49,8 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 		HasClickHandlers btVoltar();
 		
 		List<Stakeholder> getSelecionados();
+		
+		void setSelecionados(List<Stakeholder> stakes);
 	}
 	
 	@ProxyCodeSplit
@@ -191,6 +194,17 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 	{
 		this.stakeholders = stakeholders;
 		getView().updateStakes(stakeholders);
+		new Timer()
+		{
+			@Override
+			public void run()
+			{
+				if(!loadProjeto.isPending())
+				{
+					getView().setSelecionados(getProjeto().getStakeholders());
+					cancel();
+				}
+			}
+		}.scheduleRepeating(250);
 	}
-	
 }

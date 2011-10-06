@@ -86,4 +86,13 @@ public class AddStakToProjViewImpl extends ViewImpl implements AddStakToProjView
 		return btVoltar;
 	}
 	
+	@Override
+	public void setSelecionados(List<Stakeholder> stakes)
+	{
+		for(Stakeholder s : stakes)
+		{
+			factory.getSelectionModel().setSelected(s, true);
+		}
+	}
+	
 }
