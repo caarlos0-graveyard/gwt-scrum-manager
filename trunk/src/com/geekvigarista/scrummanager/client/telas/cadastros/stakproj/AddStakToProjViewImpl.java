@@ -7,6 +7,7 @@ import java.util.Set;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjView;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
@@ -63,6 +64,7 @@ public class AddStakToProjViewImpl extends ViewImpl implements AddStakToProjView
 	public void updateStakes(List<Stakeholder> stakeholders)
 	{
 		factory.getDataProvider().setList(stakeholders);
+		factory.getTabela().redraw();
 	}
 	
 	@Override
@@ -72,6 +74,18 @@ public class AddStakToProjViewImpl extends ViewImpl implements AddStakToProjView
 		ArrayList<Stakeholder> lista = new ArrayList<Stakeholder>();
 		lista.addAll(selectedSet);
 		return lista;
+	}
+	
+	@Override
+	public HasClickHandlers btAvancar()
+	{
+		return btAvancar;
+	}
+	
+	@Override
+	public HasClickHandlers btVoltar()
+	{
+		return btVoltar;
 	}
 	
 }

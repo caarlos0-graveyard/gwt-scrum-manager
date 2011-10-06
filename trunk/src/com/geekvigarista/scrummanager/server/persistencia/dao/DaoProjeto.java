@@ -104,7 +104,7 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 		
 		for(StakeholderPOJO stakePojo : stakesPojo)
 		{
-			Query<ProjetoPOJO> query = createQuery().filter("stakeholders.id", stakePojo.getId());
+			Query<ProjetoPOJO> query = createQuery().filter("stakeholders", stakePojo);
 			for(Projeto p : toValueObject(this.find(query)))
 			{
 				//adiciona projetos vindo dos stakeholders.
