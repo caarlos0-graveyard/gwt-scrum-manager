@@ -81,7 +81,8 @@ public class DaoRequisito extends BasicDAO<RequisitoPOJO, ObjectId> implements I
 	@Override
 	public List<Requisito> buscarByProjeto(Projeto projeto)
 	{
-		Query<RequisitoPOJO> query = createQuery().filter("projeto", new ProjetoPOJO(projeto));
+		ProjetoPOJO projetoPojo = new ProjetoPOJO(projeto);
+		Query<RequisitoPOJO> query = createQuery().filter("projeto", projetoPojo);
 		return toValueObject(this.find(query));
 	}
 	
@@ -98,6 +99,7 @@ public class DaoRequisito extends BasicDAO<RequisitoPOJO, ObjectId> implements I
 		List<Requisito> retorno = new ArrayList<Requisito>();
 		for(RequisitoPOJO reqPojo : resultadoBusca.asList())
 		{
+			System.out.println("achou " + reqPojo.getTitulo());
 			retorno.add(reqPojo.getRequisito());
 		}
 		return retorno;

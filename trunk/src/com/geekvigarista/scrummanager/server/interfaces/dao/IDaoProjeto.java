@@ -18,6 +18,8 @@ public interface IDaoProjeto extends IDao<Projeto, ProjetoPOJO>
 	//TODO, metodos especificos irão aqui..
 	List<Projeto> buscarLike(String parametro);	
 	
-	List<ProjetoStakeholderDTO> buscarByUsuario(Usuario usuario);	
+	List<ProjetoStakeholderDTO> buscarByUsuario(Usuario usuario);
+	
+	Projeto carregarRequisitos(Projeto projeto);
 
 }
