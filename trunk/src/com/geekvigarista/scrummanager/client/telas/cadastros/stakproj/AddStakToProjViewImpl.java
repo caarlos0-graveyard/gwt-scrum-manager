@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjView;
+import com.geekvigarista.scrummanager.client.telas.commons.showmorepagepanel.ShowMorePagerPanel;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Anchor;
@@ -24,8 +24,10 @@ public class AddStakToProjViewImpl extends ViewImpl implements AddStakToProjView
 	
 	private StakeholderTableFactory factory = new StakeholderTableFactory();
 	
-	@UiField
 	CellTable<Stakeholder> tabelaStakeholders;
+	
+	@UiField
+	ShowMorePagerPanel pager;
 	
 	@UiField
 	Button btVoltar;
@@ -38,13 +40,6 @@ public class AddStakToProjViewImpl extends ViewImpl implements AddStakToProjView
 	
 	Widget w;
 	
-	@UiFactory
-	public CellTable<Stakeholder> buildTabelaStakeholder()
-	{
-		tabelaStakeholders = new CellTable<Stakeholder>();
-		return factory.getTabela();
-	}
-	
 	interface AddStakToProjViewImplUiBinder extends UiBinder<Widget, AddStakToProjViewImpl>
 	{
 	}
@@ -52,6 +47,9 @@ public class AddStakToProjViewImpl extends ViewImpl implements AddStakToProjView
 	public AddStakToProjViewImpl()
 	{
 		w = uiBinder.createAndBindUi(this);
+		
+		tabelaStakeholders = factory.getTabela();
+		pager.setDisplay(tabelaStakeholders);
 	}
 	
 	@Override

@@ -4,7 +4,7 @@
 	xmlns:db="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.defaultbox">
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
-	<g:HTMLPanel ui:field="conteudo">
+	<g:HTMLPanel ui:field="conteudo" styleName="conteudo">
 		<g:Label text="{msg.cadastroDe}{msg.usuario}" styleName="titulo1" />
 		<hr />
 		<g:VerticalPanel>
