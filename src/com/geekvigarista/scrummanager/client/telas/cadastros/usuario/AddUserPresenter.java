@@ -12,8 +12,6 @@ import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HasValue;
@@ -43,11 +41,11 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 	{
 		TextBox getNome();
 		
-		HasValue<String> getLogin();
+		TextBox getLogin();
 		
-		HasValue<String> getSenha();
+		TextBox getSenha();
 		
-		HasValue<String> getConfSenha();
+		TextBox getConfSenha();
 		
 		HasValue<Boolean> getAdministrador();
 		
@@ -79,33 +77,15 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 	protected void onBind()
 	{
 		super.onBind();
-		registerHandler(getView().getBtSalvar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doSalvar();
-			}
-		}));
-		
-		getView().getNovo().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doNovo();
-			}
-		});
-		
-		getView().getBtCancelar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doCancelar();
-			}
-		});
-		
+		//botoes
+		registerHandler(getView().getBtSalvar().addClickHandler(salvarHandler));
+		registerHandler(getView().getNovo().addClickHandler(novoHandler));
+		registerHandler(getView().getBtCancelar().addClickHandler(cancelarHandler));
+		//campos
+		registerHandler(getView().getNome().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().getLogin().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().getSenha().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().getConfSenha().addKeyUpHandler(salvarHandler));
 	}
 	
 	@Override
@@ -154,13 +134,13 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 			}
 		});
 	}
-
+	
 	@Override
 	public void doNovo()
 	{
 		setUsuario(new Usuario());
 	}
-
+	
 	@Override
 	public void doCancelar()
 	{

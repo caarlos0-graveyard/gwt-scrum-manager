@@ -53,19 +53,19 @@ public class AddUserView extends ViewImpl implements AddUserPresenter.AddUserVie
 	}
 	
 	@Override
-	public HasValue<String> getLogin()
+	public TextBox getLogin()
 	{
 		return login;
 	}
 	
 	@Override
-	public HasValue<String> getSenha()
+	public TextBox getSenha()
 	{
 		return senha;
 	}
 	
 	@Override
-	public HasValue<String> getConfSenha()
+	public TextBox getConfSenha()
 	{
 		return confSenha;
 	}
