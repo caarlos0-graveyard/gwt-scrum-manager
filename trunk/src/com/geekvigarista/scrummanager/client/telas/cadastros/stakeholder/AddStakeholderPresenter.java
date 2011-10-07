@@ -21,8 +21,6 @@ import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuar
 import com.geekvigarista.scrummanager.shared.enums.PapelStakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.ListBox;
@@ -122,30 +120,12 @@ public class AddStakeholderPresenter extends SimpleCadPresenter<AddStakeholderPr
 	protected void onBind()
 	{
 		super.onBind();
-		getView().getBtSalvar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doSalvar();
-			}
-		});
-		getView().getBtCancelar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doCancelar();
-			}
-		});
-		getView().getBtNovo().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doNovo();
-			}
-		});
+		//botoes
+		registerHandler(getView().getBtSalvar().addClickHandler(salvarHandler));
+		registerHandler(getView().getBtCancelar().addClickHandler(cancelarHandler));
+		registerHandler(getView().getBtNovo().addClickHandler(novoHandler));
+		//campos
+		registerHandler(getView().getNome().addKeyUpHandler(salvarHandler));
 	}
 	
 	@Override

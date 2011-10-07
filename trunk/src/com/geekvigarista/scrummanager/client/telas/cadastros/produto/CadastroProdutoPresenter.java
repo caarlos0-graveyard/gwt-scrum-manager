@@ -14,11 +14,6 @@ import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdutoAction;
 import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdutoResult;
 import com.geekvigarista.scrummanager.shared.vos.Produto;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -58,7 +53,6 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	private final PlaceManager placeManager;
 	private final IProdutoConverter converter;
 	private Produto produto;
-	private SalvarHandler salvarhand;
 	
 	@Inject
 	public CadastroProdutoPresenter(EventBus eventBus, CadProdutoView view, CadProdutoProxy proxy, final PlaceManager placeManager,
@@ -68,9 +62,17 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 		this.converter = converter;
 		this.dispatch = dispatch;
 		this.placeManager = placeManager;
-		salvarhand = new SalvarHandler();
 	}
 	
+	@Override
+	protected void onBind()
+	{
+		super.onBind();
+		registerHandler(getView().salvar().addClickHandler(salvarHandler));
+		registerHandler(getView().descricao().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().cancelar().addClickHandler(cancelarHandler));
+		registerHandler(getView().novo().addClickHandler(novoHandler));
+	}
 	@Override
 	protected void revealInParent()
 	{
@@ -96,48 +98,9 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	}
 	
 	@Override
-	protected void onBind()
-	{
-		super.onBind();
-		getView().descricao().addKeyUpHandler(salvarhand);
-		getView().salvar().addClickHandler(salvarhand);
-		getView().cancelar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doCancelar();
-			}
-		});
-		getView().novo().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doNovo();
-			}
-		});
-	}
-	
-	private class SalvarHandler implements ClickHandler, KeyUpHandler
-	{
-		@Override
-		public void onKeyUp(KeyUpEvent event)
-		{
-			if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
-				doSalvar();
-		}
-		
-		@Override
-		public void onClick(ClickEvent event)
-		{
-			doSalvar();
-		}
-	}
-
-	@Override
 	public void doSalvar()
 	{
+		System.out.println("Do salvar");
 		Produto p = converter.convert(getProduto(), getView());
 		dispatch.execute(new SalvarProdutoAction(p), new AbstractCallback<SalvarProdutoResult>()
 		{
