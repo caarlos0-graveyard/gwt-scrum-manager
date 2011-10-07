@@ -24,8 +24,8 @@
 						<g:Cell verticalAlignment="ALIGN_MIDDLE">
 							<g:Label text="Horas" ui:field="labelHorasTotais" />
 						</g:Cell>
-						<g:Button ui:field="btRm" text="-" title="" />
-						<g:Button ui:field="btAdd" text="+" title="" />
+						<g:Button ui:field="btRm" text="-" title="" styleName="botaoNovo" width="25px" height="25px" />
+						<g:Button ui:field="btAdd" text="+" title="" styleName="botaoNovo" width="25px" height="25px" />
 					</g:HorizontalPanel>
 				</g:Cell>
 
@@ -79,7 +79,7 @@
 				</g:Grid>
 				<g:Cell>
 					<g:Button text="{msg.salvar} {msg.requisito}" ui:field="btSalvar"
-						width="150px"></g:Button>
+						width="150px" styleName="button"></g:Button>
 				</g:Cell>
 				<g:Cell>
 					<g:HorizontalPanel width="" horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE" styleName="marginBotoesRequisitos">
@@ -90,12 +90,13 @@
 						</g:Cell>
 						<g:Cell verticalAlignment="ALIGN_MIDDLE"
 							horizontalAlignment="ALIGN_RIGHT">
-							<g:Button text="{msg.voltar}" ui:field="btVoltar" width="100px"></g:Button>
+							<g:Button text="{msg.voltar}" ui:field="btVoltar" width="100px" 
+								styleName="button"></g:Button>
 						</g:Cell>
 						<g:Cell verticalAlignment="ALIGN_MIDDLE"
 							horizontalAlignment="ALIGN_RIGHT">
-							<g:Button text="{msg.avancar}" ui:field="btAvancar"
-								width="100px"></g:Button>
+							<g:Button text="{msg.avancar}" ui:field="btAvancar"	width="100px"
+								styleName="button"></g:Button>
 						</g:Cell>
 					</g:HorizontalPanel>
 				</g:Cell>

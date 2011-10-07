@@ -15,7 +15,7 @@
 						<g:Label text="{msg.nome}" />
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultTextBox ui:field="nome" />
+						<db:DefaultTextBox ui:field="nome" width="271px" />
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -23,7 +23,7 @@
 						<g:Label text="Produto"/>
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultListBox ui:field="produtos"/>
+						<db:DefaultListBox ui:field="produtos" width="281px"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -31,7 +31,7 @@
 						<g:Label text="{msg.dataInicio}" />
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultDateBox ui:field="dataInicio"></db:DefaultDateBox>
+						<db:DefaultDateBox ui:field="dataInicio" width="271px"></db:DefaultDateBox>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -39,7 +39,7 @@
 						<g:Label text="{msg.dataFim}" />
 					</g:customCell>
 					<g:customCell>
-						<db:DefaultDateBox ui:field="dataFim"></db:DefaultDateBox>
+						<db:DefaultDateBox ui:field="dataFim" width="271px"></db:DefaultDateBox>
 					</g:customCell>
 				</g:row>
 			</g:Grid>
@@ -49,11 +49,11 @@
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">
 						<g:Hyperlink text="{msg.cancelar}" ui:field="btCancelar"
-							targetHistoryToken="newHistoryToken" />
+							targetHistoryToken="!home" />
 					</g:Cell>
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">
-						<g:Button text="{msg.avancar}" ui:field="btSalvar"></g:Button>
+						<g:Button text="Avançar" ui:field="btSalvar" styleName="button"></g:Button>
 					</g:Cell>
 				</g:HorizontalPanel>
 			</g:Cell>

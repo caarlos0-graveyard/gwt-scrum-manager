@@ -55,7 +55,7 @@
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">
 						<g:Hyperlink text="{msg.cancelar}" ui:field="btCancelar"
-							targetHistoryToken="newHistoryToken" />
+							targetHistoryToken="!home" />
 					</g:Cell>
 					<g:Cell verticalAlignment="ALIGN_MIDDLE"
 						horizontalAlignment="ALIGN_RIGHT">

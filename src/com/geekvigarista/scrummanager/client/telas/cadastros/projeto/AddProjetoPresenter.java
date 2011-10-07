@@ -10,6 +10,7 @@ import com.geekvigarista.scrummanager.client.converters.interfaces.IProjetoConve
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
+import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultListBox;
@@ -22,17 +23,11 @@ import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProje
 import com.geekvigarista.scrummanager.shared.commands.projeto.salvar.SalvarProjetoResult;
 import com.geekvigarista.scrummanager.shared.vos.Produto;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -42,7 +37,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjetoView, AddProjetoPresenter.AddProjetoProxy>
+public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.AddProjetoView, AddProjetoPresenter.AddProjetoProxy>
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addproj)
@@ -74,7 +69,6 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	private final PlaceManager placeManager;
 	private final IProjetoConverter converter;
 	private Projeto projeto;
-	private SalvarAction action;
 	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	@Inject
@@ -85,7 +79,6 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		this.dispatch = dispatch;
 		this.placeManager = placeManager;
 		this.converter = converter;
-		action = new SalvarAction();
 	}
 	
 	@Override
@@ -98,8 +91,8 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 	protected void onBind()
 	{
 		super.onBind();
-		getView().getBtSalvar().addClickHandler(action);
-		getView().getNome().addKeyUpHandler(action);
+		registerHandler(getView().getBtSalvar().addClickHandler(salvarHandler));
+		registerHandler(getView().getNome().addKeyUpHandler(salvarHandler));
 	}
 	
 	@Override
@@ -132,24 +125,6 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		getView().getNome().setFocus(true);
 	}
 	
-	private class SalvarAction implements KeyUpHandler, ClickHandler
-	{
-		@Override
-		public void onClick(ClickEvent event)
-		{
-			doSalvar();
-		}
-		
-		@Override
-		public void onKeyUp(KeyUpEvent event)
-		{
-			if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
-			{
-				doSalvar();
-			}
-		}
-	}
-	
 	public void doAvancar()
 	{
 		PlaceRequest pr = new PlaceRequest(NameTokens.addreq).with(Parameters.projid, projeto != null ? projeto.getId() : "null"); // HERE
@@ -168,6 +143,7 @@ public class AddProjetoPresenter extends Presenter<AddProjetoPresenter.AddProjet
 		});
 	}
 	
+	@Override
 	public void doSalvar()
 	{
 		Projeto projetoConvertido = converter.convert(getProjeto(), getView(), getProdutos());

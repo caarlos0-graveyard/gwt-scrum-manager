@@ -23,7 +23,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
@@ -80,7 +79,6 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 		//botoes
 		registerHandler(getView().getBtSalvar().addClickHandler(salvarHandler));
 		registerHandler(getView().getNovo().addClickHandler(novoHandler));
-		registerHandler(getView().getBtCancelar().addClickHandler(cancelarHandler));
 		//campos
 		registerHandler(getView().getNome().addKeyUpHandler(salvarHandler));
 		registerHandler(getView().getLogin().addKeyUpHandler(salvarHandler));
@@ -141,9 +139,4 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 		setUsuario(new Usuario());
 	}
 	
-	@Override
-	public void doCancelar()
-	{
-		placeManager.revealPlace(new PlaceRequest(NameTokens.home));
-	}
 }
