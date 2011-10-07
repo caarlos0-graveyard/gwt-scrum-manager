@@ -131,58 +131,38 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	protected void onBind()
 	{
 		super.onBind();
-		getView().getBtSalvar().addClickHandler(salvarHandler);
-		getView().prioridade().addKeyUpHandler(salvarHandler);
-		getView().titulo().addKeyUpHandler(salvarHandler);
-		getView().tempoEstimado().addKeyUpHandler(salvarHandler);
-		getView().getBtVoltar().addClickHandler(new ClickHandler()
+		registerHandler(getView().getBtSalvar().addClickHandler(salvarHandler));
+		registerHandler(getView().prioridade().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().titulo().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().tempoEstimado().addKeyUpHandler(salvarHandler));
+		registerHandler(getView().getBtCancelar().addClickHandler(cancelarHandler));
+		registerHandler(getView().btAdd().addClickHandler(novoHandler));
+		registerHandler(getView().btRm().addClickHandler(excluirHandler));
+		registerHandler(getView().getBtVoltar().addClickHandler(new ClickHandler()
 		{
 			@Override
 			public void onClick(ClickEvent event)
 			{
 				doVoltar();
 			}
-		});
-		getView().getBtAvancar().addClickHandler(new ClickHandler()
+		}));
+		registerHandler(getView().getBtAvancar().addClickHandler(new ClickHandler()
 		{
 			@Override
 			public void onClick(ClickEvent event)
 			{
 				doAvancar();
 			}
-		});
-		getView().selectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler()
+		}));
+		
+		registerHandler(getView().selectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler()
 		{
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
 				setRequisito(getView().selectionModel().getSelectedObject());
 			}
-		});
-		getView().btAdd().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doNovo();
-			}
-		});
-		getView().btRm().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doExcluir();
-			}
-		});
-		getView().getBtCancelar().addClickHandler(new ClickHandler()
-		{
-			@Override
-			public void onClick(ClickEvent event)
-			{
-				doCancelar();
-			}
-		});
+		}));
 	}
 	
 	@Override
@@ -222,6 +202,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		getView().titulo().setFocus(true);
 	}
 	
+	@Override
 	public void doExcluir()
 	{
 		final Requisito req = getView().selectionModel().getSelectedObject();
@@ -249,12 +230,14 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		});
 	}
 	
+	@Override
 	public void doNovo()
 	{
 		getView().selectionModel().setSelected(null, true);
 		setRequisito(new Requisito());
 	}
 	
+	@Override
 	public void doCancelar()
 	{
 		setRequisito(getView().selectionModel().getSelectedObject());

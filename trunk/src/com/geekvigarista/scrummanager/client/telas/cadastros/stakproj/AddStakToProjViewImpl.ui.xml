@@ -28,8 +28,10 @@
 						<g:Anchor text="{msg.cancelar}" ui:field="btCancelar"
 							width="" />
 					</g:Cell>
-					<g:Button text="{msg.voltar}" ui:field="btVoltar" width="100px"></g:Button>
-					<g:Button text="{msg.concluir}" ui:field="btAvancar" width="100px"></g:Button>
+					<g:Button text="{msg.voltar}" ui:field="btVoltar" width="100px"
+						styleName="button"></g:Button>
+					<g:Button text="{msg.concluir}" ui:field="btAvancar" width="100px"
+						styleName="button"></g:Button>
 				</g:HorizontalPanel>
 			</g:Cell>
 		</g:VerticalPanel>
