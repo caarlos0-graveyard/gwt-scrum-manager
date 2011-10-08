@@ -5,6 +5,7 @@ import java.util.List;
 import com.geekvigarista.scrummanager.client.i18n.Mensagem;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumView;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.coluna.ColunaQuadroScrum;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

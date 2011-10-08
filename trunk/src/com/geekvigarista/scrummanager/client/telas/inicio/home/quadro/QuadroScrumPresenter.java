@@ -6,27 +6,35 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
-import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.encaminhar.EncaminharEvent;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.encaminhar.EncaminharEventHandler;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.projetoselecionado.ProjetoSelecionadoEvent;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.projetoselecionado.ProjetoSelecionadoEventHandler;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumView;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.coluna.ColunaQuadroScrum;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.CarregarRequisitosNoProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
+import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
+import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoResult;
+import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
+import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
+import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrumProxy>
@@ -38,8 +46,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	
 	@ProxyCodeSplit
 	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
-	@NameToken(NameTokens.scrum)
-	public interface QuadroScrumProxy extends ProxyPlace<QuadroScrumPresenter>
+	public interface QuadroScrumProxy extends Proxy<QuadroScrumPresenter>
 	{
 	}
 	
@@ -101,7 +108,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 							requisitos.add(r);
 						}
 					}
-					colunas.add(new ColunaQuadroScrum(requisitos, sr.desc()));
+					colunas.add(new ColunaQuadroScrum(requisitos, sr.desc(), getEventBus(), usuarioLogado.getUsuario()));
 				}
 				getView().setColunas(colunas);
 			}
@@ -114,4 +121,38 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		RevealContentEvent.fire(this, HomePresenter.TYPE_SetQuadroScrumContent, this);
 	}
 	
+	@Override
+	protected void onBind()
+	{
+		super.onBind();
+		
+		getEventBus().addHandler(ProjetoSelecionadoEvent.getType(), new ProjetoSelecionadoEventHandler()
+		{
+			@Override
+			public void selecionar(ProjetoSelecionadoEvent event)
+			{
+				constroiColunas(event.getProjeto());
+			}
+		});
+		
+		getEventBus().addHandler(EncaminharEvent.getType(), new EncaminharEventHandler()
+		{
+			@Override
+			public void encaminhar(EncaminharEvent event)
+			{
+				Requisito requisito = event.getRequisito();
+				Encaminhamento e = EncaminharUtil.getUltimoEncaminhamento(requisito);
+				requisito.getEncaminhamentos().add(
+						EncaminharUtil.encaminhar(e, e.getStakeholder(), "Encaminhado pelo quadro", 5, AcaoEncaminhar.AVANCAR));
+				dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
+				{
+					@Override
+					public void onSuccess(SalvarRequisitoResult result)
+					{
+						constroiColunas(result.getProjeto());
+					}
+				});
+			}
+		});
+	}
 }

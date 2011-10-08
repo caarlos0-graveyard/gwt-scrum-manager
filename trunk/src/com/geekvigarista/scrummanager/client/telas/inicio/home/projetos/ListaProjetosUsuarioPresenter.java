@@ -8,12 +8,14 @@ import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.projetoselecionado.ProjetoSelecionadoEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter.ListaProjetosProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter.ListaProjetosView;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetoListResult;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetosByUsuarioAction;
 import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
+import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -46,6 +48,7 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 	private final UsuarioLogadoGatekeeper usuarioLogado;
 	private final DispatchAsync dispatcher;
 	private final PlaceManager placemanager;
+	private String idProjetoSelecionado = null;
 	
 	@Inject
 	public ListaProjetosUsuarioPresenter(EventBus eventBus, ListaProjetosView view, ListaProjetosProxy proxy, final DispatchAsync dispatcher,
@@ -67,7 +70,26 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 			@Override
 			public void onSuccess(BuscarProjetoListResult result)
 			{
+				System.out.println("ListaProjetosUsuarioPresenter.onReveal().new AbstractCallback() {...}.onSuccess() " + idProjetoSelecionado);
 				getView().setProjetos(result.getProjetos());
+				
+				idProjetoSelecionado = placemanager.getCurrentPlaceRequest().getParameter(Parameters.projid, null);
+				
+				if(idProjetoSelecionado != null)
+				{
+					for(ProjetoStakeholderDTO proj : result.getProjetos())
+					{
+						if(proj.getProjeto().getId().equals(idProjetoSelecionado))
+						{
+							getView().factory().getSelectionModel().setSelected(proj, true);
+							return;
+						}
+					}
+				}
+				else
+				{
+					getView().factory().getSelectionModel().setSelected(null, true);
+				}
 			}
 		});
 	}
@@ -81,10 +103,10 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
-				String projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto().getId();
-				System.out.println("projeto : " + projeto);
-				PlaceRequest pr = new PlaceRequest(NameTokens.scrum).with(Parameters.projid, projeto);
-				placemanager.revealPlace(pr);
+				Projeto projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto();
+				getEventBus().fireEvent(new ProjetoSelecionadoEvent(projeto));
+				PlaceRequest pr = new PlaceRequest(NameTokens.home).with(Parameters.projid, projeto.getId());
+				placemanager.updateHistory(pr, true);
 			}
 		});
 	}
@@ -94,5 +116,4 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 	{
 		RevealContentEvent.fire(this, HomePresenter.TYPE_SetProjetosContent, this);
 	}
-	
 }
