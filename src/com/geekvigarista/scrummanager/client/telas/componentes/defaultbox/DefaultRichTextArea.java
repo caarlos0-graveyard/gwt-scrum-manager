@@ -1,6 +1,6 @@
 package com.geekvigarista.scrummanager.client.telas.componentes.defaultbox;
 
-import com.geekvigarista.scrummanager.client.telas.commons.richtexttoolbar.RichTextToolbar;
+import com.geekvigarista.scrummanager.client.telas.componentes.richtexttoolbar.RichTextToolbar;
 import com.google.gwt.event.logical.shared.HasInitializeHandlers;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;

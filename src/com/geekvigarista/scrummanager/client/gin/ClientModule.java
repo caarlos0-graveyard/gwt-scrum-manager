@@ -37,6 +37,10 @@ import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginViewImpl;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainView;
+import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter.TopoProxy;
+import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter.TopoView;
+import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoViewImpl;
 import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoPresenter;
 import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoView;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
@@ -53,6 +57,8 @@ public class ClientModule extends AbstractPresenterModule
 		
 		// constants
 		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.login);
+		
+		// presenters
 		
 		bindPresenter(HomePresenter.class, HomePresenter.HomeView.class, HomeView.class, HomePresenter.HomeProxy.class);
 		
@@ -85,5 +91,7 @@ public class ClientModule extends AbstractPresenterModule
 		bindPresenter(CadastroProdutoPresenter.class, CadProdutoView.class, AddProdutoView.class, CadProdutoProxy.class);
 		
 		bindPresenter(AddStakToProjPresenter.class, AddStakToProjView.class, AddStakToProjViewImpl.class, AddStakToProjProxy.class);
+		
+		bindPresenter(TopoPresenter.class, TopoView.class, TopoViewImpl.class, TopoProxy.class);
 	}
 }

@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import com.geekvigarista.scrummanager.client.events.LogoutEvent;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
-import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter.MainMenuProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter.MainMenuView;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;

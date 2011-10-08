@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**

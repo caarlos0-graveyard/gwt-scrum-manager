@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjView;
-import com.geekvigarista.scrummanager.client.telas.commons.showmorepagepanel.ShowMorePagerPanel;
+import com.geekvigarista.scrummanager.client.telas.componentes.showmorepagepanel.ShowMorePagerPanel;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;

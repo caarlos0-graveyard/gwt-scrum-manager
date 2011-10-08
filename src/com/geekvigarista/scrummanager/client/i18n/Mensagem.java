@@ -58,6 +58,10 @@ public interface Mensagem extends Constants
 	
 	public String multiSelecaoDica();
 	
+	public String buscar();
+	
+	public String buscarProjetos();
+	
 	/*
 	 * Home
 	 */

@@ -22,6 +22,8 @@ public class MainView extends ViewImpl implements MainPresenter.MainView
 	
 	@UiField
 	FlowPanel mainContentPanel;
+	@UiField
+	FlowPanel topoContentPanel;
 	
 	public MainView()
 	{
@@ -45,6 +47,10 @@ public class MainView extends ViewImpl implements MainPresenter.MainView
 		{
 			setMenuContent(content);
 		}
+		else if(slot == MainPresenter.TYPE_SetTopoContent)
+		{
+			setTopoContent(content);
+		}
 		else
 		{
 			super.setInSlot(slot, content);
@@ -58,6 +64,16 @@ public class MainView extends ViewImpl implements MainPresenter.MainView
 		if(content != null)
 		{
 			mainContentPanel.add(content);
+		}
+	}
+	
+	private void setTopoContent(Widget content)
+	{
+		topoContentPanel.clear();
+		
+		if(content != null)
+		{
+			topoContentPanel.add(content);
 		}
 	}
 	

@@ -7,7 +7,7 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCa
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserView;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
-import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuarioResult;

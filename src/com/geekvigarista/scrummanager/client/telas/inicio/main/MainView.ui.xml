@@ -4,7 +4,8 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:FlowPanel ui:field="menuContentPanel" />
+			<g:FlowPanel width="100%" ui:field="topoContentPanel"/>
+			<g:FlowPanel ui:field="menuContentPanel" width="100%" />
 			<g:Cell horizontalAlignment="ALIGN_CENTER">
 				<g:FlowPanel ui:field="mainContentPanel" />
 			</g:Cell>

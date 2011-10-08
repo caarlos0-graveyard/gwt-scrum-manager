@@ -1,4 +1,4 @@
-package com.geekvigarista.scrummanager.client.telas.commons.richtexttoolbar;
+package com.geekvigarista.scrummanager.client.telas.componentes.richtexttoolbar;
 
 /*
  * This software is published under the Apchae 2.0 licenses.
