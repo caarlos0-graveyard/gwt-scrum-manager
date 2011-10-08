@@ -18,6 +18,7 @@ import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -70,28 +71,42 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 			@Override
 			public void onSuccess(BuscarProjetoListResult result)
 			{
-				System.out.println("ListaProjetosUsuarioPresenter.onReveal().new AbstractCallback() {...}.onSuccess() " + idProjetoSelecionado);
+				/*
+				 * seto a lista de projetos
+				 */
 				getView().setProjetos(result.getProjetos());
-				
-				idProjetoSelecionado = placemanager.getCurrentPlaceRequest().getParameter(Parameters.projid, null);
-				
-				if(idProjetoSelecionado != null)
-				{
-					for(ProjetoStakeholderDTO proj : result.getProjetos())
-					{
-						if(proj.getProjeto().getId().equals(idProjetoSelecionado))
-						{
-							getView().factory().getSelectionModel().setSelected(proj, true);
-							return;
-						}
-					}
-				}
-				else
-				{
-					getView().factory().getSelectionModel().setSelected(null, true);
-				}
 			}
 		});
+	}
+	
+	@Override
+	protected void onReset()
+	{
+		super.onReset();
+		/*
+		 * pego a ultima placerequest, tentando capturar o id do projeto.
+		 * essa presenter nao é uma proxyplace, então o prepareFromRequest 
+		 * não é chamdo aqui, e tenho que fazer esse "desvio" usando o onreset. :P
+		 */
+		idProjetoSelecionado = placemanager.getCurrentPlaceRequest().getParameter(Parameters.projid, null);
+		
+		// procuro o id do projeto e seleciono ele like a boss.
+		if(idProjetoSelecionado != null)
+		{
+			for(ProjetoStakeholderDTO proj : getView().factory().getDataProvider().getList())
+			{
+				if(proj.getProjeto().getId().equals(idProjetoSelecionado))
+				{
+					getView().factory().getSelectionModel().setSelected(proj, true);
+					return;
+				}
+			}
+		}
+		else
+		{
+			// senao seleciono o null :D
+			getView().factory().getSelectionModel().setSelected(null, true);
+		}
 	}
 	
 	@Override
@@ -103,9 +118,13 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event)
 			{
-				Projeto projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto();
+				Projeto projeto = null;
+				if(getView().factory().getSelectionModel().getSelectedObject() != null)
+				{
+					projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto();
+				}
 				getEventBus().fireEvent(new ProjetoSelecionadoEvent(projeto));
-				PlaceRequest pr = new PlaceRequest(NameTokens.home).with(Parameters.projid, projeto.getId());
+				PlaceRequest pr = new PlaceRequest(NameTokens.home).with(Parameters.projid, projeto != null ? projeto.getId() : null);
 				placemanager.updateHistory(pr, true);
 			}
 		});

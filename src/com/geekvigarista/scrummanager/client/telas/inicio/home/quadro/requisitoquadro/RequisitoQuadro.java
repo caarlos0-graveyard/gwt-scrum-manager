@@ -60,14 +60,6 @@ public class RequisitoQuadro extends Composite
 		sb.append(";").append(Parameters.reqid).append("=").append(requisito.getId());
 		detalhes.setTargetHistoryToken(sb.toString());
 		
-		/*
-		 * TODO encaminhar
-		 * 
-		 * ao clicar no botão, abrir um modalzinho, com a descricao, usuario destino e tempo gasto e um botao salvar.
-		 * 
-		 * ao salvar, executa a acao, e atualiza o quadro (mais seguro quanto a html bugado).
-		 * 
-		 */
 		switch(EncaminharUtil.getUltimoEncaminhamento(requisito).getStatus())
 		{
 			case AGUARDANDO:

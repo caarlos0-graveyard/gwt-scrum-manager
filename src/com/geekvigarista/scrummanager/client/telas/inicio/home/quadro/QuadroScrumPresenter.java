@@ -89,6 +89,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	{
 		if(projeto == null || projeto.getId() == null)
 		{
+			getView().setColunas(null); // vai add o label de nenhum proj. selecionado..
 			return;
 		}
 		
