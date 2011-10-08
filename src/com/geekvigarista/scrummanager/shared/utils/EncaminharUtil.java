@@ -5,6 +5,7 @@ import java.util.Date;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
+import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 
 /**
@@ -65,5 +66,10 @@ public class EncaminharUtil
 			e.setStatus(StatusRequisito.CONCLUIDO);
 		}
 		return e;
+	}
+	
+	public static Encaminhamento getUltimoEncaminhamento(Requisito requisito)
+	{
+		return requisito.getEncaminhamentos().get(requisito.getEncaminhamentos().size() - 1);
 	}
 }
