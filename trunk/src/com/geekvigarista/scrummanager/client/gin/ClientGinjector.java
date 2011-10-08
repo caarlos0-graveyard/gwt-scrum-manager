@@ -19,6 +19,8 @@ import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaPro
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.resultadobusca.ResultadoBuscaPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter;
 import com.geekvigarista.scrummanager.client.telas.visao.requisito.VisualizarRequisitoPresenter;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -65,6 +67,10 @@ public interface ClientGinjector extends Ginjector
 	AsyncProvider<CadastroProdutoPresenter> getCadastroProdutoPresenter();
 	
 	AsyncProvider<AddStakToProjPresenter> getAddStakToProjPresenter();
+	
+	AsyncProvider<TopoPresenter> getTopoPresenter();
+	
+	AsyncProvider<ResultadoBuscaPresenter> getResultadoBuscaPresenter();
 	
 	/*
 	 * Providers de gatekeepers

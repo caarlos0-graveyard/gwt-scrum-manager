@@ -11,7 +11,7 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCa
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjProxy;
 import com.geekvigarista.scrummanager.client.telas.cadastros.stakproj.AddStakToProjPresenter.AddStakToProjView;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
-import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
@@ -146,7 +146,7 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 					
 					String msg = "Projeto " + result.getResponse().getNome() + " salvo com sucesso";
 					new MsgBox(msg, false);
-					placeManager.revealPlace(new PlaceRequest(NameTokens.scrum).with(Parameters.projid, result.getResponse().getId()));
+					placeManager.revealPlace(new PlaceRequest(NameTokens.home).with(Parameters.projid, result.getResponse().getId()));
 				}
 				else
 				{

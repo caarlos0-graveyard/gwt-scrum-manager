@@ -1,0 +1,28 @@
+@def boxHeight 16px;
+@def boxRadius 5px; /* @sprite  */
+.box { /* 	gwt-image: 'lupe'; */
+	/* 	background-position: right center; */
+	/* 	background-color: White; */
+	\-moz-border-radius: boxRadius;
+	\-webkit-border-radius: boxRadius;
+	padding: 5px;
+	width: 100%;
+	height: boxHeight;
+	border: 1px solid #A9ADB8;
+	/* 	padding-right: 20px; */
+}
+
+.button {
+	margin-left: 6px;
+	width: 17px;
+}
+
+.focus {
+	color: #000;
+	font-style: normal;
+}
+
+.blur {
+	color: #777;
+	font-style: italic;
+}

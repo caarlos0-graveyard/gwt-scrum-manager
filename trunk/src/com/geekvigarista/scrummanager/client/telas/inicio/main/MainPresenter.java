@@ -3,6 +3,7 @@ package com.geekvigarista.scrummanager.client.telas.inicio.main;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter.MainProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter.MainView;
+import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
@@ -20,6 +21,9 @@ public class MainPresenter extends Presenter<MainView, MainProxy>
 	 * Child presenters can fire a RevealContentEvent with TYPE_SetMainContent to set themselves as children of this presenter.
 	 */
 	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_SetTopoContent = new Type<RevealContentHandler<?>>();
+	
+	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 	
 	@ContentSlot
@@ -35,12 +39,15 @@ public class MainPresenter extends Presenter<MainView, MainProxy>
 	}
 	
 	private final MainMenuPresenter mainmenu;
+	private final TopoPresenter topo;
 	
 	@Inject
-	public MainPresenter(final EventBus eventBus, final MainView view, final MainProxy proxy, final MainMenuPresenter mainmenu)//, ClientPlaceManager placeManager, DispatchAsync dispatcher)
+	public MainPresenter(final EventBus eventBus, final MainView view, final MainProxy proxy, final MainMenuPresenter mainmenu,
+			final TopoPresenter topo)//, ClientPlaceManager placeManager, DispatchAsync dispatcher)
 	{
 		super(eventBus, view, proxy);
 		this.mainmenu = mainmenu;
+		this.topo = topo;
 	}
 	
 	@Override
@@ -54,5 +61,6 @@ public class MainPresenter extends Presenter<MainView, MainProxy>
 	{
 		super.onReveal();
 		setInSlot(TYPE_SetMenuContent, mainmenu);
+		setInSlot(TYPE_SetTopoContent, topo);
 	}
 }

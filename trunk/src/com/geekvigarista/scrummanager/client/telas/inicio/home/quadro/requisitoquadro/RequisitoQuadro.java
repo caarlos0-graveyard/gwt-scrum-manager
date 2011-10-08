@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
-import com.geekvigarista.scrummanager.client.telas.commons.msgbox.MsgBox;
+import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.modalencaminhar.ModalEncaminhar;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;

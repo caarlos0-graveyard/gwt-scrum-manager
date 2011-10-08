@@ -1,4 +1,4 @@
-package com.geekvigarista.scrummanager.client.telas.commons.msgbox;
+package com.geekvigarista.scrummanager.client.telas.componentes.msgbox;
 
 import java.util.ArrayList;
 import java.util.List;

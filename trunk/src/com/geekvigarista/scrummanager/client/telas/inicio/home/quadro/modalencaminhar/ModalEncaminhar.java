@@ -5,7 +5,6 @@ import java.util.List;
 import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultDialogBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.encaminhar.EncaminharEvent;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
-import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.gwt.core.client.GWT;
@@ -77,6 +76,7 @@ public class ModalEncaminhar extends DefaultDialogBox
 	
 	private void inicializarCampos()
 	{
+		System.out.println(stakeholders.size() + "LLLLLLLLLLLLLLl");
 		for(Stakeholder s : stakeholders)
 		{
 			if(s != null && s.getNome() != null)

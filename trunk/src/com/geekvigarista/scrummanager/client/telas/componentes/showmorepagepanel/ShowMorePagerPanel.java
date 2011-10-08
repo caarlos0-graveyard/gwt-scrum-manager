@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.geekvigarista.scrummanager.client.telas.commons.showmorepagepanel;
+package com.geekvigarista.scrummanager.client.telas.componentes.showmorepagepanel;
 
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;

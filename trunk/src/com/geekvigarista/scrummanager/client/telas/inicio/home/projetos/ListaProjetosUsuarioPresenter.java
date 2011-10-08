@@ -18,7 +18,6 @@ import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;

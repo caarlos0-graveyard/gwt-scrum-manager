@@ -1,4 +1,4 @@
-package com.geekvigarista.scrummanager.client.telas.commons.msgbox;
+package com.geekvigarista.scrummanager.client.telas.componentes.msgbox;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
