@@ -6,7 +6,7 @@
 	<g:HTMLPanel>
 		<g:Label text="{msg.seusProjetos}" styleName="titulo1"></g:Label>
 		<g:DecoratorPanel>
-			<p1:CellList ui:field="cellListProjetos" width="200px" />
+			<p1:CellList ui:field="cellListProjetos" width="230px" />
 		</g:DecoratorPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
