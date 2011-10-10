@@ -74,21 +74,13 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 				 * seto a lista de projetos
 				 */
 				getView().setProjetos(result.getProjetos());
+				selecionarProjetoById();
 			}
 		});
 	}
 	
-	@Override
-	protected void onReset()
+	public void selecionarProjetoById()
 	{
-		super.onReset();
-		/*
-		 * pego a ultima placerequest, tentando capturar o id do projeto.
-		 * essa presenter nao é uma proxyplace, então o prepareFromRequest 
-		 * não é chamdo aqui, e tenho que fazer esse "desvio" usando o onreset. :P
-		 */
-		idProjetoSelecionado = placemanager.getCurrentPlaceRequest().getParameter(Parameters.projid, null);
-		
 		// procuro o id do projeto e seleciono ele like a boss.
 		if(idProjetoSelecionado != null)
 		{
@@ -106,6 +98,18 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 			// senao seleciono o null :D
 			getView().factory().getSelectionModel().setSelected(null, true);
 		}
+	}
+	
+	@Override
+	protected void onReset()
+	{
+		super.onReset();
+		/*
+		 * pego a ultima placerequest, tentando capturar o id do projeto.
+		 * essa presenter nao é uma proxyplace, então o prepareFromRequest 
+		 * não é chamdo aqui, e tenho que fazer esse "desvio" usando o onreset. :P
+		 */
+		idProjetoSelecionado = placemanager.getCurrentPlaceRequest().getParameter(Parameters.projid, null);
 	}
 	
 	@Override
