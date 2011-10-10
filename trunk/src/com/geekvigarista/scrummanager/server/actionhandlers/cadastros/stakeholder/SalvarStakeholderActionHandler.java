@@ -74,6 +74,5 @@ public class SalvarStakeholderActionHandler implements ActionHandler<SalvarStake
 	@Override
 	public void undo(SalvarStakeholderAction arg0, SalvarStakeholderResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 	}
 }

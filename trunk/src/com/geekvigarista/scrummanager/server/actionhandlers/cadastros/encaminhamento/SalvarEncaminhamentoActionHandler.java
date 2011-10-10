@@ -82,7 +82,6 @@ public class SalvarEncaminhamentoActionHandler implements ActionHandler<SalvarEn
 	@Override
 	public void undo(SalvarEncaminhamentoAction arg0, SalvarEncaminhamentoResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

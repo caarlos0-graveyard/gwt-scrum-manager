@@ -22,8 +22,6 @@ public class ExcluirUsuarioActionHandler implements ActionHandler<ExcluirUsuario
 	@Override
 	public ExcluirUsuarioResult execute(ExcluirUsuarioAction arg0, ExecutionContext arg1) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.execute()");
-		//		Usuario u = dao.salvar(arg0.getUsuario());
 		Usuario usuarioExcluir = arg0.getUsuario();
 		boolean rv = validar(usuarioExcluir);
 		if(!rv)
@@ -63,7 +61,6 @@ public class ExcluirUsuarioActionHandler implements ActionHandler<ExcluirUsuario
 	@Override
 	public void undo(ExcluirUsuarioAction arg0, ExcluirUsuarioResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

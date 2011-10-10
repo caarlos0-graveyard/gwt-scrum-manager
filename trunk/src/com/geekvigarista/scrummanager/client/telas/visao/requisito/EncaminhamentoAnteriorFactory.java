@@ -4,11 +4,8 @@ import java.util.Date;
 
 import com.geekvigarista.scrummanager.client.i18n.Mensagem;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
-import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
@@ -48,15 +45,15 @@ public class EncaminhamentoAnteriorFactory
 	
 	private void initColumns()
 	{
-		Column<Encaminhamento, Boolean> checkColumn = new Column<Encaminhamento, Boolean>(new CheckboxCell(true, false))
-		{
-			@Override
-			public Boolean getValue(Encaminhamento object)
-			{
-				return selectionModel.isSelected(object);
-			}
-		};
-		
+		//		Column<Encaminhamento, Boolean> checkColumn = new Column<Encaminhamento, Boolean>(new CheckboxCell(true, false))
+		//		{
+		//			@Override
+		//			public Boolean getValue(Encaminhamento object)
+		//			{
+		//				return selectionModel.isSelected(object);
+		//			}
+		//		};
+		//		
 		Column<Encaminhamento, String> stakeholderColumn = new Column<Encaminhamento, String>(new TextCell())
 		{
 			@Override
@@ -65,7 +62,9 @@ public class EncaminhamentoAnteriorFactory
 				if(object.getStakeholder() != null)
 				{
 					return object.getStakeholder().getNome() + " (" + object.getStakeholder().getPapel() + ")";
-				}else{
+				}
+				else
+				{
 					return "Sem Stakeholder";
 				}
 			}
@@ -96,8 +95,8 @@ public class EncaminhamentoAnteriorFactory
 			}
 		};
 		
-		cellTable.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
-		cellTable.setColumnWidth(checkColumn, 40, Unit.PX);
+		//		cellTable.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
+		//		cellTable.setColumnWidth(checkColumn, 40, Unit.PX);
 		cellTable.addColumn(dataColumn, Mensagem.get.data());
 		cellTable.addColumn(stakeholderColumn, Mensagem.get.stakeholders());
 		cellTable.addColumn(tempoColumn, Mensagem.get.tempoGasto());

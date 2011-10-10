@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStartEvent;
@@ -35,11 +36,13 @@ import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -59,14 +62,16 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	
 	private final UsuarioLogadoGatekeeper usuarioLogado;
 	private final DispatchAsync dispatcher;
+	private final PlaceManager placeManager;
 	
 	@Inject
 	public QuadroScrumPresenter(EventBus eventBus, QuadroScrumView view, QuadroScrumProxy proxy, final DispatchAsync dispatcher,
-			final UsuarioLogadoGatekeeper usuarioLogado)
+			final UsuarioLogadoGatekeeper usuarioLogado, final PlaceManager placeManager)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.usuarioLogado = usuarioLogado;
+		this.placeManager = placeManager;
 		getView().setColunas(null);
 	}
 	
@@ -155,7 +160,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		{
 			
 			@Override
-			public void encaminhar(AbrirModalEncaminharEvent event)
+			public void abrirModal(AbrirModalEncaminharEvent event)
 			{
 				final AcaoEncaminhar acao = event.getAcao();
 				final Requisito requisito = event.getRequisito();
@@ -187,7 +192,15 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 					@Override
 					public void onSuccess(SalvarRequisitoResult result)
 					{
-						constroiColunas(result.getProjeto());
+						if(placeManager.getCurrentPlaceRequest().getNameToken().equals(NameTokens.visreq))
+						{
+							Window.alert("OI");
+							placeManager.revealCurrentPlace();
+						}
+						else
+						{
+							constroiColunas(result.getProjeto());
+						}
 					}
 				});
 			}

@@ -30,7 +30,7 @@ public class ClientPlaceManager extends PlaceManagerImpl
 	@Override
 	public void revealErrorPlace(String invalidHistoryToken)
 	{
-		System.out.println(invalidHistoryToken);
+		System.out.println("Token inválido: " + invalidHistoryToken);
 		revealPlace(new PlaceRequest(NameTokens.erro404));
 	}
 	

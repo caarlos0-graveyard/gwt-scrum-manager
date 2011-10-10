@@ -54,7 +54,6 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 		this.usuarioLogado = usuarioLogado;
 		this.projetos = projetos;
 		this.quadro = quadro;
-		System.out.println(usuarioLogado.getUsuario());
 	}
 	
 	@Override
