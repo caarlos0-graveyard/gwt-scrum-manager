@@ -62,7 +62,12 @@ public class EncaminhamentoAnteriorFactory
 			@Override
 			public String getValue(Encaminhamento object)
 			{
-				return object.getStakeholder().getNome() + " (" + object.getStakeholder().getPapel() + ")";
+				if(object.getStakeholder() != null)
+				{
+					return object.getStakeholder().getNome() + " (" + object.getStakeholder().getPapel() + ")";
+				}else{
+					return "Sem Stakeholder";
+				}
 			}
 		};
 		Column<Encaminhamento, Date> dataColumn = new Column<Encaminhamento, Date>(new DateCell())

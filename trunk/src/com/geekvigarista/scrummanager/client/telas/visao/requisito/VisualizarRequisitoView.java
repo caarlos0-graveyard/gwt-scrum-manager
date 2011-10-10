@@ -7,12 +7,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
-import com.google.gwt.user.cellview.client.CellTable;
 
 public class VisualizarRequisitoView extends ViewImpl implements VisualizarRequisitoPresenter.VisReqView
 {
@@ -46,6 +47,12 @@ public class VisualizarRequisitoView extends ViewImpl implements VisualizarRequi
 	
 	@UiField
 	HTMLPanel conteudo;
+	
+	@UiField
+	Button btVoltarEncaminhamento;
+	
+	@UiField
+	Button btAvancarEncaminhamento;
 	
 	@UiField
 	//(provided = true)
@@ -122,6 +129,18 @@ public class VisualizarRequisitoView extends ViewImpl implements VisualizarRequi
 		}
 		
 		factory.getDataProvider().setList(encaminhamentos);
+	}
+
+	@Override
+	public Button getBtVoltar()
+	{
+		return btVoltarEncaminhamento;
+	}
+
+	@Override
+	public Button getBtAvancar()
+	{
+		return btAvancarEncaminhamento;
 	}
 	
 }

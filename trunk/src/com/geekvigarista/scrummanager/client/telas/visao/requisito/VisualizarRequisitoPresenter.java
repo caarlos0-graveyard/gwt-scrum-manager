@@ -4,17 +4,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.geekvigarista.scrummanager.client.i18n.MensagemParams;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoObjResult;
+import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
+import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
 import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -58,6 +63,10 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 		void setData(List<Encaminhamento> encaminhamentos);
 		
 		Widget asWidget();
+		
+		Button getBtVoltar();
+		
+		Button getBtAvancar();
 	}
 	
 	/*
@@ -66,6 +75,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	
 	private Requisito requisito;
 	private final DispatchAsync dispatcher;
+	private EventBus eventBus;
 	
 	/*
 	 * Construtores
@@ -76,6 +86,26 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
+		this.eventBus = eventBus;
+	}
+	
+	public void configuraBotoes()
+	{
+		switch(EncaminharUtil.getUltimoEncaminhamento(requisito).getStatus())
+		{
+			case AGUARDANDO:
+				getView().getBtVoltar().setEnabled(false);
+				break;
+			
+			case CONCLUIDO:
+				getView().getBtAvancar().setEnabled(false);
+				break;
+			
+			default:
+				getView().getBtAvancar().setEnabled(true);
+				getView().getBtVoltar().setEnabled(true);
+				break;
+		}
 	}
 	
 	/*
@@ -86,6 +116,28 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	protected void revealInParent()
 	{
 		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
+	}
+	
+	@Override
+	public void onBind()
+	{
+		getView().getBtAvancar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				eventBus.fireEvent(new AbrirModalEncaminharEvent(AcaoEncaminhar.AVANCAR, requisito));
+			}
+		});
+		
+		getView().getBtVoltar().addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				eventBus.fireEvent(new AbrirModalEncaminharEvent(AcaoEncaminhar.VOLTAR, requisito));
+			}
+		});
 	}
 	
 	@Override
@@ -130,9 +182,13 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 		getView().descricao().setText(requisito.getDescricao());
 		getView().dataCadastro().setValue(requisito.getDataCadastro());
 		getView().prioridade().setText(requisito.getPrioridade().desc());
-		// FIXME essa merda aqui nao ta funcionando nao sei porque
-		getView().tempoEstimado().setText(MensagemParams.get.tempoHoras(requisito.getTempoEstimado()));
-		getView().tempoGasto().setText(MensagemParams.get.tempoHoras(requisito.getTempoTotal()));
+		
+		getView().tempoEstimado().setText(Integer.toString(requisito.getTempoEstimado()) + "horas");
+		getView().tempoGasto().setText(Integer.toString(requisito.getTempoTotal()) + "horas");
+		
+		getView().setData(requisito.getEncaminhamentos());
+		
+		configuraBotoes();
 	}
 	
 }
