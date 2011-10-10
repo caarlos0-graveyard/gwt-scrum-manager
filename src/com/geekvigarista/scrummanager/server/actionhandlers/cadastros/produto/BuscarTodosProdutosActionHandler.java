@@ -40,7 +40,6 @@ public class BuscarTodosProdutosActionHandler implements ActionHandler<BuscaTodo
 	@Override
 	public void undo(BuscaTodosProdutosAction arg0, BuscarProdutoListResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

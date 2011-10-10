@@ -48,7 +48,6 @@ public class BuscarUsuarioActionHandler implements ActionHandler<BuscarUsuarioAc
 	@Override
 	public void undo(BuscarUsuarioAction arg0, BuscarUsuarioListResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

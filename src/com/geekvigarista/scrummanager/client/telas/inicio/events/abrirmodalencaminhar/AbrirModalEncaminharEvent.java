@@ -43,7 +43,7 @@ public class AbrirModalEncaminharEvent extends GwtEvent<AbrirModalEncaminharEven
 	@Override
 	protected void dispatch(AbrirModalEncaminharEventHandler handler)
 	{
-		handler.encaminhar(this);
+		handler.abrirModal(this);
 	}
 	
 	@Override

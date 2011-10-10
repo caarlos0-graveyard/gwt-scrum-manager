@@ -69,7 +69,7 @@ public class ModalEncaminhar extends DefaultDialogBox
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				Stakeholder s = stakeholder.getSelectedIndex() > -1 ? stakeholders.get(stakeholder.getSelectedIndex()) : null;
+				Stakeholder s = stakeholders.get(stakeholder.getSelectedIndex());
 				eventbus.fireEvent(new EncaminharEvent(requisito, s, descricao.getHTML(), tempoGasto.getValue(), acao));
 				hide();
 			}
@@ -78,7 +78,6 @@ public class ModalEncaminhar extends DefaultDialogBox
 	
 	private void inicializarCampos()
 	{
-		System.out.println(stakeholders.size() + "LLLLLLLLLLLLLLl");
 		for(Stakeholder s : stakeholders)
 		{
 			if(s != null && s.getNome() != null)

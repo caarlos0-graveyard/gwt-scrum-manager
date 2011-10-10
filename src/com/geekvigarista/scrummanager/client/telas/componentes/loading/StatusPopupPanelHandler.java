@@ -33,9 +33,11 @@ public class StatusPopupPanelHandler implements IStatusPopupPanelHandler
 			@Override
 			public void loadStart(LoadingStartEvent event)
 			{
-				System.out.println("StatusPopupPanelHandler.StatusPopupPanelHandler(...).new LoadingStartEventHandler() {...}.loadStart()");
 				System.out.println(new Date().getTime());
-				status.show();
+				if(status != null && !status.isVisible())
+				{
+					status.show();
+				}
 			}
 		});
 		
@@ -44,7 +46,6 @@ public class StatusPopupPanelHandler implements IStatusPopupPanelHandler
 			@Override
 			public void loadStop(LoadingStopEvent event)
 			{
-				System.out.println("StatusPopupPanelHandler.StatusPopupPanelHandler(...).new LoadingStopEventHandler() {...}.loadStop()");
 				System.out.println(new Date().getTime());
 				if(status != null && status.isVisible())
 				{

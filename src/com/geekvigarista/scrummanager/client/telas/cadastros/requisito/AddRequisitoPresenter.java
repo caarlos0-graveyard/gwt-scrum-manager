@@ -179,8 +179,6 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	public void setProjeto(Projeto projeto)
 	{
 		this.projeto = projeto;
-		System.out.println(projeto);
-		System.out.println(projeto.getRequisitos());
 		getView().setData(projeto.getRequisitos());
 	}
 	

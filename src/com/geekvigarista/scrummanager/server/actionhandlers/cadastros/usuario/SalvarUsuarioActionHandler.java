@@ -26,7 +26,6 @@ public class SalvarUsuarioActionHandler implements ActionHandler<SalvarUsuarioAc
 	@Override
 	public SalvarUsuarioResult execute(SalvarUsuarioAction arg0, ExecutionContext arg1) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.execute()");
 		Usuario u = arg0.getUsuario();
 		RetornoValidacao rv = valida(u);
 		if(!rv.isOk())
@@ -96,7 +95,6 @@ public class SalvarUsuarioActionHandler implements ActionHandler<SalvarUsuarioAc
 	@Override
 	public void undo(SalvarUsuarioAction arg0, SalvarUsuarioResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

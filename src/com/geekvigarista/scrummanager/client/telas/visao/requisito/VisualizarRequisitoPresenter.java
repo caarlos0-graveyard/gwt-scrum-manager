@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStopEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
-import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoObjResult;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
@@ -28,6 +31,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -40,6 +44,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.visreq)
+	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
 	public interface VisReqProxy extends ProxyPlace<VisualizarRequisitoPresenter>
 	{
 	}
@@ -81,12 +86,23 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	 * Construtores
 	 */
 	
+	/*
+	 * essa presenter depende dos eventos que são tratados na quadroScrumPresenter...
+	 * então, se acessar essa presenter direto, não funciona.
+	 * 
+	 * Sendo assim, vou injetar essa bosta aqui!
+	 */
+	
+	private final QuadroScrumPresenter quadro;
+	
 	@Inject
-	public VisualizarRequisitoPresenter(final EventBus eventBus, final VisReqView view, final VisReqProxy proxy, final DispatchAsync dispatcher)
+	public VisualizarRequisitoPresenter(final EventBus eventBus, final VisReqView view, final VisReqProxy proxy, final DispatchAsync dispatcher,
+			final QuadroScrumPresenter quadro)
 	{
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.eventBus = eventBus;
+		this.quadro = quadro;
 	}
 	
 	public void configuraBotoes()
@@ -116,7 +132,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	protected void revealInParent()
 	{
 		//FIXME ta funcionando mas buga ao voltar
-		RevealContentEvent.fire(this, HomePresenter.TYPE_SetQuadroScrumContent, this);
+		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
 	}
 	
 	@Override
@@ -190,6 +206,8 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 		getView().setData(requisito.getEncaminhamentos());
 		
 		configuraBotoes();
+		
+		getEventBus().fireEvent(new LoadingStopEvent());
 	}
 	
 }

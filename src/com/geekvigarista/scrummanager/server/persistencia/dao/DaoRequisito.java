@@ -99,7 +99,6 @@ public class DaoRequisito extends BasicDAO<RequisitoPOJO, ObjectId> implements I
 		List<Requisito> retorno = new ArrayList<Requisito>();
 		for(RequisitoPOJO reqPojo : resultadoBusca.asList())
 		{
-			System.out.println("achou " + reqPojo.getTitulo());
 			retorno.add(reqPojo.getRequisito());
 		}
 		return retorno;

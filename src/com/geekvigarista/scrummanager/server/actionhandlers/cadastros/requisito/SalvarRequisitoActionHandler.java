@@ -95,7 +95,6 @@ public class SalvarRequisitoActionHandler implements ActionHandler<SalvarRequisi
 	@Override
 	public void undo(SalvarRequisitoAction arg0, SalvarRequisitoResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

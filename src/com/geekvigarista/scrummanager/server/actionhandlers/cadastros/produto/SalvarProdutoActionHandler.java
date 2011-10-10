@@ -71,7 +71,6 @@ public class SalvarProdutoActionHandler implements ActionHandler<SalvarProdutoAc
 	@Override
 	public void undo(SalvarProdutoAction arg0, SalvarProdutoResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		System.out.println("SalvarUsuarioActionHandler.undo()");
 		
 	}
 	

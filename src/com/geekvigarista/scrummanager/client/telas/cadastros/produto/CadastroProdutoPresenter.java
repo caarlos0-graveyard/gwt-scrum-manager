@@ -100,7 +100,6 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	@Override
 	public void doSalvar()
 	{
-		System.out.println("Do salvar");
 		Produto p = converter.convert(getProduto(), getView());
 		dispatch.execute(new SalvarProdutoAction(p), new AbstractCallback<SalvarProdutoResult>()
 		{
