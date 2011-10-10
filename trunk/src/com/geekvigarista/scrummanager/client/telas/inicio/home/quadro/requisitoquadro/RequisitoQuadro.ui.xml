@@ -7,21 +7,24 @@
 		
 	</ui:style>
 	<g:HTMLPanel>
-		<g:DecoratorPanel>
+		<g:SimplePanel styleName="postit" ui:field="simplePanel">
 			<g:VerticalPanel width="120px">
 				<g:Cell horizontalAlignment="ALIGN_CENTER">
-					<g:Label text="titulo" ui:field="titulo" styleName="titulo3" />
+					<g:Label text="titulo" ui:field="titulo" styleName="titulo3 sublinhado" />
+				</g:Cell>
+				<g:Cell horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="lbResponsavel"/>
 				</g:Cell>
 				<g:Cell horizontalAlignment="ALIGN_RIGHT">
 					<g:Hyperlink text="{msg.detalhes}" ui:field="detalhes"></g:Hyperlink>
 				</g:Cell>
 				<g:Cell horizontalAlignment="ALIGN_CENTER">
 					<g:HorizontalPanel>
-						<g:Button text="&lt;-" ui:field="previous" />
-						<g:Button text="-&gt;" ui:field="next" />
+						<g:Button text="&lt;" ui:field="previous" styleName="botaoNovo"/>
+						<g:Button text="&gt;" ui:field="next" styleName="botaoNovo"/>
 					</g:HorizontalPanel>
 				</g:Cell>
 			</g:VerticalPanel>
-		</g:DecoratorPanel>
+		</g:SimplePanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

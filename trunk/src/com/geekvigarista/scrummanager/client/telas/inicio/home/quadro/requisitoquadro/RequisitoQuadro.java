@@ -4,8 +4,10 @@ import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
+import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
+import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,6 +19,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RequisitoQuadro extends Composite
@@ -35,7 +38,14 @@ public class RequisitoQuadro extends Composite
 	@UiField
 	Button previous;
 	
+	@UiField
+	SimplePanel simplePanel;
+	
+	@UiField
+	Label lbResponsavel;
+	
 	private final EventBus eventbus;
+	@SuppressWarnings(value = "unused")
 	private final Usuario usuariologado;
 	
 	interface RequisitoQuadroUiBinder extends UiBinder<Widget, RequisitoQuadro>
@@ -54,20 +64,28 @@ public class RequisitoQuadro extends Composite
 		sb.append(";").append(Parameters.reqid).append("=").append(requisito.getId());
 		detalhes.setTargetHistoryToken(sb.toString());
 		
-		switch(EncaminharUtil.getUltimoEncaminhamento(requisito).getStatus())
+		controlaDisabledBotoes(requisito);
+		controlaPrioridades(requisito);
+		adicionaResponsavelNaTela(requisito);
+		adicionaHandlerBotoes(requisito);
+	}
+	
+	public void adicionaResponsavelNaTela(Requisito requisito)
+	{
+		Stakeholder stakeholder = EncaminharUtil.getUltimoEncaminhamento(requisito).getStakeholder();
+		if(stakeholder == null)
 		{
-			case AGUARDANDO:
-				previous.setEnabled(false);
-				break;
-			
-			case CONCLUIDO:
-				next.setEnabled(false);
-				break;
-			
-			default:
-				break;
+			lbResponsavel.setText("Sem Stakeholder");
+		}
+		else
+		{
+			lbResponsavel.setText(stakeholder.getNome());
 		}
 		
+	}
+	
+	public void adicionaHandlerBotoes(final Requisito requisito)
+	{
 		next.addClickHandler(new ClickHandler()
 		{
 			@Override
@@ -84,5 +102,39 @@ public class RequisitoQuadro extends Composite
 				eventbus.fireEvent(new AbrirModalEncaminharEvent(AcaoEncaminhar.VOLTAR, requisito));
 			}
 		});
+	}
+	
+	public void controlaDisabledBotoes(Requisito requisito)
+	{
+		switch(EncaminharUtil.getUltimoEncaminhamento(requisito).getStatus())
+		{
+			case AGUARDANDO:
+				previous.setEnabled(false);
+				break;
+			
+			case CONCLUIDO:
+				next.setEnabled(false);
+				break;
+			
+			default:
+				break;
+		}
+	}
+	
+	public void controlaPrioridades(Requisito requisito)
+	{
+		//TODO futuramente mudar para switch...
+		if(requisito.getPrioridade().equals(PrioridadeRequisito.ALTA))
+		{
+			simplePanel.addStyleName("prioridadeAlta");
+		}
+		else if(requisito.getPrioridade().equals(PrioridadeRequisito.MEDIA))
+		{
+			simplePanel.addStyleName("prioridadeMedia");
+		}
+		else if(requisito.getPrioridade().equals(PrioridadeRequisito.BAIXA))
+		{
+			simplePanel.addStyleName("prioridadeBaixa");
+		}
 	}
 }
