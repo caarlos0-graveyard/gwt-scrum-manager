@@ -85,6 +85,13 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		});
 	}
 	
+	@Override
+	protected void onReset()
+	{
+		super.onReset();
+		
+	}
+	
 	private void constroiColunas(Projeto projeto)
 	{
 		if(projeto == null || projeto.getId() == null)

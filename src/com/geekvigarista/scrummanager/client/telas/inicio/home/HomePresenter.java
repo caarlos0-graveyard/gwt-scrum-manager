@@ -4,11 +4,9 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
-import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
-import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -83,7 +81,6 @@ public class HomePresenter extends Presenter<HomePresenter.HomeView, HomePresent
 	public void prepareFromRequest(PlaceRequest request)
 	{
 		super.prepareFromRequest(request);
-		
 	}
 	
 }
