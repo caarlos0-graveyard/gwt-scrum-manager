@@ -11,7 +11,7 @@
 		<g:Grid>
 			<g:row>
 				<g:customCell>
-					<g:Image height="32px" width="90px" />
+					<g:Image height="32px" width="90px" url="imagens/logo3.png" />
 				</g:customCell>
 				<g:customCell>
 					<s:SearchBox ui:field="txtbusca" width="400px" />
