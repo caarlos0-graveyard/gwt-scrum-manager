@@ -8,6 +8,7 @@ import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter.MainMenuProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter.MainMenuView;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.projetoselecionado.ProjetoSelecionadoEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuarioObjResult;
 import com.geekvigarista.scrummanager.shared.commands.usuario.login.LogoutUsuarioAction;
@@ -49,7 +50,8 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 	private final DispatchAsync dispatcher;
 	
 	@Inject
-	public MainMenuPresenter(EventBus eventBus, MainMenuView view, MainMenuProxy proxy, final PlaceManager placeManager, final DispatchAsync dispatcher)
+	public MainMenuPresenter(EventBus eventBus, MainMenuView view, MainMenuProxy proxy, final PlaceManager placeManager,
+			final DispatchAsync dispatcher)
 	{
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
@@ -102,6 +104,7 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 			@Override
 			public void execute()
 			{
+				getEventBus().fireEvent(new ProjetoSelecionadoEvent(null));
 				goToPlace(NameTokens.home);
 			}
 		});
@@ -126,7 +129,8 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 				if(result.getErros() == null || result.getErros().isEmpty())
 				{
 					getEventBus().fireEvent(new LogoutEvent());
-				}else
+				}
+				else
 				{
 					new MsgBox(result.getErros(), true);
 				}

@@ -95,8 +95,8 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 		}
 		else
 		{
-			// senao seleciono o null :D
-			getView().factory().getSelectionModel().setSelected(null, true);
+			ProjetoStakeholderDTO selectedObject = getView().factory().getSelectionModel().getSelectedObject();
+			getView().factory().getSelectionModel().setSelected(selectedObject, false);
 		}
 	}
 	
@@ -110,6 +110,7 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 		 * não é chamdo aqui, e tenho que fazer esse "desvio" usando o onreset. :P
 		 */
 		idProjetoSelecionado = placemanager.getCurrentPlaceRequest().getParameter(Parameters.projid, null);
+		selecionarProjetoById();
 	}
 	
 	@Override
@@ -138,4 +139,5 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 	{
 		RevealContentEvent.fire(this, HomePresenter.TYPE_SetProjetosContent, this);
 	}
+	
 }
