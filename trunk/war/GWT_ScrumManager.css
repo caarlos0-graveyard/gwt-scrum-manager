@@ -36,8 +36,10 @@
 .titulo1 {
 	font-size: 2em;
 	font-weight: bold;
-	color: #777777;
+	color: #777;
 	text-aling: center;
+	padding: 6px;
+	text-shadow: 0 0 5px #F0F0F0;
 }
 
 .titulo2 {
@@ -251,4 +253,8 @@
 .sublinhado
 {
 	text-decoration: underline;
+}
+
+.listProjetoItem {
+	padding: 12px;
 }

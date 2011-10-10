@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStartEvent;
 import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStopEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEventHandler;
@@ -176,6 +177,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 			@Override
 			public void encaminhar(EncaminharEvent event)
 			{
+				getEventBus().fireEvent(new LoadingStartEvent());
 				Requisito requisito = event.getRequisito();
 				Encaminhamento e = EncaminharUtil.getUltimoEncaminhamento(requisito);
 				requisito.getEncaminhamentos().add(

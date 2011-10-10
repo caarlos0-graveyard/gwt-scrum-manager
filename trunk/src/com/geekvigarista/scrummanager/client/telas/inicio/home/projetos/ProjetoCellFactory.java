@@ -56,6 +56,7 @@ public class ProjetoCellFactory
 				return;
 			Projeto p = value.getProjeto();
 			Stakeholder s = value.getStakeholder();
+			sb.appendHtmlConstant("<div class=\"listProjetoItem\">");
 			sb.appendHtmlConstant("<span class=\"tituloCell\">");
 			sb.appendEscaped(p.getNome());
 			sb.appendHtmlConstant("</span><br />");
@@ -63,7 +64,7 @@ public class ProjetoCellFactory
 			sb.appendEscaped(" - ").appendEscaped(dtf.format(p.getDataFim()));
 			sb.appendHtmlConstant("<br />");
 			sb.appendEscaped("Papel: ").appendEscaped(s.getPapel().desc());
-			System.out.println("ProjetoCellFactory.ProjetoCell.render()");
+			sb.appendHtmlConstant("</div>");
 		}
 	}
 	

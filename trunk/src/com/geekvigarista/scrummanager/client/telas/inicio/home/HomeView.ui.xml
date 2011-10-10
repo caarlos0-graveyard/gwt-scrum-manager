@@ -4,7 +4,7 @@
 	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
 		field="msg"></ui:with>
 	<g:HTMLPanel>
-		<g:HorizontalSplitPanel splitPosition="210px"
+		<g:HorizontalSplitPanel splitPosition="251px"
 			height="500px" ui:field="splitPanel">
 			<g:SimplePanel ui:field="panelProjetos"></g:SimplePanel>
 			<g:SimplePanel ui:field="panelQuadro"></g:SimplePanel>
