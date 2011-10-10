@@ -212,3 +212,12 @@
 	background-position: 0% 0%;
 	border: none;
 }
+
+.negrito
+{
+	font-weight: bold;
+}
+.gwt-Label negrito {
+}
+.gwt-Label  {
+}

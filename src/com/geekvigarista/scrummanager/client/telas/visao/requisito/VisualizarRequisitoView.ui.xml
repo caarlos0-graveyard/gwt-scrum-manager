@@ -12,7 +12,7 @@
 		<g:Grid>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{msg.dataCadastro}" />
+					<g:Label text="{msg.dataCadastro}" styleName="gwt-Label negrito" />
 				</g:customCell>
 				<g:customCell>
 					<g:DateLabel ui:field="dataCadastro" />
@@ -20,13 +20,13 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{msg.tempoEstimado}" />
+					<g:Label text="{msg.tempoEstimado}" styleName="gwt-Label negrito" />
 				</g:customCell>
 				<g:customCell>
 					<g:Label ui:field="tempoEstimado" />
 				</g:customCell>
 				<g:customCell>
-					<g:Label text="{msg.tempoGasto}" />
+					<g:Label text="{msg.tempoGasto}" styleName="gwt-Label negrito" />
 				</g:customCell>
 				<g:customCell>
 					<g:Label ui:field="tempoGasto" />
@@ -34,14 +34,17 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="{msg.descricao}" />
+					<g:Label text="{msg.descricao}" styleName="gwt-Label negrito" />
 				</g:customCell>
 			</g:row>
 		</g:Grid>
 		<g:Label text="" ui:field="descricao" />
 		<hr />
 		<g:Label text="{msg.encaminhar}" styleName="titulo2" />
-		<g:SimplePanel ui:field="encaminharPanel"></g:SimplePanel>
+		<g:HorizontalPanel ui:field="encaminharPanel">
+			<g:Button text="&lt;" ui:field="btVoltarEncaminhamento" styleName="botaoNovo">voltar</g:Button>
+			<g:Button text="&gt;" ui:field="btAvancarEncaminhamento" styleName="botaoNovo">Avancar</g:Button>
+		</g:HorizontalPanel>
 
 		<hr />
 		<g:Label text="{msg.encaminhamentosAnteriores}" styleName="titulo2" />
