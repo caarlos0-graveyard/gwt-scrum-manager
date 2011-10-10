@@ -32,7 +32,7 @@ public class EncaminharUtil
 	 *            - {@link AcaoEncaminhar} a ser executada.
 	 * @return
 	 */
-	public static Encaminhamento encaminhar(Encaminhamento encaminhamentoAnterior, Stakeholder stakeholder, String descricao, int tempoGasto,
+	private static Encaminhamento getEncaminhamento(Encaminhamento encaminhamentoAnterior, Stakeholder stakeholder, String descricao, int tempoGasto,
 			AcaoEncaminhar acao)
 	{
 		Encaminhamento e = new Encaminhamento();
@@ -75,5 +75,28 @@ public class EncaminharUtil
 	public static Encaminhamento getUltimoEncaminhamento(Requisito requisito)
 	{
 		return requisito.getEncaminhamentos().get(requisito.getEncaminhamentos().size() - 1);
+	}
+	
+	/**
+	 * Retorna o requisito pronto para ser salvo ( encaminhamento feito! )
+	 * 
+	 * @param requisito
+	 *            - requisito a ser encaminhado
+	 * @param stakeholder
+	 *            - stakeholder destino
+	 * @param descricao
+	 * @param tempoGasto
+	 * @param acao
+	 * @return requisito pronto
+	 */
+	public static Requisito encaminhar(Requisito requisito, Stakeholder stakeholder, String descricao, int tempoGasto, AcaoEncaminhar acao)
+	{
+		assert (requisito != null) : "O requisito não pode ser null";
+		assert (stakeholder != null) : "É obrigatório selecionar um stakeholder.";
+		assert (tempoGasto > -1) : "O tempo gasto não pode ser menor que 0 ";
+		Encaminhamento e = getUltimoEncaminhamento(requisito);
+		requisito.getEncaminhamentos().add(getEncaminhamento(e, stakeholder, descricao, tempoGasto, acao));
+		requisito.setTempoTotal(requisito.getTempoTotal() + tempoGasto);
+		return requisito;
 	}
 }

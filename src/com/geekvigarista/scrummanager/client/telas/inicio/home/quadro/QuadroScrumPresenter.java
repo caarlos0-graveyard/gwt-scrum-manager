@@ -32,7 +32,6 @@ import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarS
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
-import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.event.shared.EventBus;
@@ -183,10 +182,8 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 			public void encaminhar(EncaminharEvent event)
 			{
 				getEventBus().fireEvent(new LoadingStartEvent());
-				Requisito requisito = event.getRequisito();
-				Encaminhamento e = EncaminharUtil.getUltimoEncaminhamento(requisito);
-				requisito.getEncaminhamentos().add(
-						EncaminharUtil.encaminhar(e, event.getStakeholder(), event.getDescricao(), event.getTempoGasto(), event.getAcao()));
+				Requisito requisito = EncaminharUtil.encaminhar(event.getRequisito(), event.getStakeholder(), event.getDescricao(),
+						event.getTempoGasto(), event.getAcao());
 				dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
 				{
 					@Override

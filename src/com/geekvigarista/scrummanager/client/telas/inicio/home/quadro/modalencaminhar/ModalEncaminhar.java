@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.ListBox;
@@ -60,6 +61,7 @@ public class ModalEncaminhar extends DefaultDialogBox
 		inicializarCampos();
 		bind();
 		descricao.setFocus(true);
+		tempoGasto.setValue(0);
 	}
 	
 	private void bind()
@@ -69,6 +71,8 @@ public class ModalEncaminhar extends DefaultDialogBox
 			@Override
 			public void onClick(ClickEvent event)
 			{
+				Window.alert(stakeholders.size() + " SIZE");
+				Window.alert(stakeholder.getSelectedIndex() + " SEL");
 				Stakeholder s = stakeholders.get(stakeholder.getSelectedIndex());
 				eventbus.fireEvent(new EncaminharEvent(requisito, s, descricao.getHTML(), tempoGasto.getValue(), acao));
 				hide();
