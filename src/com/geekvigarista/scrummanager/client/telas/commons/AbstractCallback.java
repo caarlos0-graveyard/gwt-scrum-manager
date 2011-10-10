@@ -28,7 +28,11 @@ public abstract class AbstractCallback<T> implements AsyncCallback<T>
 		
 		if(caught.getMessage().contains("com.mongodb.MongoException$Network"))
 		{
-			mensagens.add("Ooops, parece que o banco de dados não quis responder sua solicitação");
+			mensagens.add("Ooops, parece que o banco de dados não quis responder sua solicitação.");
+		}
+		if(caught.getMessage().contains("java.lang.NullPointerException"))
+		{
+			mensagens.add("OH WAIT, algum de nossos macacos fez caquinha. Tente novamente mais tarde.");
 		}
 		else
 		{

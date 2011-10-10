@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStopEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEventHandler;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.encaminhar.EncaminharEvent;
@@ -124,6 +125,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 					colunas.add(new ColunaQuadroScrum(requisitos, sr.desc(), getEventBus(), usuarioLogado.getUsuario()));
 				}
 				getView().setColunas(colunas);
+				getEventBus().fireEvent(new LoadingStopEvent());
 			}
 		});
 	}

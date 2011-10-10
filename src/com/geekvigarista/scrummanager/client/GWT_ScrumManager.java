@@ -19,6 +19,9 @@ public class GWT_ScrumManager implements EntryPoint
 	{
 		DelayedBindRegistry.bind(ginjector);
 		ginjector.getPlaceManager().revealCurrentPlace();
+		
+		// injeta o controlador de status.
+		ginjector.getStatusPopupPanel();
 		RootPanel.get("carregando").setVisible(false);
 	}
 	

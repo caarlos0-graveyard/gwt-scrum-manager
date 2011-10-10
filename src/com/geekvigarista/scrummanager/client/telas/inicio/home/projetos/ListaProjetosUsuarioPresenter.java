@@ -8,6 +8,8 @@ import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.componentes.loading.StatusPopupPanel;
+import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStartEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.projetoselecionado.ProjetoSelecionadoEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter.ListaProjetosProxy;
@@ -127,6 +129,7 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 				{
 					projeto = getView().factory().getSelectionModel().getSelectedObject().getProjeto();
 				}
+				getEventBus().fireEvent(new LoadingStartEvent());
 				getEventBus().fireEvent(new ProjetoSelecionadoEvent(projeto));
 				PlaceRequest pr = new PlaceRequest(NameTokens.home).with(Parameters.projid, projeto != null ? projeto.getId() : null);
 				placemanager.updateHistory(pr, true);
