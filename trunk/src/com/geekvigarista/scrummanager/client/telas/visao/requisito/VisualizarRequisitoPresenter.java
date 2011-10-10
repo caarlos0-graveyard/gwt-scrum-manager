@@ -37,7 +37,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * inner interfaces classe
 	 */
-
+	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.visreq)
 	public interface VisReqProxy extends ProxyPlace<VisualizarRequisitoPresenter>
@@ -72,7 +72,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * Atributos
 	 */
-
+	
 	private Requisito requisito;
 	private final DispatchAsync dispatcher;
 	private EventBus eventBus;
@@ -80,7 +80,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * Construtores
 	 */
-
+	
 	@Inject
 	public VisualizarRequisitoPresenter(final EventBus eventBus, final VisReqView view, final VisReqProxy proxy, final DispatchAsync dispatcher)
 	{
@@ -111,7 +111,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * METHODS
 	 */
-
+	
 	@Override
 	protected void revealInParent()
 	{

@@ -1,8 +1,8 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.main;
 
-import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter.MainProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter.MainView;
+import com.geekvigarista.scrummanager.client.telas.inicio.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;

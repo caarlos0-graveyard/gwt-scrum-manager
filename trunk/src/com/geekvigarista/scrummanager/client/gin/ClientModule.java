@@ -21,8 +21,6 @@ import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPres
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserView;
 import com.geekvigarista.scrummanager.client.telas.erros.Erro404ViewImpl;
 import com.geekvigarista.scrummanager.client.telas.erros.Error404Presenter;
-import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenu;
-import com.geekvigarista.scrummanager.client.telas.inicio.componentes.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.HomeView;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.projetos.ListaProjetosUsuarioPresenter;
@@ -37,6 +35,8 @@ import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.login.LoginViewImpl;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainView;
+import com.geekvigarista.scrummanager.client.telas.inicio.mainmenu.MainMenu;
+import com.geekvigarista.scrummanager.client.telas.inicio.mainmenu.MainMenuPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter.TopoProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter.TopoView;

@@ -62,6 +62,8 @@ public interface Mensagem extends Constants
 	
 	public String buscarProjetos();
 	
+	public String carregando();
+	
 	/*
 	 * Home
 	 */

@@ -1,0 +1,25 @@
+@def radius 5px;
+.statusPopupPanelContainer {
+	position: fixed !important;
+	top: 0px;
+	width: 100%;
+	margin-left: 45%;
+}
+
+@sprite .statusPopupPanel {
+	gwt-image: 'ajaxloader';
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-color: #f9edbd;
+	margin: auto;
+	padding: 0 5px;
+	-moz-border-radius-bottomleft: radius;
+	-webkit-border-bottom-left-radius: radius;
+	-moz-border-radius-bottomright: radius;
+	-webkit-border-bottom-right-radius: radius;
+}
+
+.statusPopupPanelText {
+	font-weight: bold;
+	font-color: #333;
+}
