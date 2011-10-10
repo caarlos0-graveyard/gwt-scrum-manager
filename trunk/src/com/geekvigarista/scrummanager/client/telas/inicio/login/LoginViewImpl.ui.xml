@@ -12,8 +12,10 @@
 			horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" ui:field="vpTudo">
 			<g:DecoratorPanel>
 				<g:VerticalPanel>
-					<g:Label text="{msg.efetuarlogin}" styleName="titulo1"></g:Label>
-					<g:Grid>
+					<g:Image width="316px" height="91px" url="imagens/logo3.png"/>
+					<g:Label text="{msg.efetuarlogin}" styleName="titulo1" direction="RTL" horizontalAlignment="ALIGN_CENTER"></g:Label>
+					<g:HorizontalPanel>
+						<g:Grid width="351px" height="113px">
 						<g:row>
 							<g:customCell>
 								<g:Label text="{msg.usuario}" />
@@ -35,7 +37,7 @@
 								<g:Label></g:Label>
 							</g:customCell>
 							<g:customCell>
-								<g:HorizontalPanel spacing="3">
+								<g:HorizontalPanel spacing="3" width="157px">
 									<g:Button ui:field="btlogin" text="{msg.login}"></g:Button>
 									<g:Cell verticalAlignment="ALIGN_MIDDLE">
 										<g:CheckBox text="{msg.lembrarme}" ui:field="lembrar"/>
@@ -44,6 +46,7 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>
+					</g:HorizontalPanel>
 				</g:VerticalPanel>
 			</g:DecoratorPanel>
 		</g:VerticalPanel>

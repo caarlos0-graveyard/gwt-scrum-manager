@@ -8,7 +8,7 @@ import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
-import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoByIdAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.buscar.BuscarRequisitoObjResult;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
@@ -37,7 +37,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * inner interfaces classe
 	 */
-	
+
 	@ProxyCodeSplit
 	@NameToken(NameTokens.visreq)
 	public interface VisReqProxy extends ProxyPlace<VisualizarRequisitoPresenter>
@@ -72,7 +72,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * Atributos
 	 */
-	
+
 	private Requisito requisito;
 	private final DispatchAsync dispatcher;
 	private EventBus eventBus;
@@ -80,7 +80,7 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * Construtores
 	 */
-	
+
 	@Inject
 	public VisualizarRequisitoPresenter(final EventBus eventBus, final VisReqView view, final VisReqProxy proxy, final DispatchAsync dispatcher)
 	{
@@ -111,11 +111,12 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * METHODS
 	 */
-	
+
 	@Override
 	protected void revealInParent()
 	{
-		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
+		//FIXME ta funcionando mas buga ao voltar
+		RevealContentEvent.fire(this, HomePresenter.TYPE_SetQuadroScrumContent, this);
 	}
 	
 	@Override
