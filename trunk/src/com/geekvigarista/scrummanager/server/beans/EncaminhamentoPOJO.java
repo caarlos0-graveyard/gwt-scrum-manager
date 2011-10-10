@@ -101,11 +101,11 @@ public class EncaminhamentoPOJO
 	@PrePersist
 	void prePersist()
 	{
-		if(!status.equals(StatusRequisito.AGUARDANDO) && encaminhamentoAnterior.getId() == null)
-		{
-			IDaoEncaminhamento dao = new DaoEncaminhamento();
-			setEncaminhamentoAnterior(new EncaminhamentoPOJO(dao.salvar(encaminhamentoAnterior.getEncaminhamento())));
-		}
+//		if(!status.equals(StatusRequisito.AGUARDANDO) && encaminhamentoAnterior != null && encaminhamentoAnterior.getId() == null)
+//		{
+//			IDaoEncaminhamento dao = new DaoEncaminhamento();
+//			setEncaminhamentoAnterior(new EncaminhamentoPOJO(dao.salvar(encaminhamentoAnterior.getEncaminhamento())));
+//		}
 		if(stakeholder != null && stakeholder.getId() == null)
 		{
 			IDaoStakeholder daoStake = new DaoStakeholder();
@@ -172,12 +172,12 @@ public class EncaminhamentoPOJO
 	{
 		this.status = status;
 	}
-
+	
 	public String getDescricao()
 	{
 		return descricao;
 	}
-
+	
 	public void setDescricao(String descricao)
 	{
 		this.descricao = descricao;

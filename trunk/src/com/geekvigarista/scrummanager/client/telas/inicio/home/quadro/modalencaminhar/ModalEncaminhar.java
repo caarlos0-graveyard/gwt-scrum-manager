@@ -59,6 +59,7 @@ public class ModalEncaminhar extends DefaultDialogBox
 		
 		inicializarCampos();
 		bind();
+		descricao.setFocus(true);
 	}
 	
 	private void bind()
@@ -70,6 +71,7 @@ public class ModalEncaminhar extends DefaultDialogBox
 			{
 				Stakeholder s = stakeholder.getSelectedIndex() > -1 ? stakeholders.get(stakeholder.getSelectedIndex()) : null;
 				eventbus.fireEvent(new EncaminharEvent(requisito, s, descricao.getHTML(), tempoGasto.getValue(), acao));
+				hide();
 			}
 		});
 	}

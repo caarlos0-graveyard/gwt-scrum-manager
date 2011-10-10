@@ -1,17 +1,11 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.requisitoquadro;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
-import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
-import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.modalencaminhar.ModalEncaminhar;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
-import com.geekvigarista.scrummanager.shared.vos.Encaminhamento;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
-import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -74,37 +68,21 @@ public class RequisitoQuadro extends Composite
 				break;
 		}
 		
-		try
+		next.addClickHandler(new ClickHandler()
 		{
-			Encaminhamento ultimoEnc = EncaminharUtil.getUltimoEncaminhamento(requisito);
-			if(ultimoEnc != null && ultimoEnc.getStakeholder() != null && ultimoEnc.getStakeholder().getUsuario() != null
-					&& !ultimoEnc.getStakeholder().getUsuario().equals(usuariologado))
+			@Override
+			public void onClick(ClickEvent event)
 			{
-				next.setEnabled(false);
-				previous.setEnabled(false);
+				eventbus.fireEvent(new AbrirModalEncaminharEvent(AcaoEncaminhar.AVANCAR, requisito));
 			}
-			else
-			{
-				next.addClickHandler(new ClickHandler()
-				{
-					@Override
-					public void onClick(ClickEvent event)
-					{
-						List<Stakeholder> s = new ArrayList<Stakeholder>();
-						s.add(EncaminharUtil.getUltimoEncaminhamento(requisito).getStakeholder());
-						ModalEncaminhar me = new ModalEncaminhar(s, eventbus, AcaoEncaminhar.AVANCAR, requisito);
-						me.setPopupPosition(next.getAbsoluteLeft(), next.getAbsoluteTop());
-						me.show();
-					}
-				});
-			}
-		}
-		catch(Exception e)
+		});
+		previous.addClickHandler(new ClickHandler()
 		{
-			e.printStackTrace();
-			new MsgBox("Você não pode encaminhar esse requisito.", true);
-		}
-		
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				eventbus.fireEvent(new AbrirModalEncaminharEvent(AcaoEncaminhar.VOLTAR, requisito));
+			}
+		});
 	}
-	
 }

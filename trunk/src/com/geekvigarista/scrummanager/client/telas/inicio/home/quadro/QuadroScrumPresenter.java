@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
+import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEventHandler;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.encaminhar.EncaminharEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.encaminhar.EncaminharEventHandler;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.projetoselecionado.ProjetoSelecionadoEvent;
@@ -16,11 +18,14 @@ import com.geekvigarista.scrummanager.client.telas.inicio.home.HomePresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.QuadroScrumPresenter.QuadroScrumView;
 import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.coluna.ColunaQuadroScrum;
+import com.geekvigarista.scrummanager.client.telas.inicio.home.quadro.modalencaminhar.ModalEncaminhar;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.CarregarRequisitosNoProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoResult;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderAction;
+import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderListResult;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
@@ -143,6 +148,27 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 			}
 		});
 		
+		getEventBus().addHandler(AbrirModalEncaminharEvent.getType(), new AbrirModalEncaminharEventHandler()
+		{
+			
+			@Override
+			public void encaminhar(AbrirModalEncaminharEvent event)
+			{
+				final AcaoEncaminhar acao = event.getAcao();
+				final Requisito requisito = event.getRequisito();
+				
+				dispatcher.execute(new BuscarStakeholderAction(null), new AbstractCallback<BuscarStakeholderListResult>()
+				{
+					@Override
+					public void onSuccess(BuscarStakeholderListResult result)
+					{
+						ModalEncaminhar me = new ModalEncaminhar(result.getResponse(), getEventBus(), acao, requisito);
+						me.show();
+					}
+				});
+			}
+		});
+		
 		getEventBus().addHandler(EncaminharEvent.getType(), new EncaminharEventHandler()
 		{
 			@Override
@@ -151,7 +177,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 				Requisito requisito = event.getRequisito();
 				Encaminhamento e = EncaminharUtil.getUltimoEncaminhamento(requisito);
 				requisito.getEncaminhamentos().add(
-						EncaminharUtil.encaminhar(e, e.getStakeholder(), "Encaminhado pelo quadro", 5, AcaoEncaminhar.AVANCAR));
+						EncaminharUtil.encaminhar(e, event.getStakeholder(), event.getDescricao(), event.getTempoGasto(), event.getAcao()));
 				dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
 				{
 					@Override

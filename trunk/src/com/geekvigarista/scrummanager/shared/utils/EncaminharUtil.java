@@ -40,7 +40,7 @@ public class EncaminharUtil
 		e.setDescricao(descricao);
 		e.setTempoGasto(tempoGasto);
 		e.setData(new Date());
-		e.setEncaminhamentoAnterior(encaminhamentoAnterior);
+		//		e.setEncaminhamentoAnterior(encaminhamentoAnterior); deprecated
 		
 		int indexstatus = encaminhamentoAnterior == null ? -1 : encaminhamentoAnterior.getStatus().ordinal();
 		
@@ -50,9 +50,13 @@ public class EncaminharUtil
 				indexstatus++;
 				break;
 			
-			case ALTERAR:
+			case VOLTAR:
 				indexstatus--;
-				
+				break;
+			
+			case ALTERAR:
+				break;
+			
 			default:
 				break;
 		}

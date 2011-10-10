@@ -29,7 +29,6 @@ public class BuscarStakeholderActionHandler implements ActionHandler<BuscarStake
 	{
 		try
 		{
-			
 			String parametro = arg0.getParametro();
 			if(parametro == null || parametro.isEmpty())
 			{
