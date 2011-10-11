@@ -112,7 +112,7 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 				//adiciona projetos vindo dos stakeholders.
 				//nao adiciona 2 projetos com o mesmo id.
 				
-				//FIXME este codigo fico uma bosta, refatorar algum dia...
+				//FIXME este codigo fico uma bosta, refatorar algum dia... boa sorte então.
 				if(projetosRetorno.isEmpty())
 				{
 					projetosRetorno.add(new ProjetoStakeholderDTO(p, stakePojo.getStakeholder()));

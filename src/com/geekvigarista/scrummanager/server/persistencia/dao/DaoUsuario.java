@@ -64,7 +64,6 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 	{
 		try
 		{
-			//FIXME mudar o jeito de retorno dos metodos
 			this.deleteById(new UsuarioPOJO(usuario).getId());
 			return true;
 		}
