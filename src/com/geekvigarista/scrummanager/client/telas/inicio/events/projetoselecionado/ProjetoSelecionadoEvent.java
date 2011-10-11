@@ -40,7 +40,7 @@ public class ProjetoSelecionadoEvent extends GwtEvent<ProjetoSelecionadoEventHan
 	@Override
 	protected void dispatch(ProjetoSelecionadoEventHandler handler)
 	{
-		handler.selecionar(this);
+		handler.onProjetoSelecionado(this);
 	}
 	
 	@Override

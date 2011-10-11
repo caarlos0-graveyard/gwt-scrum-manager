@@ -90,7 +90,7 @@ public class EncaminharEvent extends GwtEvent<EncaminharEventHandler>
 	@Override
 	protected void dispatch(EncaminharEventHandler handler)
 	{
-		handler.encaminhar(this);
+		handler.onEncaminharRequisito(this);
 	}
 	
 	@Override

@@ -3,7 +3,7 @@ package com.geekvigarista.scrummanager.client.telas.cadastros.produto;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IProdutoConverter;
-import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.AdminGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.produto.CadastroProdutoPresenter.CadProdutoProxy;
@@ -43,7 +43,7 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addprod)
-	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
+	@UseGatekeeper(AdminGatekeeper.class)
 	public interface CadProdutoProxy extends ProxyPlace<CadastroProdutoPresenter>
 	{
 		
@@ -73,6 +73,7 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 		registerHandler(getView().cancelar().addClickHandler(cancelarHandler));
 		registerHandler(getView().novo().addClickHandler(novoHandler));
 	}
+	
 	@Override
 	protected void revealInParent()
 	{
@@ -119,19 +120,19 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 			}
 		});
 	}
-
+	
 	@Override
 	public void doNovo()
 	{
 		setProduto(new Produto());
 	}
-
+	
 	@Override
 	public void doCancelar()
 	{
 		placeManager.revealPlace(new PlaceRequest(NameTokens.home));
 	}
-
+	
 	@Override
 	public void doExcluir()
 	{

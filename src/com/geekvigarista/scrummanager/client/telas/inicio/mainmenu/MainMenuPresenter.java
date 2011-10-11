@@ -3,6 +3,7 @@ package com.geekvigarista.scrummanager.client.telas.inicio.mainmenu;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.events.LogoutEvent;
+import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
@@ -39,6 +40,8 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 		MenuItem produto();
 		
 		MenuItem sair();
+		
+		MenuItem novo();
 	}
 	
 	@ProxyCodeSplit
@@ -48,14 +51,30 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 	
 	private final PlaceManager placeManager;
 	private final DispatchAsync dispatcher;
+	private final UsuarioLogadoGatekeeper gatekeeper;
 	
 	@Inject
 	public MainMenuPresenter(EventBus eventBus, MainMenuView view, MainMenuProxy proxy, final PlaceManager placeManager,
-			final DispatchAsync dispatcher)
+			final DispatchAsync dispatcher, final UsuarioLogadoGatekeeper gatekeeper)
 	{
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
+		this.gatekeeper = gatekeeper;
+	}
+	
+	@Override
+	protected void onReveal()
+	{
+		super.onReveal();
+		if(!gatekeeper.getUsuario().isAdministrador())
+		{
+			getView().novo().setVisible(false);
+		}
+		else
+		{
+			getView().novo().setVisible(true);
+		}
 	}
 	
 	@Override
