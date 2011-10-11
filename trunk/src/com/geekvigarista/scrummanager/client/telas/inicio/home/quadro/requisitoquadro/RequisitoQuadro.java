@@ -4,7 +4,6 @@ import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.abrirmodalencaminhar.AbrirModalEncaminharEvent;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
-import com.geekvigarista.scrummanager.shared.enums.PrioridadeRequisito;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
@@ -123,18 +122,22 @@ public class RequisitoQuadro extends Composite
 	
 	public void controlaPrioridades(Requisito requisito)
 	{
-		//TODO futuramente mudar para switch...
-		if(requisito.getPrioridade().equals(PrioridadeRequisito.ALTA))
+		switch(requisito.getPrioridade())
 		{
-			simplePanel.addStyleName("prioridadeAlta");
-		}
-		else if(requisito.getPrioridade().equals(PrioridadeRequisito.MEDIA))
-		{
-			simplePanel.addStyleName("prioridadeMedia");
-		}
-		else if(requisito.getPrioridade().equals(PrioridadeRequisito.BAIXA))
-		{
-			simplePanel.addStyleName("prioridadeBaixa");
+			case ALTA:
+				simplePanel.addStyleName("prioridadeAlta");
+				break;
+			
+			case MEDIA:
+				simplePanel.addStyleName("prioridadeMedia");
+				break;
+			
+			case BAIXA:
+				simplePanel.addStyleName("prioridadeBaixa");
+				break;
+			
+			default:
+				break;
 		}
 	}
 }

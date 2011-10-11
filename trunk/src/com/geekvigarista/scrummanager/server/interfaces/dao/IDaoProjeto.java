@@ -8,18 +8,17 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 
 /**
- * Interface para o dao projeto, extendendo da interface IDao
- * Aqui serao descritos metodos especificos do Dao Projeto
+ * Interface para o dao projeto, extendendo da interface IDao Aqui serao descritos metodos especificos do Dao Projeto
+ * 
  * @author Raduq
- *
+ * 
  */
-public interface IDaoProjeto extends IDao<Projeto, ProjetoPOJO> 
+public interface IDaoProjeto extends IDao<Projeto, ProjetoPOJO>
 {
-	//TODO, metodos especificos irão aqui..
-	List<Projeto> buscarLike(String parametro);	
+	List<Projeto> buscarLike(String parametro);
 	
 	List<ProjetoStakeholderDTO> buscarByUsuario(Usuario usuario);
 	
 	Projeto carregarRequisitos(Projeto projeto);
-
+	
 }

@@ -54,8 +54,8 @@ public class ServerModule extends HandlerModule
 {
 	
 	/*
-	 * TODO ActionHandler DI
-	 * 
+	 * ActionHandler DI
+	 *
 	 * sempre que adicionar um ActionHandler, deve-se adiciona-lo a esta classe para 
 	 * que o guice possa injeta-lo atraves do servlet.
 	 * 

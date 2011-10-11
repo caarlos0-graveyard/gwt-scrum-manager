@@ -51,7 +51,6 @@ public class ProjetoPOJO
 	 */
 	public ProjetoPOJO(Projeto projeto)
 	{
-		// TODO avoid nullpointers
 		super();
 		if(projeto == null)
 			projeto = new Projeto();
@@ -144,7 +143,6 @@ public class ProjetoPOJO
 	
 	public Projeto getProjeto()
 	{
-		// TODO avoid nullpointers
 		List<Stakeholder> stakeholders = new ArrayList<Stakeholder>();
 		if(this.stakeholders != null)
 		{
@@ -155,14 +153,6 @@ public class ProjetoPOJO
 		}
 		
 		List<Requisito> requisitos = new ArrayList<Requisito>();
-		//		if(this.requisitos != null)
-		//		{
-		//			for(RequisitoPOJO r : this.requisitos)
-		//			{
-		//				Requisito req = r.getRequisito();
-		//				requisitos.add(req);
-		//			}
-		//		}
 		
 		if(this.id == null)
 		{

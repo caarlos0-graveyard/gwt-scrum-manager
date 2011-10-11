@@ -1,7 +1,7 @@
 package com.geekvigarista.scrummanager.client.telas.componentes.richtexttoolbar;
 
 /*
- * This software is published under the Apchae 2.0 licenses.
+ * This software is published under the Apache 2.0 licenses.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -12,7 +12,8 @@ package com.geekvigarista.scrummanager.client.telas.componentes.richtexttoolbar;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Author: Erik Scholtz 
+ * Author: Erik Scholtz
+ * Tradução PT-Br: Carlos Alexandro Becker 
  * Web: http://blog.elitecoderz.net
  */
 
@@ -49,12 +50,12 @@ public class RichTextToolbar extends Composite
 	public final static HashMap<String, String> GUI_COLORLIST = new HashMap<String, String>();
 	static
 	{
-		GUI_COLORLIST.put("White", "#FFFFFF");
-		GUI_COLORLIST.put("Black", "#000000");
-		GUI_COLORLIST.put("Red", "red");
-		GUI_COLORLIST.put("Green", "green");
-		GUI_COLORLIST.put("Yellow", "yellow");
-		GUI_COLORLIST.put("Blue", "blue");
+		GUI_COLORLIST.put("Branco", "#FFFFFF");
+		GUI_COLORLIST.put("Preto", "#000000");
+		GUI_COLORLIST.put("Vermelho", "red");
+		GUI_COLORLIST.put("Verde", "green");
+		GUI_COLORLIST.put("Amarelo", "yellow");
+		GUI_COLORLIST.put("Azul", "blue");
 	}
 	public final static HashMap<String, String> GUI_FONTLIST = new HashMap<String, String>();
 	static
@@ -93,31 +94,31 @@ public class RichTextToolbar extends Composite
 	private static final String HTML_STYLE_HLINE = "<hr style=\"width: 100%; height: 2px;\">";
 	
 	//GUI Related stuff
-	private static final String GUI_DIALOG_INSERTURL = "Enter a link URL:";
-	private static final String GUI_DIALOG_IMAGEURL = "Enter an image URL:";
+	private static final String GUI_DIALOG_INSERTURL = "Insira a URL do link:";
+	private static final String GUI_DIALOG_IMAGEURL = "Insira a URL da imagem:";
 	
-	private static final String GUI_LISTNAME_COLORS = "Colors";
-	private static final String GUI_LISTNAME_FONTS = "Fonts";
+	private static final String GUI_LISTNAME_COLORS = "Cores";
+	private static final String GUI_LISTNAME_FONTS = "Fontes";
 	
-	private static final String GUI_HOVERTEXT_SWITCHVIEW = "Switch View HTML/Source";
-	private static final String GUI_HOVERTEXT_REMOVEFORMAT = "Remove Formatting";
-	private static final String GUI_HOVERTEXT_IMAGE = "Insert Image";
-	private static final String GUI_HOVERTEXT_HLINE = "Insert Horizontal Line";
-	private static final String GUI_HOVERTEXT_BREAKLINK = "Break Link";
-	private static final String GUI_HOVERTEXT_LINK = "Generate Link";
-	private static final String GUI_HOVERTEXT_IDENTLEFT = "Ident Left";
-	private static final String GUI_HOVERTEXT_IDENTRIGHT = "Ident Right";
-	private static final String GUI_HOVERTEXT_UNORDERLIST = "Unordered List";
-	private static final String GUI_HOVERTEXT_ORDERLIST = "Ordered List";
-	private static final String GUI_HOVERTEXT_ALIGNRIGHT = "Align Right";
-	private static final String GUI_HOVERTEXT_ALIGNCENTER = "Align Center";
-	private static final String GUI_HOVERTEXT_ALIGNLEFT = "Align Left";
+	private static final String GUI_HOVERTEXT_SWITCHVIEW = "Alternar entre HTML e Código";
+	private static final String GUI_HOVERTEXT_REMOVEFORMAT = "Remover Formatação";
+	private static final String GUI_HOVERTEXT_IMAGE = "Inserir imagem";
+	private static final String GUI_HOVERTEXT_HLINE = "Inserir linha horizontal";
+	private static final String GUI_HOVERTEXT_BREAKLINK = "Quebrar Link";
+	private static final String GUI_HOVERTEXT_LINK = "Gerar link";
+	private static final String GUI_HOVERTEXT_IDENTLEFT = "Identar a esquera";
+	private static final String GUI_HOVERTEXT_IDENTRIGHT = "Identar a direita";
+	private static final String GUI_HOVERTEXT_UNORDERLIST = "Lista não-ordenada";
+	private static final String GUI_HOVERTEXT_ORDERLIST = "Lista ordenada";
+	private static final String GUI_HOVERTEXT_ALIGNRIGHT = "Alinhar a direita";
+	private static final String GUI_HOVERTEXT_ALIGNCENTER = "Centralizar";
+	private static final String GUI_HOVERTEXT_ALIGNLEFT = "Alinhar a esquerda";
 	private static final String GUI_HOVERTEXT_SUPERSCRIPT = "Superscript";
 	private static final String GUI_HOVERTEXT_SUBSCRIPT = "Subscript";
 	private static final String GUI_HOVERTEXT_STROKE = "Stroke";
 	private static final String GUI_HOVERTEXT_UNDERLINE = "Underline";
-	private static final String GUI_HOVERTEXT_ITALIC = "Italic";
-	private static final String GUI_HOVERTEXT_BOLD = "Bold";
+	private static final String GUI_HOVERTEXT_ITALIC = "Italico";
+	private static final String GUI_HOVERTEXT_BOLD = "Negrito";
 	
 	/** Private Variables **/
 	//The main (Vertical)-Panel and the two inner (Horizontal)-Panels

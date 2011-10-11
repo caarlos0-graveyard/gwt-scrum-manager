@@ -36,7 +36,7 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 	}
 	
 	/**
-	 * Metodo que salva um Usuario. TODO - melhorar
+	 * Metodo que salva um Usuario.
 	 */
 	@Override
 	public Usuario salvar(Usuario usuario)
@@ -48,7 +48,6 @@ public class DaoUsuario extends BasicDAO<UsuarioPOJO, ObjectId> implements IDaoU
 			return null;
 		}
 		System.out.println("Salvo com id " + key.toString());
-		//FIXME ver isso se funga
 		uPojo.setId(new ObjectId(key.getId().toString()));
 		return uPojo.getUsuario();
 	}
