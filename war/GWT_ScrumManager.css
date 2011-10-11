@@ -32,10 +32,11 @@ html
 }
 
 .tituloGigante {
-	font-size: 4em;
+	font-size: 10em;
 	font-weight: bold;
 	color: #363636;
 	text-aling: center;
+	margin-top: 30px;
 }
 
 .titulo1 {
