@@ -5,6 +5,7 @@ import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.encaminham
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.BuscarTodosProdutosActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.LoadProdutoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.produto.SalvarProdutoActionHandler;
+import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.BuscarProjetoLikeActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.BuscarProjetosByUsuarioActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.CarregarRequisitosNoProjetoActionHandler;
 import com.geekvigarista.scrummanager.server.actionhandlers.cadastros.projeto.LoadProjetoActionHandler;
@@ -28,6 +29,7 @@ import com.geekvigarista.scrummanager.shared.commands.encaminhamento.salvar.Salv
 import com.geekvigarista.scrummanager.shared.commands.produto.busca.BuscaTodosProdutosAction;
 import com.geekvigarista.scrummanager.shared.commands.produto.load.LoadProdutoAction;
 import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdutoAction;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetoLikeAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.BuscarProjetosByUsuarioAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.CarregarRequisitosNoProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
@@ -93,6 +95,7 @@ public class ServerModule extends HandlerModule
 		bindHandler(LoadProjetoAction.class, LoadProjetoActionHandler.class);
 		bindHandler(BuscarProjetosByUsuarioAction.class, BuscarProjetosByUsuarioActionHandler.class);
 		bindHandler(CarregarRequisitosNoProjetoAction.class, CarregarRequisitosNoProjetoActionHandler.class);
+		bindHandler(BuscarProjetoLikeAction.class, BuscarProjetoLikeActionHandler.class);
 	}
 	
 	private void configureProduto()
