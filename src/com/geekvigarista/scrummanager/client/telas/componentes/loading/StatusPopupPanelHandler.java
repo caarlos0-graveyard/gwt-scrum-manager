@@ -9,9 +9,10 @@ import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.Lo
 import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStopEvent;
 import com.geekvigarista.scrummanager.client.telas.componentes.loading.events.LoadingStopEventHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 
 /**
- * Classe que gerencia o ato de ocultar mostrar o Status.
+ * Classe que gerencia os eventos de ocultar/mostrar o Status.
  * 
  * @see LoadingStartEvent
  * @see LoadingStopEvent
@@ -27,10 +28,9 @@ public class StatusPopupPanelHandler implements IStatusPopupPanelHandler, Loadin
 	public StatusPopupPanelHandler(EventBus eventbus)
 	{
 		status = new StatusPopupPanel();
-		eventbus.addHandler(LoadingStartEvent.getType(), this);
-		eventbus.addHandler(LoadingStopEvent.getType(), this);
 	}
 	
+	@ProxyEvent
 	@Override
 	public void loadStop(LoadingStopEvent event)
 	{
@@ -41,6 +41,7 @@ public class StatusPopupPanelHandler implements IStatusPopupPanelHandler, Loadin
 		}
 	}
 	
+	@ProxyEvent
 	@Override
 	public void loadStart(LoadingStartEvent event)
 	{

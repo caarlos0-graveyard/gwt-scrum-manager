@@ -26,6 +26,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.dispatch.shared.DispatchRequest;
 import com.gwtplatform.mvp.client.View;
@@ -97,14 +98,22 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 	protected void onReveal()
 	{
 		super.onReveal();
-		dispatch.execute(new BuscarStakeholderAction(""), new AbstractCallback<BuscarStakeholderListResult>()
+		
+		new AbstractCallback<BuscarStakeholderListResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<BuscarStakeholderListResult> asyncCallback)
+			{
+				dispatch.execute(new BuscarStakeholderAction(""), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarStakeholderListResult result)
 			{
 				setStakeholders(result.getResponse());
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override
@@ -135,8 +144,15 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 		List<Stakeholder> stakeSelecionados = getView().getSelecionados();
 		projeto.setStakeholders(stakeSelecionados);
 		
-		dispatch.execute(new SalvarProjetoAction(projeto), new AbstractCallback<SalvarProjetoResult>()
+		new AbstractCallback<SalvarProjetoResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<SalvarProjetoResult> asyncCallback)
+			{
+				dispatch.execute(new SalvarProjetoAction(projeto), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(SalvarProjetoResult result)
 			{
@@ -153,8 +169,7 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 					new MsgBox(result.getErros(), true);
 				}
 			}
-		});
-		
+		}.goDefault();
 	}
 	
 	public void doVoltar()
@@ -163,16 +178,24 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 		placeManager.revealPlace(pr);
 	}
 	
-	private void doLoadProjeto(String id)
+	private void doLoadProjeto(final String id)
 	{
-		loadProjeto = dispatch.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
+		new AbstractCallback<LoadProjetoResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<LoadProjetoResult> asyncCallback)
+			{
+				setLoadProjeto(dispatch.execute(new LoadProjetoAction(id), asyncCallback));
+			}
+			
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{
 				setProjeto(result.getProjeto());
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	public Projeto getProjeto()
@@ -188,6 +211,11 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 	public List<Stakeholder> getStakeholders()
 	{
 		return stakeholders;
+	}
+	
+	public void setLoadProjeto(DispatchRequest loadProjeto)
+	{
+		this.loadProjeto = loadProjeto;
 	}
 	
 	public void setStakeholders(List<Stakeholder> stakeholders)

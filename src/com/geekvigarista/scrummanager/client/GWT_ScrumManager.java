@@ -11,7 +11,6 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
  */
 public class GWT_ScrumManager implements EntryPoint
 {
-	
 	private final ClientGinjector ginjector = GWT.create(ClientGinjector.class);
 	
 	@Override
@@ -19,9 +18,6 @@ public class GWT_ScrumManager implements EntryPoint
 	{
 		DelayedBindRegistry.bind(ginjector);
 		ginjector.getPlaceManager().revealCurrentPlace();
-		
-		// injeta o controlador de status.
-		ginjector.getStatusPopupPanel();
 		RootPanel.get("carregando").setVisible(false);
 	}
 	

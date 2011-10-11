@@ -14,6 +14,7 @@ import com.geekvigarista.scrummanager.shared.commands.usuario.salvar.SalvarUsuar
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
@@ -113,9 +114,16 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 	@Override
 	public void doSalvar()
 	{
-		Usuario usuario = converter.convert(getUsuario(), getView());
-		dispatcher.execute(new SalvarUsuarioAction(usuario), new AbstractCallback<SalvarUsuarioResult>()
-		{
+		final Usuario usuario = converter.convert(getUsuario(), getView());
+		
+		new AbstractCallback<SalvarUsuarioResult>(){
+
+			@Override
+			protected void callService(AsyncCallback<SalvarUsuarioResult> asyncCallback)
+			{
+				dispatcher.execute(new SalvarUsuarioAction(usuario), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(SalvarUsuarioResult result)
 			{
@@ -130,7 +138,7 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 					new MsgBox(result.getErros(), true);
 				}
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override
