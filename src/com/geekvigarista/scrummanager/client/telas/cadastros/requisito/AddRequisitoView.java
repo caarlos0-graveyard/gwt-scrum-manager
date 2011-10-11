@@ -131,6 +131,13 @@ public class AddRequisitoView extends ViewImpl implements AddRequisitoPresenter.
 	public void setData(List<Requisito> reqs)
 	{
 		requisitosFactory.getDataProvider().setList(reqs);
+		int total = 0;
+		for(Requisito r : reqs)
+		{
+			total += r.getTempoEstimado();
+		}
+		
+		labelHorasTotais.setText("Projeto possui " + total + " hrs");
 	}
 	
 	@Override
