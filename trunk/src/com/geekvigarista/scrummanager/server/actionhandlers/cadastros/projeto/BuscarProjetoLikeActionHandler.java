@@ -26,8 +26,7 @@ public class BuscarProjetoLikeActionHandler implements ActionHandler<BuscarProje
 	@Override
 	public BuscarProjetoListResult execute(BuscarProjetoLikeAction arg0, ExecutionContext arg1) throws ActionException
 	{
-		
-		List<Projeto> retorno = dao.buscarLike(arg0.getParametro());
+		List<Projeto> retorno = dao.buscarLike(arg0.getParametro(),arg0.getUsuario());
 		List<ProjetoStakeholderDTO> retornoDTO = new ArrayList<ProjetoStakeholderDTO>();
 		for(Projeto p : retorno)
 		{

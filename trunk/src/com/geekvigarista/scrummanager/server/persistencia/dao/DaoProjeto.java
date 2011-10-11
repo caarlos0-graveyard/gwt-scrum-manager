@@ -115,7 +115,8 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 				if(projetosRetorno.isEmpty())
 				{
 					projetosRetorno.add(new ProjetoStakeholderDTO(p, stakePojo.getStakeholder()));
-				}else
+				}
+				else
 				{
 					boolean podeAdicionar = true;
 					for(ProjetoStakeholderDTO projetoAdicionado : projetosRetorno)
@@ -166,15 +167,57 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 	}
 	
 	@Override
-	public List<Projeto> buscarLike(String parametro)
+	public List<Projeto> buscarLike(String parametro, Usuario usuario)
 	{
+		if(usuario == null)
+		{
+			System.out.println("USUARIO NULO BUSCA LIKE");
+			return new ArrayList<Projeto>();
+		}
 		if(parametro == null || parametro.isEmpty())
 		{
-			return buscarTodos();
+			if(usuario.isAdministrador())
+			{
+				return buscarTodos();
+			}
+			else
+			{
+				return convertProjetoStakeholderDTO(buscarByUsuario(usuario));
+			}
 		}
 		
-		Query<ProjetoPOJO> query = createQuery().field("nome").contains(parametro);
+		IDaoStakeholder daoS = new DaoStakeholder();
+		Query<ProjetoPOJO> query;
+		if(!usuario.isAdministrador())
+		{
+			List<Stakeholder> stakes = daoS.buscarByUsuario(usuario);
+			List<StakeholderPOJO> stakesP = new ArrayList<StakeholderPOJO>();
+			for(Stakeholder stk : stakes)
+			{
+				stakesP.add(new StakeholderPOJO(stk));
+			}
+			
+			query = createQuery().field("nome").contains(parametro).field("stakeholders").in(stakesP);
+		}
+		else
+		{
+			query = createQuery().field("nome").contains(parametro);
+		}
 		return toValueObject(this.find(query));
 	}
 	
+	/**
+	 * Converter um List de ProjetoStakeholderDTO para um list de Projeto.
+	 */
+	private List<Projeto> convertProjetoStakeholderDTO(List<ProjetoStakeholderDTO> projetosDTO)
+	{
+		List<Projeto> retorno = new ArrayList<Projeto>();
+		
+		for(ProjetoStakeholderDTO p : projetosDTO)
+		{
+			retorno.add(p.getProjeto());
+		}
+		
+		return retorno;
+	}
 }
