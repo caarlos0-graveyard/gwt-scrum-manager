@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IRequisitoConverter;
 import com.geekvigarista.scrummanager.client.gatekeeper.AdminGatekeeper;
+import com.geekvigarista.scrummanager.client.i18n.Mensagem;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
@@ -117,6 +118,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		
 		if(id == null)
 		{
+			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
 			return; //FIXME tratar essa pica aqui
 		}
 		
@@ -236,11 +238,11 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 				{
 					setProjeto(getProjeto());
 					doNovo();
-					new MsgBox("Excluido com sucesso!", false); //FIXME msg
+					new MsgBox(Mensagem.get.excluidoSucesso(), false); 
 				}
 				else
 				{
-					new MsgBox("Ocorreu um erro ao excluir", true); //FIXME msg
+					new MsgBox(Mensagem.get.erroExcluir(), true); 
 				}
 			}
 		}.goDefault();

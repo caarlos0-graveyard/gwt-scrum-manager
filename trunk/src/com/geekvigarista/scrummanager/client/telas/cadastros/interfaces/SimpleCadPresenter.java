@@ -1,11 +1,13 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.interfaces;
 
+import com.geekvigarista.scrummanager.client.i18n.Mensagem;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.Proxy;
@@ -103,7 +105,10 @@ public abstract class SimpleCadPresenter<V extends View, Proxy_ extends Proxy<?>
 		@Override
 		public void onClick(ClickEvent event)
 		{
-			doExcluir(); //FIXME mostrar msg confirmacao?
+			if(Window.confirm(Mensagem.get.temCerteza()))
+			{
+				doExcluir(); 
+			}
 		}
 	}
 	

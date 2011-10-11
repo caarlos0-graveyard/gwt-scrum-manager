@@ -26,13 +26,6 @@ public class MongoConnection
 	private static Datastore datastore;
 
 	/**
-	 * XXX - Verificar esta classe posteriorment N�o sei se estou implementando
-	 * certo esta classe.
-	 * FIXME - Mais pra frente verificar possibilidade de injetar o datastore nos daos.
-	 * 
-	 */
-
-	/**
 	 * Retorna uma instancia de Mongo. Caso nao tenha nenhuma, cria uma.
 	 */
 	private static Mongo getMongo() 

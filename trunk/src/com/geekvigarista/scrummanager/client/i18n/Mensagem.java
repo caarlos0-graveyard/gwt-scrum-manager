@@ -64,6 +64,12 @@ public interface Mensagem extends Constants
 	
 	public String carregando();
 	
+	public String temCerteza();
+	
+	public String excluidoSucesso();
+	
+	public String erroExcluir();
+	
 	/*
 	 * Home
 	 */
