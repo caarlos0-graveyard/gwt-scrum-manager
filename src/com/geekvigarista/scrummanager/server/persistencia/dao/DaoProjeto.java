@@ -171,7 +171,6 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 	{
 		if(usuario == null)
 		{
-			System.out.println("USUARIO NULO BUSCA LIKE");
 			return new ArrayList<Projeto>();
 		}
 		if(parametro == null || parametro.isEmpty())
@@ -188,22 +187,39 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 		
 		IDaoStakeholder daoS = new DaoStakeholder();
 		Query<ProjetoPOJO> query;
+		
+		//XXX MANO, fuja longe deste codigo....
+		//tem que substituir por um field("stakeholders").hasAnyOf(...),
+		//mas nao sei porque nao ta fungando :S
 		if(!usuario.isAdministrador())
 		{
 			List<Stakeholder> stakes = daoS.buscarByUsuario(usuario);
-			List<StakeholderPOJO> stakesP = new ArrayList<StakeholderPOJO>();
-			for(Stakeholder stk : stakes)
+			List<Projeto> retorno = new ArrayList<Projeto>();
+			query = createQuery().field("nome").containsIgnoreCase(parametro);
+			for(ProjetoPOJO p : this.find(query))
 			{
-				stakesP.add(new StakeholderPOJO(stk));
+				for(StakeholderPOJO st : p.getStakeholders())
+				{	
+					for(Stakeholder stk : stakes)
+					{
+						if(st.getId().equals(stk.getId()))
+						{
+							Projeto proj = p.getProjeto();
+							if(!retorno.contains(proj)){
+								retorno.add(proj);
+							}
+						}
+					}
+				}
 			}
-			
-			query = createQuery().field("nome").contains(parametro).field("stakeholders").in(stakesP);
+			return retorno;
 		}
 		else
 		{
-			query = createQuery().field("nome").contains(parametro);
+			query = createQuery().field("nome").containsIgnoreCase(parametro);
+			return toValueObject(this.find(query));
 		}
-		return toValueObject(this.find(query));
+		
 	}
 	
 	/**
