@@ -37,6 +37,10 @@ import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainView;
 import com.geekvigarista.scrummanager.client.telas.inicio.mainmenu.MainMenu;
 import com.geekvigarista.scrummanager.client.telas.inicio.mainmenu.MainMenuPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.resultadobusca.ResultadoBuscaPresenter;
+import com.geekvigarista.scrummanager.client.telas.inicio.resultadobusca.ResultadoBuscaPresenter.ResultadoBuscaView;
+import com.geekvigarista.scrummanager.client.telas.inicio.resultadobusca.ResultadoBuscaPresenter.ResultadoBuscaProxy;
+import com.geekvigarista.scrummanager.client.telas.inicio.resultadobusca.ResultadoBuscaViewImpl;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter.TopoProxy;
 import com.geekvigarista.scrummanager.client.telas.inicio.topo.TopoPresenter.TopoView;
@@ -93,5 +97,7 @@ public class ClientModule extends AbstractPresenterModule
 		bindPresenter(AddStakToProjPresenter.class, AddStakToProjView.class, AddStakToProjViewImpl.class, AddStakToProjProxy.class);
 		
 		bindPresenter(TopoPresenter.class, TopoView.class, TopoViewImpl.class, TopoProxy.class);
+		
+		bindPresenter(ResultadoBuscaPresenter.class, ResultadoBuscaView.class, ResultadoBuscaViewImpl.class, ResultadoBuscaProxy.class);
 	}
 }

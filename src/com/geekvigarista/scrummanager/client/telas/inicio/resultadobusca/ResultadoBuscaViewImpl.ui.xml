@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:d="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.defaultbox"
+	xmlns:p="urn:import:com.geekvigarista.scrummanager.client.telas.componentes.showmorepagepanel">
+	<ui:with type="com.geekvigarista.scrummanager.client.i18n.Mensagem"
+		field="msg"></ui:with>
+	<ui:style>
+		.scrollable {
+			height: 500px;
+			width: 100%x;
+			border: 1px solid #ccc;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<p:ShowMorePagerPanel ui:field="pager"
+			addStyleNames='{style.scrollable}'>
+		</p:ShowMorePagerPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

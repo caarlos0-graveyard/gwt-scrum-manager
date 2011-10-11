@@ -45,7 +45,7 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 	/**
 	 * Texto que fica "atras" do campo, "Digite aqui para pesquisar..." por exemplo.
 	 */
-	private String stakeholder;
+	private String placeholder;
 	
 	/**
 	 * Constructor.
@@ -64,20 +64,20 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 	
 	public String getStakeholder()
 	{
-		return stakeholder;
+		return placeholder;
 	}
 	
-	public void setStakeholder(String stakeholder)
+	public void setPlaceholder(String placeholder)
 	{
-		this.stakeholder = stakeholder;
-		text.setValue(stakeholder);
+		this.placeholder = placeholder;
+		text.setValue(placeholder);
 		setBlurStyle();
-		bindStakeholderEvents();
+		bindPlaceholderEvents();
 	}
 	
-	private void bindStakeholderEvents()
+	private void bindPlaceholderEvents()
 	{
-		if(stakeholder == null)
+		if(placeholder == null)
 		{
 			return;
 		}
@@ -87,7 +87,7 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 			@Override
 			public void onFocus(FocusEvent event)
 			{
-				if(text.getValue().trim().equals(stakeholder))
+				if(text.getValue().trim().equals(placeholder))
 				{
 					text.setValue("");
 				}
@@ -102,7 +102,7 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 			{
 				if(text.getValue().trim().equals("") || text.getValue().trim().equals(getStakeholder()))
 				{
-					text.setValue(stakeholder);
+					text.setValue(placeholder);
 					setBlurStyle();
 				}
 			}
@@ -130,6 +130,8 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 			{
 				if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
 				{
+					if(text.getValue().equals(placeholder))
+						text.setValue("");
 					fireEvent(new SearchEvent());
 				}
 			}
@@ -139,6 +141,8 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 			@Override
 			public void onClick(ClickEvent event)
 			{
+				if(text.getValue().equals(placeholder))
+					text.setValue("");
 				fireEvent(new SearchEvent());
 			}
 		});
@@ -166,6 +170,10 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 	public void setValue(String value)
 	{
 		text.setValue(value);
+		if(!value.equals(placeholder))
+		{
+			setFocusStyle();
+		}
 	}
 	
 	@Override
