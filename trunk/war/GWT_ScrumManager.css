@@ -4,6 +4,11 @@
 	color: 363636;
 }
 
+html
+{
+	background-color: #FCFCFC;
+}	
+
 #carregando {
 	with: 100%;
 	text-align: center;
@@ -261,4 +266,17 @@
 
 .list-Requisito-Item {
 	padding: 7px;
+}
+
+.corInterna
+{
+	background-color: #FCFCFC;
+	background-repeat: repeat;
+}
+
+.corInternaBranco
+{
+	background-color: #ffffff;
+}
+.gwt-DecoratorPanel corInternaBranco {
 }

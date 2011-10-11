@@ -27,13 +27,12 @@ import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAc
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoAction;
 import com.geekvigarista.scrummanager.shared.commands.requisito.salvar.SalvarRequisitoResult;
-import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderAction;
-import com.geekvigarista.scrummanager.shared.commands.stakeholder.buscar.BuscarStakeholderListResult;
 import com.geekvigarista.scrummanager.shared.enums.AcaoEncaminhar;
 import com.geekvigarista.scrummanager.shared.enums.StatusRequisito;
 import com.geekvigarista.scrummanager.shared.utils.EncaminharUtil;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
+import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -213,22 +212,27 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		final AcaoEncaminhar acao = event.getAcao();
 		final Requisito requisito = event.getRequisito();
 		
-		new AbstractCallback<BuscarStakeholderListResult>()
-		{
-			
-			@Override
-			protected void callService(AsyncCallback<BuscarStakeholderListResult> asyncCallback)
-			{
-				dispatcher.execute(new BuscarStakeholderAction(null), asyncCallback);
-			}
-			
-			@Override
-			public void onSuccess(BuscarStakeholderListResult result)
-			{
-				ModalEncaminhar me = new ModalEncaminhar(result.getResponse(), getEventBus(), acao, requisito);
-				me.show();
-				getEventBus().fireEvent(new LoadingStopEvent());
-			}
-		}.goDefault();
+		List<Stakeholder> stakes = event.getRequisito().getProjeto().getStakeholders();
+		ModalEncaminhar me = new ModalEncaminhar(stakes, getEventBus(), acao, requisito);
+		me.show();
+		getEventBus().fireEvent(new LoadingStopEvent());
+		
+//		new AbstractCallback<BuscarStakeholderListResult>()
+//		{
+//			
+//			@Override
+//			protected void callService(AsyncCallback<BuscarStakeholderListResult> asyncCallback)
+//			{
+//				dispatcher.execute(new BuscarStakeholderAction(null), asyncCallback);
+//			}
+//			
+//			@Override
+//			public void onSuccess(BuscarStakeholderListResult result)
+//			{
+//				ModalEncaminhar me = new ModalEncaminhar(result.getResponse(), getEventBus(), acao, requisito);
+//				me.show();
+//				getEventBus().fireEvent(new LoadingStopEvent());
+//			}
+//		}.goDefault();
 	}
 }
