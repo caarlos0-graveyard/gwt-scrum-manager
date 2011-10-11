@@ -21,6 +21,12 @@ public class ProjetoStakeholderDTO implements Serializable
 		this.stakeholder = stakeholder;
 	}
 	
+	public ProjetoStakeholderDTO(Projeto projeto)
+	{
+		super();
+		this.projeto = projeto;
+	}
+	
 	/**
 	 * @return the projeto
 	 */

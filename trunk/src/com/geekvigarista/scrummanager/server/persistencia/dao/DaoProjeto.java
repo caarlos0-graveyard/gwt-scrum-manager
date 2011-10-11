@@ -166,14 +166,16 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 		return retorno;
 	}
 	
-	/**
-	 * nao implementado....
-	 */
 	@Override
-	@Deprecated
 	public List<Projeto> buscarLike(String parametro)
 	{
-		return null;
+		if(parametro == null || parametro.isEmpty())
+		{
+			return buscarTodos();
+		}
+		
+		Query<ProjetoPOJO> query = createQuery().field("nome").contains(parametro);
+		return toValueObject(this.find(query));
 	}
 	
 }
