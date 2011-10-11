@@ -186,12 +186,6 @@ public class AddStakeholderPresenter extends
 	
 	public void doLoadStakeholderFromRequest(final String stakid)
 	{
-		if(stakid == null)
-		{
-			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
-			return;
-		}
-		
 		new AbstractCallback<BuscarStakeholderObjResult>()
 		{
 			@Override

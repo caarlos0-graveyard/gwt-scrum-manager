@@ -117,12 +117,6 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		super.prepareFromRequest(request);
 		final String id = request.getParameter(Parameters.projid, null);
 		
-		if(id == null)
-		{
-			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
-			return;
-		}
-		
 		new AbstractCallback<LoadProjetoResult>()
 		{
 			@Override
@@ -235,11 +229,6 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	public void doExcluir()
 	{
 		final Requisito req = getView().selectionModel().getSelectedObject();
-		if(req == null)
-		{
-			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
-			return;
-		}
 		
 		new AbstractCallback<ExcluirRequisitoResult>()
 		{
@@ -312,7 +301,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 				if(result.getErros() == null || result.getErros().isEmpty())
 				{
 					setRequisito(result.getResponse());
-//					setProjeto(result.getProjeto());
+					//					setProjeto(result.getProjeto());
 					projeto = result.getProjeto();
 					getView().setData(result.getProjeto().getRequisitos());
 					

@@ -16,7 +16,8 @@ public class Stakeholder implements Serializable
 	{
 		this.papel = PapelStakeholder.DESENVOLVEDOR;
 	}
-	public Stakeholder(String id, String nome, PapelStakeholder papel,Usuario usuario)
+	
+	public Stakeholder(String id, String nome, PapelStakeholder papel, Usuario usuario)
 	{
 		super();
 		this.id = id;
@@ -73,4 +74,52 @@ public class Stakeholder implements Serializable
 		this.usuario = usuario;
 	}
 	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((papel == null) ? 0 : papel.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		Stakeholder other = (Stakeholder) obj;
+		
+		if(id == null)
+		{
+			if(other.id != null)
+				return false;
+		}
+		else if(!id.equals(other.id))
+			return false;
+		if(nome == null)
+		{
+			if(other.nome != null)
+				return false;
+		}
+		else if(!nome.equals(other.nome))
+			return false;
+		if(papel != other.papel)
+			return false;
+		if(usuario == null)
+		{
+			if(other.usuario != null)
+				return false;
+		}
+		else if(!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
 }
