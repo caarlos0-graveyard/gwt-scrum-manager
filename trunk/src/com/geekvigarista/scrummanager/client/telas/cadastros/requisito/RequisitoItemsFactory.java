@@ -51,7 +51,9 @@ public class RequisitoItemsFactory
 		{
 			if(value != null)
 			{
+				sb.appendHtmlConstant("<div class=\"list-Requisito-Item\">");
 				sb.appendEscaped(value.getTitulo()).appendEscaped(" (").append(value.getTempoEstimado()).appendEscaped(" hrs)");
+				sb.appendHtmlConstant("</div>");
 			}
 		}
 	}
