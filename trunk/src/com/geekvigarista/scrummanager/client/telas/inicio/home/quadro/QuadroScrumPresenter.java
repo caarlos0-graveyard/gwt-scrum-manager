@@ -36,6 +36,7 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -81,21 +82,29 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	{
 		super.prepareFromRequest(request);
 		
-		String id = request.getParameter(Parameters.projid, null);
+		final String id = request.getParameter(Parameters.projid, null);
 		if(id == null)
 		{
 			getView().setColunas(null);
 			return;
 		}
 		
-		dispatcher.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
+		new AbstractCallback<LoadProjetoResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<LoadProjetoResult> asyncCallback)
+			{
+				dispatcher.execute(new LoadProjetoAction(id), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{
 				constroiColunas(result.getProjeto());
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	@Override
@@ -105,7 +114,7 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 		
 	}
 	
-	private void constroiColunas(Projeto projeto)
+	private void constroiColunas(final Projeto projeto)
 	{
 		if(projeto == null || projeto.getId() == null)
 		{
@@ -113,8 +122,15 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 			return;
 		}
 		
-		dispatcher.execute(new CarregarRequisitosNoProjetoAction(projeto), new AbstractCallback<LoadProjetoResult>()
+		new AbstractCallback<LoadProjetoResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<LoadProjetoResult> asyncCallback)
+			{
+				dispatcher.execute(new CarregarRequisitosNoProjetoAction(projeto), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{
@@ -134,7 +150,8 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 				getView().setColunas(colunas);
 				getEventBus().fireEvent(new LoadingStopEvent());
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	@Override
@@ -161,16 +178,23 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	public void onEncaminharRequisito(EncaminharEvent event)
 	{
 		getEventBus().fireEvent(new LoadingStartEvent());
-		Requisito requisito = EncaminharUtil.encaminhar(event.getRequisito(), event.getStakeholder(), event.getDescricao(), event.getTempoGasto(),
+		final Requisito requisito = EncaminharUtil.encaminhar(event.getRequisito(), event.getStakeholder(), event.getDescricao(), event.getTempoGasto(),
 				event.getAcao());
-		dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
+		
+		new AbstractCallback<SalvarRequisitoResult>()
 		{
+
+			@Override
+			protected void callService(AsyncCallback<SalvarRequisitoResult> asyncCallback)
+			{
+				dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(SalvarRequisitoResult result)
 			{
 				if(placeManager.getCurrentPlaceRequest().getNameToken().equals(NameTokens.visreq))
 				{
-					Window.alert("OI");
 					placeManager.revealCurrentPlace();
 				}
 				else
@@ -178,24 +202,34 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 					constroiColunas(result.getProjeto());
 				}
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	@Override
 	@ProxyEvent
 	public void onAbrirModalEncaminharRequisito(AbrirModalEncaminharEvent event)
 	{
+		getEventBus().fireEvent(new LoadingStartEvent());
 		final AcaoEncaminhar acao = event.getAcao();
 		final Requisito requisito = event.getRequisito();
 		
-		dispatcher.execute(new BuscarStakeholderAction(null), new AbstractCallback<BuscarStakeholderListResult>()
+		new AbstractCallback<BuscarStakeholderListResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<BuscarStakeholderListResult> asyncCallback)
+			{
+				dispatcher.execute(new BuscarStakeholderAction(null), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarStakeholderListResult result)
 			{
 				ModalEncaminhar me = new ModalEncaminhar(result.getResponse(), getEventBus(), acao, requisito);
 				me.show();
+				getEventBus().fireEvent(new LoadingStopEvent());
 			}
-		});
+		}.goDefault();
 	}
 }

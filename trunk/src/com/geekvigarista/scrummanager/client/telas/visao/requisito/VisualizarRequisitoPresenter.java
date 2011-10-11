@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -84,7 +85,6 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 	/*
 	 * Construtores
 	 */
-	
 	
 	@Inject
 	public VisualizarRequisitoPresenter(final EventBus eventBus, final VisReqView view, final VisReqProxy proxy, final DispatchAsync dispatcher)
@@ -160,16 +160,23 @@ public class VisualizarRequisitoPresenter extends Presenter<VisualizarRequisitoP
 		}
 	}
 	
-	public void doLoadRequisito(String id)
+	public void doLoadRequisito(final String id)
 	{
-		dispatcher.execute(new BuscarRequisitoByIdAction(id), new AbstractCallback<BuscarRequisitoObjResult>()
+		new AbstractCallback<BuscarRequisitoObjResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<BuscarRequisitoObjResult> asyncCallback)
+			{
+				dispatcher.execute(new BuscarRequisitoByIdAction(id), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarRequisitoObjResult result)
 			{
 				setRequisito(result.getResponse());
 			}
-		});
+		}.goDefault();
 	}
 	
 	/*

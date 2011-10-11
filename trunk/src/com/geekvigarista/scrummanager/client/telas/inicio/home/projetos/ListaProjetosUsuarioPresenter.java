@@ -20,6 +20,7 @@ import com.geekvigarista.scrummanager.shared.dtos.ProjetoStakeholderDTO;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -66,9 +67,16 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 	protected void onReveal()
 	{
 		super.onReveal();
-		Usuario u = usuarioLogado.getUsuario();
-		dispatcher.execute(new BuscarProjetosByUsuarioAction(u), new AbstractCallback<BuscarProjetoListResult>()
+		final Usuario u = usuarioLogado.getUsuario();
+		
+		new AbstractCallback<BuscarProjetoListResult>()
 		{
+			@Override
+			protected void callService(AsyncCallback<BuscarProjetoListResult> asyncCallback)
+			{
+				dispatcher.execute(new BuscarProjetosByUsuarioAction(u), asyncCallback);				
+			}
+			
 			@Override
 			public void onSuccess(BuscarProjetoListResult result)
 			{
@@ -78,7 +86,7 @@ public class ListaProjetosUsuarioPresenter extends Presenter<ListaProjetosView, 
 				getView().setProjetos(result.getProjetos());
 				selecionarProjetoById();
 			}
-		});
+		}.goDefault();
 	}
 	
 	public void selecionarProjetoById()

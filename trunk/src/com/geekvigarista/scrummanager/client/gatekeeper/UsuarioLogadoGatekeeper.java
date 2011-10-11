@@ -16,6 +16,7 @@ import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Singleton;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.dispatch.shared.DispatchRequest;
@@ -30,7 +31,9 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 	private Usuario usuario;
 	private final EventBus eventBus;
 	private final DispatchAsync dispatcher;
+	@SuppressWarnings("unused")
 	private final PlaceManager placeManager;
+	private DispatchRequest request = null;
 	
 	@Inject
 	public UsuarioLogadoGatekeeper(final EventBus eventBus, final DispatchAsync dispatcher, final PlaceManager placeManager)
@@ -88,14 +91,21 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 		if(usuario == null || usuario.getId() == null)
 		{
 			usuario = null;
-			final DispatchRequest request = dispatcher.execute(new VerificaUsuarioLogadoAction(), new AbstractCallback<BuscarUsuarioObjResult>()
+			
+			new AbstractCallback<BuscarUsuarioObjResult>()
 			{
+				@Override
+				protected void callService(AsyncCallback<BuscarUsuarioObjResult> asyncCallback)
+				{
+					setRequest(dispatcher.execute(new VerificaUsuarioLogadoAction(), asyncCallback));
+				}
+				
 				@Override
 				public void onSuccess(BuscarUsuarioObjResult result)
 				{
 					usuario = result.getResponse();
 				}
-			});
+			}.goDefault();
 			
 			new Timer()
 			{
@@ -110,5 +120,15 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 			}.scheduleRepeating(100);
 		}
 		return usuario;
+	}
+	
+	public DispatchRequest getRequest()
+	{
+		return request;
+	}
+	
+	public void setRequest(DispatchRequest request)
+	{
+		this.request = request;
 	}
 }

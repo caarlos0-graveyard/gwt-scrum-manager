@@ -25,6 +25,7 @@ import com.geekvigarista.scrummanager.shared.vos.Produto;
 import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -99,7 +100,7 @@ public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.
 	public void prepareFromRequest(PlaceRequest request)
 	{
 		super.prepareFromRequest(request);
-		String id = request.getParameter(Parameters.projid, null);
+		final String id = request.getParameter(Parameters.projid, null);
 		
 		if(id == null)
 		{
@@ -107,14 +108,21 @@ public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.
 			return;
 		}
 		
-		dispatch.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
+		new AbstractCallback<LoadProjetoResult>()
 		{
+			@Override
+			protected void callService(AsyncCallback<LoadProjetoResult> asyncCallback)
+			{
+				dispatch.execute(new LoadProjetoAction(id), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{
 				setProjeto(result.getProjeto());
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	@Override
@@ -133,22 +141,36 @@ public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.
 	
 	public void doReloadProdutos()
 	{
-		dispatch.execute(new BuscaTodosProdutosAction(), new AbstractCallback<BuscarProdutoListResult>()
+		new AbstractCallback<BuscarProdutoListResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<BuscarProdutoListResult> asyncCallback)
+			{
+				dispatch.execute(new BuscaTodosProdutosAction(), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarProdutoListResult result)
 			{
 				setProdutos(result.getResponse());
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override
 	public void doSalvar()
 	{
-		Projeto projetoConvertido = converter.convert(getProjeto(), getView(), getProdutos());
-		dispatch.execute(new SalvarProjetoAction(projetoConvertido), new AbstractCallback<SalvarProjetoResult>()
-		{
+		final Projeto projetoConvertido = converter.convert(getProjeto(), getView(), getProdutos());
+		
+		new AbstractCallback<SalvarProjetoResult>(){
+
+			@Override
+			protected void callService(AsyncCallback<SalvarProjetoResult> asyncCallback)
+			{
+				dispatch.execute(new SalvarProjetoAction(projetoConvertido), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(SalvarProjetoResult result)
 			{
@@ -165,7 +187,7 @@ public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.
 					new MsgBox(result.getErros(), true);
 				}
 			}
-		});
+		}.goDefault();
 	}
 	
 	public Projeto getProjeto()
@@ -196,7 +218,8 @@ public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.
 			int index = -1;
 			for(Produto p : produtos)
 			{
-				if(projeto.getProduto().getDescricao() != null &&  p.getDescricao() != null && p.getDescricao().equals(projeto.getProduto().getDescricao()))
+				if(projeto.getProduto().getDescricao() != null && p.getDescricao() != null
+						&& p.getDescricao().equals(projeto.getProduto().getDescricao()))
 				{
 					index = produtos.indexOf(p);
 				}

@@ -18,6 +18,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -110,11 +111,18 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 	
 	public void doLogin()
 	{
-		String login = getView().login().getValue();
-		String senha = getView().passwd().getValue();
+		final String login = getView().login().getValue();
+		final String senha = getView().passwd().getValue();
 		final boolean lembrar = getView().lembrar().getValue().booleanValue();
-		dispatcher.execute(new LoginUsuarioAction(login, senha), new AbstractCallback<BuscarUsuarioObjResult>()
+		new AbstractCallback<BuscarUsuarioObjResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<BuscarUsuarioObjResult> asyncCallback)
+			{
+				dispatcher.execute(new LoginUsuarioAction(login, senha), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarUsuarioObjResult result)
 			{
@@ -132,7 +140,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.LoginView, LoginPre
 					}
 				}
 			}
-		});
+		}.goDefault();
 	}
 	
 	public class LoginHandler implements ClickHandler, KeyUpHandler

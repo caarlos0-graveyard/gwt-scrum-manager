@@ -23,6 +23,7 @@ import com.geekvigarista.scrummanager.shared.vos.Stakeholder;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -102,8 +103,15 @@ public class AddStakeholderPresenter extends
 			return;
 		}
 		
-		dispatcher.execute(new BuscarUsuarioAction(""), new AbstractCallback<BuscarUsuarioListResult>()
+		new AbstractCallback<BuscarUsuarioListResult>()
 		{
+			
+			@Override
+			protected void callService(AsyncCallback<BuscarUsuarioListResult> asyncCallback)
+			{
+				dispatcher.execute(new BuscarUsuarioAction(""), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarUsuarioListResult result)
 			{
@@ -114,7 +122,9 @@ public class AddStakeholderPresenter extends
 					populaCadastro();
 				}
 			}
-		});
+			
+		}.goDefault();
+		
 	}
 	
 	@Override
@@ -133,9 +143,16 @@ public class AddStakeholderPresenter extends
 	public void doSalvar()
 	{
 		
-		Stakeholder stakeholderConvertido = converter.convert(getStakeholder(), getView(), usuariosSistema);
-		dispatcher.execute(new SalvarStakeholderAction(stakeholderConvertido), new AbstractCallback<SalvarStakeholderResult>()
+		final Stakeholder stakeholderConvertido = converter.convert(getStakeholder(), getView(), usuariosSistema);
+		
+		new AbstractCallback<SalvarStakeholderResult>()
 		{
+			@Override
+			protected void callService(AsyncCallback<SalvarStakeholderResult> asyncCallback)
+			{
+				dispatcher.execute(new SalvarStakeholderAction(stakeholderConvertido), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(SalvarStakeholderResult result)
 			{
@@ -150,9 +167,8 @@ public class AddStakeholderPresenter extends
 				{
 					new MsgBox(result.getErros(), true);
 				}
-				
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override
@@ -168,19 +184,27 @@ public class AddStakeholderPresenter extends
 		doLoadStakeholderFromRequest(request.getParameter(Parameters.stakid, null));
 	}
 	
-	public void doLoadStakeholderFromRequest(String stakid)
+	public void doLoadStakeholderFromRequest(final String stakid)
 	{
 		if(stakid == null)
-			return; //FIXME tratar essa pica aqui
-			
-		dispatcher.execute(new BuscarStakeholderByIdAction(stakid), new AbstractCallback<BuscarStakeholderObjResult>()
 		{
+			return; //FIXME tratar essa pica aqui
+		}
+		
+		new AbstractCallback<BuscarStakeholderObjResult>()
+		{
+			@Override
+			protected void callService(AsyncCallback<BuscarStakeholderObjResult> asyncCallback)
+			{
+				dispatcher.execute(new BuscarStakeholderByIdAction(stakid), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarStakeholderObjResult result)
 			{
 				setStakeholder(result.getResponse());
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override

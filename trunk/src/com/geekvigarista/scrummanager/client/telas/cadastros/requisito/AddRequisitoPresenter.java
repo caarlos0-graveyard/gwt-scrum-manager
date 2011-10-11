@@ -26,6 +26,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
@@ -112,19 +113,29 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	public void prepareFromRequest(PlaceRequest request)
 	{
 		super.prepareFromRequest(request);
-		String id = request.getParameter(Parameters.projid, null);
+		final String id = request.getParameter(Parameters.projid, null);
+		
 		if(id == null)
-			return; //FIXME tratar essa pica aqui
-			
-		dispatcher.execute(new LoadProjetoAction(id), new AbstractCallback<LoadProjetoResult>()
 		{
+			return; //FIXME tratar essa pica aqui
+		}
+		
+		new AbstractCallback<LoadProjetoResult>()
+		{
+			@Override
+			protected void callService(AsyncCallback<LoadProjetoResult> asyncCallback)
+			{
+				dispatcher.execute(new LoadProjetoAction(id), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(LoadProjetoResult result)
 			{
 				setProjeto(result.getProjeto());
 				doNovo();
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	@Override
@@ -209,8 +220,15 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 			//TODO tratar
 			return;
 		}
-		dispatcher.execute(new ExcluirRequisitoAction(req), new AbstractCallback<ExcluirRequisitoResult>()
+		
+		new AbstractCallback<ExcluirRequisitoResult>()
 		{
+			@Override
+			protected void callService(AsyncCallback<ExcluirRequisitoResult> asyncCallback)
+			{
+				dispatcher.execute(new ExcluirRequisitoAction(req), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(ExcluirRequisitoResult result)
 			{
@@ -225,7 +243,8 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 					new MsgBox("Ocorreu um erro ao excluir", true); //FIXME msg
 				}
 			}
-		});
+		}.goDefault();
+		
 	}
 	
 	@Override
@@ -256,10 +275,17 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	@Override
 	public void doSalvar()
 	{
-		Requisito req = converter.convert(getRequisito(), getView());
+		final Requisito req = converter.convert(getRequisito(), getView());
 		
-		dispatcher.execute(new SalvarRequisitoAction(req, getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
+		new AbstractCallback<SalvarRequisitoResult>()
 		{
+
+			@Override
+			protected void callService(AsyncCallback<SalvarRequisitoResult> asyncCallback)
+			{
+				dispatcher.execute(new SalvarRequisitoAction(req, getProjeto()), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(SalvarRequisitoResult result)
 			{
@@ -276,7 +302,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 					new MsgBox(result.getErros(), true);
 				}
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override

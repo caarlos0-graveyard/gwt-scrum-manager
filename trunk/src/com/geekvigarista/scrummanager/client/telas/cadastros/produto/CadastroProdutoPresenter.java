@@ -15,6 +15,7 @@ import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdu
 import com.geekvigarista.scrummanager.shared.commands.produto.salvar.SalvarProdutoResult;
 import com.geekvigarista.scrummanager.shared.vos.Produto;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
@@ -101,9 +102,15 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	@Override
 	public void doSalvar()
 	{
-		Produto p = converter.convert(getProduto(), getView());
-		dispatch.execute(new SalvarProdutoAction(p), new AbstractCallback<SalvarProdutoResult>()
-		{
+		final Produto p = converter.convert(getProduto(), getView());
+		
+		new AbstractCallback<SalvarProdutoResult>(){
+
+			@Override
+			protected void callService(AsyncCallback<SalvarProdutoResult> asyncCallback)
+			{
+				dispatch.execute(new SalvarProdutoAction(p), asyncCallback);
+			}
 			@Override
 			public void onSuccess(SalvarProdutoResult result)
 			{
@@ -118,7 +125,7 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 					new MsgBox(result.getErros(), true);
 				}
 			}
-		});
+		}.goDefault();
 	}
 	
 	@Override

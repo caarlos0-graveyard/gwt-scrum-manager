@@ -15,6 +15,7 @@ import com.geekvigarista.scrummanager.shared.commands.usuario.buscar.BuscarUsuar
 import com.geekvigarista.scrummanager.shared.commands.usuario.login.LogoutUsuarioAction;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -140,8 +141,14 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 	
 	private void doLogout()
 	{
-		dispatcher.execute(new LogoutUsuarioAction(), new AbstractCallback<BuscarUsuarioObjResult>()
+		new AbstractCallback<BuscarUsuarioObjResult>()
 		{
+			@Override
+			protected void callService(AsyncCallback<BuscarUsuarioObjResult> asyncCallback)
+			{
+				dispatcher.execute(new LogoutUsuarioAction(), asyncCallback);
+			}
+			
 			@Override
 			public void onSuccess(BuscarUsuarioObjResult result)
 			{
@@ -154,7 +161,7 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 					new MsgBox(result.getErros(), true);
 				}
 			}
-		});
+		}.goDefault();
 	}
 	
 	private void goToPlace(String place)
