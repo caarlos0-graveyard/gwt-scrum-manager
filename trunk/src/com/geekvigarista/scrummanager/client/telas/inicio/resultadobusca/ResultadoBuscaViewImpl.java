@@ -10,6 +10,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class ResultadoBuscaViewImpl extends ViewImpl implements ResultadoBuscaView
@@ -49,6 +50,12 @@ public class ResultadoBuscaViewImpl extends ViewImpl implements ResultadoBuscaVi
 	{
 		factory.getDataProvider().setList(lista);
 		factory.getDataProvider().refresh();
+	}
+	
+	@Override
+	public SingleSelectionModel<Projeto> geetSelectionModel()
+	{
+		return factory.getSelectionModel();
 	}
 	
 }
