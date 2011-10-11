@@ -141,6 +141,7 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 	
 	private void doLogout()
 	{
+		
 		new AbstractCallback<BuscarUsuarioObjResult>()
 		{
 			@Override
