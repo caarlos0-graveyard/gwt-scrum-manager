@@ -13,10 +13,11 @@
 				<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="{msg.requisitos}" styleName="titulo1" />
 				</g:Cell>
-
 				<g:DecoratorPanel title="{msg.requisitos}"
 					ui:field="panelRequisitos">
-					<c:CellList ui:field="requisitos" width="150px"></c:CellList>
+					<g:ScrollPanel height="282px" width="155px">
+					<c:CellList ui:field="requisitos" width="100%" height="100%"></c:CellList>
+				</g:ScrollPanel>
 				</g:DecoratorPanel>
 				<g:Cell horizontalAlignment="ALIGN_RIGHT">
 					<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT"

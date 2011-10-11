@@ -14,6 +14,7 @@ import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.componentes.defaultbox.DefaultRichTextArea;
 import com.geekvigarista.scrummanager.client.telas.componentes.msgbox.MsgBox;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
+import com.geekvigarista.scrummanager.shared.commands.projeto.load.CarregarRequisitosNoProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoAction;
 import com.geekvigarista.scrummanager.shared.commands.projeto.load.LoadProjetoResult;
 import com.geekvigarista.scrummanager.shared.commands.requisito.excluir.ExcluirRequisitoAction;
@@ -192,7 +193,24 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	public void setProjeto(Projeto projeto)
 	{
 		this.projeto = projeto;
-		getView().setData(projeto.getRequisitos());
+		
+		new AbstractCallback<LoadProjetoResult>()
+		{
+			
+			@Override
+			protected void callService(AsyncCallback<LoadProjetoResult> asyncCallback)
+			{
+				dispatcher.execute(new CarregarRequisitosNoProjetoAction(getProjeto()), asyncCallback);
+			}
+			
+			@Override
+			public void onSuccess(LoadProjetoResult result)
+			{
+				getProjeto().setRequisitos(result.getProjeto().getRequisitos());
+				getView().setData(result.getProjeto().getRequisitos());
+			}
+		}.goDefault();
+		
 	}
 	
 	public Requisito getRequisito()
@@ -238,11 +256,11 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 				{
 					setProjeto(getProjeto());
 					doNovo();
-					new MsgBox(Mensagem.get.excluidoSucesso(), false); 
+					new MsgBox(Mensagem.get.excluidoSucesso(), false);
 				}
 				else
 				{
-					new MsgBox(Mensagem.get.erroExcluir(), true); 
+					new MsgBox(Mensagem.get.erroExcluir(), true);
 				}
 			}
 		}.goDefault();
@@ -281,7 +299,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		
 		new AbstractCallback<SalvarRequisitoResult>()
 		{
-
+			
 			@Override
 			protected void callService(AsyncCallback<SalvarRequisitoResult> asyncCallback)
 			{
@@ -294,7 +312,9 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 				if(result.getErros() == null || result.getErros().isEmpty())
 				{
 					setRequisito(result.getResponse());
-					setProjeto(result.getProjeto());
+//					setProjeto(result.getProjeto());
+					projeto = result.getProjeto();
+					getView().setData(result.getProjeto().getRequisitos());
 					
 					String msg = "Requisito " + result.getResponse().getTitulo() + " salvo com sucesso";
 					new MsgBox(msg, false);
