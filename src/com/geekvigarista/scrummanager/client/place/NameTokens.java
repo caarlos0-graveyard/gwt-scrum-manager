@@ -16,19 +16,9 @@ public class NameTokens
 	public static final String login = "!login";
 	public static final String busca = "!busca";
 	
-	public static String getVisreq()
+	public static String getErro404()
 	{
-		return visreq;
-	}
-	
-	public static String getLogin()
-	{
-		return login;
-	}
-	
-	public static String getAddstaktoproj()
-	{
-		return addstaktoproj;
+		return erro404;
 	}
 	
 	public static String getHome()
@@ -51,6 +41,11 @@ public class NameTokens
 		return addprod;
 	}
 	
+	public static String getAddstaktoproj()
+	{
+		return addstaktoproj;
+	}
+	
 	public static String getAddstak()
 	{
 		return addstak;
@@ -66,13 +61,19 @@ public class NameTokens
 		return addenc;
 	}
 	
-	public static String getErro404()
+	public static String getVisreq()
 	{
-		return erro404;
+		return visreq;
+	}
+	
+	public static String getLogin()
+	{
+		return login;
 	}
 	
 	public static String getBusca()
 	{
 		return busca;
 	}
+	
 }
