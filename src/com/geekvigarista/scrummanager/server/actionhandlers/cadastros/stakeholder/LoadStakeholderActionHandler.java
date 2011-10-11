@@ -32,7 +32,6 @@ public class LoadStakeholderActionHandler implements ActionHandler<BuscarStakeho
 	@Override
 	public void undo(BuscarStakeholderByIdAction arg0, BuscarStakeholderObjResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	

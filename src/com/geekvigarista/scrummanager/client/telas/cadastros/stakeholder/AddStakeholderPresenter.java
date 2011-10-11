@@ -188,7 +188,8 @@ public class AddStakeholderPresenter extends
 	{
 		if(stakid == null)
 		{
-			return; //FIXME tratar essa pica aqui
+			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
+			return;
 		}
 		
 		new AbstractCallback<BuscarStakeholderObjResult>()

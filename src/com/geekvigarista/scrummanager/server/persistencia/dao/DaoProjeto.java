@@ -89,7 +89,6 @@ public class DaoProjeto extends BasicDAO<ProjetoPOJO, ObjectId> implements IDaoP
 	 */
 	public List<ProjetoStakeholderDTO> buscarByUsuario(Usuario usuario)
 	{
-		//TODO injetar isso ?
 		IDaoStakeholder daoStake = new DaoStakeholder();
 		List<Stakeholder> stakeholders = daoStake.buscarByUsuario(usuario);
 		if(stakeholders == null || stakeholders.isEmpty())

@@ -108,9 +108,6 @@ public class RequisitoPOJO
 			e.setData(new Date());
 			e.setDescricao("Encaminhamento aguardando padrão");
 			e.setEncaminhamentoAnterior(null);
-			//FIXME ver que usuario padrao usar...
-//			Stakeholder stk = new Stakeholder();
-//			stk.setNome(requisito.getProjeto().getU)
 			
 			e.setStatus(StatusRequisito.AGUARDANDO);
 			e.setTempoGasto(01);

@@ -32,7 +32,6 @@ public class LoadProjetoActionHandler implements ActionHandler<LoadProjetoAction
 	@Override
 	public void undo(LoadProjetoAction arg0, LoadProjetoResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	

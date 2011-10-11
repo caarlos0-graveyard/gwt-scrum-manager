@@ -7,14 +7,12 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Requisito;
 
 /**
- * Interface para o dao requisito, extendendo da interface IDao
- * Aqui serao descritos metodos especificos do Dao Requisito
+ * Interface para o dao requisito, extendendo da interface IDao Aqui serao descritos metodos especificos do Dao Requisito
+ * 
  * @author Raduq
- *
+ * 
  */
-public interface IDaoRequisito extends IDao<Requisito, RequisitoPOJO> 
+public interface IDaoRequisito extends IDao<Requisito, RequisitoPOJO>
 {
-	//TODO, metodos especificos ir�o aqui..
-	
 	List<Requisito> buscarByProjeto(Projeto projeto);
 }

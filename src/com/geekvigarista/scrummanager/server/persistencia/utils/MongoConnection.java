@@ -37,7 +37,6 @@ public class MongoConnection
 				mongo = new Mongo(HOST, PORT);
 			} catch (Exception e) 
 			{
-				//TODO melhorar isto
 				e.printStackTrace();
 			}
 		}
@@ -59,8 +58,8 @@ public class MongoConnection
 				   .map(ProjetoPOJO.class)
 			       .map(EncaminhamentoPOJO.class)
 			       .map(RequisitoPOJO.class);
-			// TODO mapear os outros beans
-			// TODO inserir ensureIndex
+			// TODO mapear os outros beans RADUUUQQQ
+			// TODO inserir ensureIndex RADUUUQQQ
 		}
 		return morphia;
 	}

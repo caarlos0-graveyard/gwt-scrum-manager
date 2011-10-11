@@ -30,6 +30,7 @@ public class UsuarioPOJO
 	
 	/**
 	 * Construtor vazio de UsuarioPojo.
+	 * 
 	 * @deprecated nao instanciar, usar o outro construtor recebendo usuario.
 	 */
 	public UsuarioPOJO()
@@ -37,16 +38,23 @@ public class UsuarioPOJO
 	}
 	
 	/**
-	 * Construtor que recebe um usuario.
-	 * Necessario para converter de vo 
-	 * para UsuarioPOJO persistivel.
+	 * Construtor que recebe um usuario. Necessario para converter de vo para UsuarioPOJO persistivel.
+	 * 
 	 * @param usuario
 	 */
 	public UsuarioPOJO(Usuario usuario)
 	{
-		// TODO avoid nullpointers
 		super();
 		this.usuario = usuario;
+		if(usuario == null)
+		{
+			id = null;
+			login = null;
+			senha = null;
+			nome = null;
+			administrador = false;
+			return;
+		}
 		if(usuario.getId() != null)
 		{
 			this.id = new ObjectId(usuario.getId());
@@ -58,8 +66,8 @@ public class UsuarioPOJO
 	}
 	
 	/**
-	 * Retorna o vo de Usuario, usavel no client.
-	 * Caso o POJO tenha id, retorna um vo com id...
+	 * Retorna o vo de Usuario, usavel no client. Caso o POJO tenha id, retorna um vo com id...
+	 * 
 	 * @return
 	 */
 	public Usuario getUsuario()
@@ -72,7 +80,7 @@ public class UsuarioPOJO
 		else
 		{
 			//se o usuarioPojo NAO tem id, retorna um sem id
-			usuario = new Usuario(this.login, this.senha, this.nome,this.administrador);
+			usuario = new Usuario(this.login, this.senha, this.nome, this.administrador);
 		}
 		return usuario;
 	}
@@ -116,12 +124,12 @@ public class UsuarioPOJO
 	{
 		this.nome = nome;
 	}
-
+	
 	public boolean isAdministrador()
 	{
 		return administrador;
 	}
-
+	
 	public void setAdministrador(boolean administrador)
 	{
 		this.administrador = administrador;

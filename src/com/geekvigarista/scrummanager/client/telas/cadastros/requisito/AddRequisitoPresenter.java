@@ -119,7 +119,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		if(id == null)
 		{
 			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
-			return; //FIXME tratar essa pica aqui
+			return;
 		}
 		
 		new AbstractCallback<LoadProjetoResult>()
@@ -219,7 +219,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 		final Requisito req = getView().selectionModel().getSelectedObject();
 		if(req == null)
 		{
-			//TODO tratar
+			placeManager.revealErrorPlace(placeManager.getCurrentPlaceRequest().toString());
 			return;
 		}
 		

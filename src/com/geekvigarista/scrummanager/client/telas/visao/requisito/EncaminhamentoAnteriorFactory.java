@@ -45,15 +45,6 @@ public class EncaminhamentoAnteriorFactory
 	
 	private void initColumns()
 	{
-		//		Column<Encaminhamento, Boolean> checkColumn = new Column<Encaminhamento, Boolean>(new CheckboxCell(true, false))
-		//		{
-		//			@Override
-		//			public Boolean getValue(Encaminhamento object)
-		//			{
-		//				return selectionModel.isSelected(object);
-		//			}
-		//		};
-		//		
 		Column<Encaminhamento, String> stakeholderColumn = new Column<Encaminhamento, String>(new TextCell())
 		{
 			@Override
@@ -95,13 +86,20 @@ public class EncaminhamentoAnteriorFactory
 			}
 		};
 		
-		//		cellTable.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
-		//		cellTable.setColumnWidth(checkColumn, 40, Unit.PX);
+		Column<Encaminhamento, String> descrColumn = new Column<Encaminhamento, String>(new TextCell())
+		{
+			@Override
+			public String getValue(Encaminhamento object)
+			{
+				return object.getDescricao();
+			}
+		};
+		
 		cellTable.addColumn(dataColumn, Mensagem.get.data());
 		cellTable.addColumn(stakeholderColumn, Mensagem.get.stakeholders());
 		cellTable.addColumn(tempoColumn, Mensagem.get.tempoGasto());
 		cellTable.addColumn(statusColumn, Mensagem.get.status());
-		// TODO descricao
+		cellTable.addColumn(descrColumn, Mensagem.get.descricao());
 	}
 	
 	public CellTable<Encaminhamento> getCellTable()

@@ -32,7 +32,6 @@ public class LoadUsuarioActionHandler implements ActionHandler<BuscarUsuarioById
 	@Override
 	public void undo(BuscarUsuarioByIdAction arg0, BuscarUsuarioObjResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	

@@ -104,13 +104,15 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	{
 		final Produto p = converter.convert(getProduto(), getView());
 		
-		new AbstractCallback<SalvarProdutoResult>(){
-
+		new AbstractCallback<SalvarProdutoResult>()
+		{
+			
 			@Override
 			protected void callService(AsyncCallback<SalvarProdutoResult> asyncCallback)
 			{
 				dispatch.execute(new SalvarProdutoAction(p), asyncCallback);
 			}
+			
 			@Override
 			public void onSuccess(SalvarProdutoResult result)
 			{
@@ -143,7 +145,6 @@ public class CadastroProdutoPresenter extends SimpleCadPresenter<CadProdutoView,
 	@Override
 	public void doExcluir()
 	{
-		// TODO vai excluir ?
 		
 	}
 }

@@ -32,8 +32,6 @@ public class LoadRequisitoActionHandler implements ActionHandler<BuscarRequisito
 	@Override
 	public void undo(BuscarRequisitoByIdAction arg0, BuscarRequisitoObjResult arg1, ExecutionContext arg2) throws ActionException
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
