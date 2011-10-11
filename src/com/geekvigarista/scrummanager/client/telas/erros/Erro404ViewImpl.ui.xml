@@ -5,14 +5,17 @@
 		
 	</ui:style>
 	<g:HTMLPanel>
-		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER"
+		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_LEFT"
 			verticalAlignment="ALIGN_MIDDLE">
 			<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
-				<g:Label text="404 Error" styleName="tituloGigante" />
+				<g:Label text="404" styleName="tituloGigante" />
 			</g:Cell>
 			<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
 				<g:Label text="Sorry Mario, Your Princess Is In Another Castle."
-					styleName="titulo2" />
+					styleName="titulo1" />
+			</g:Cell>
+			<g:Cell horizontalAlignment="ALIGN_CENTER">
+				<g:Hyperlink text="Home" targetHistoryToken="!home" styleName="titulo2"/>
 			</g:Cell>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
