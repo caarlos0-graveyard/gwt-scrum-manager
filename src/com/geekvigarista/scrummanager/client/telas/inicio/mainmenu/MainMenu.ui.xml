@@ -18,7 +18,7 @@
 					<g:MenuItem text="{msg.stakeholders}" ui:field="stakeholder" />
 				</g:MenuBar>
 			</g:MenuItem>
-			<g:MenuItemSeparator />
+			<g:MenuItemSeparator ui:field="separatorSair"/>
 			<g:MenuItem text="{msg.sair}" ui:field="sair" />
 		</g:MenuBar>
 	</g:HTMLPanel>

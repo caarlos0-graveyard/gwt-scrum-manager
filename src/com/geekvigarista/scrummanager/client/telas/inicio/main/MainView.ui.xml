@@ -4,10 +4,10 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:FlowPanel width="100%" ui:field="topoContentPanel"/>
-			<g:FlowPanel ui:field="menuContentPanel" width="100%" />
+			<g:FlowPanel width="100%" ui:field="topoContentPanel" styleName="corInterna"/>
+			<g:FlowPanel ui:field="menuContentPanel" width="100%" styleName="corInterna" />
 			<g:Cell horizontalAlignment="ALIGN_CENTER">
-				<g:FlowPanel ui:field="mainContentPanel" />
+				<g:FlowPanel ui:field="mainContentPanel" styleName="corInterna" />
 			</g:Cell>
 		</g:VerticalPanel>
 	</g:HTMLPanel>

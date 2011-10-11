@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -25,6 +26,8 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	MenuItem inicio;
 	@UiField
 	MenuItem novo;
+	@UiField
+	MenuItemSeparator separatorSair;
 	
 	Widget widget;
 	
@@ -83,5 +86,11 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	public MenuItem novo()
 	{
 		return novo;
+	}
+	
+	@Override
+	public MenuItemSeparator separatorSair()
+	{
+		return separatorSair;
 	}
 }

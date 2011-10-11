@@ -17,6 +17,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -43,6 +44,8 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 		MenuItem sair();
 		
 		MenuItem novo();
+		
+		MenuItemSeparator separatorSair();
 	}
 	
 	@ProxyCodeSplit
@@ -71,10 +74,12 @@ public class MainMenuPresenter extends Presenter<MainMenuView, MainMenuProxy>
 		if(!gatekeeper.getUsuario().isAdministrador())
 		{
 			getView().novo().setVisible(false);
+			getView().separatorSair().setVisible(false);
 		}
 		else
 		{
 			getView().novo().setVisible(true);
+			getView().separatorSair().setVisible(true);
 		}
 	}
 	
