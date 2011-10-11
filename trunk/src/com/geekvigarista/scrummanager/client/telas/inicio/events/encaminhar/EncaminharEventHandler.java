@@ -4,5 +4,5 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface EncaminharEventHandler extends EventHandler
 {
-	void encaminhar(EncaminharEvent event);
+	void onEncaminharRequisito(EncaminharEvent event);
 }

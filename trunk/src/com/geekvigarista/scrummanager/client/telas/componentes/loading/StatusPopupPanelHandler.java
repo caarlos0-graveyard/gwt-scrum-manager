@@ -19,7 +19,7 @@ import com.google.gwt.event.shared.EventBus;
  * @author caarlos0
  * 
  */
-public class StatusPopupPanelHandler implements IStatusPopupPanelHandler
+public class StatusPopupPanelHandler implements IStatusPopupPanelHandler, LoadingStartEventHandler, LoadingStopEventHandler
 {
 	private StatusPopupPanel status;
 	
@@ -27,31 +27,24 @@ public class StatusPopupPanelHandler implements IStatusPopupPanelHandler
 	public StatusPopupPanelHandler(EventBus eventbus)
 	{
 		status = new StatusPopupPanel();
-		
-		eventbus.addHandler(LoadingStartEvent.getType(), new LoadingStartEventHandler()
+		eventbus.addHandler(LoadingStartEvent.getType(), this);
+		eventbus.addHandler(LoadingStopEvent.getType(), this);
+	}
+	
+	@Override
+	public void loadStop(LoadingStopEvent event)
+	{
+		System.out.println("Load stop: " + new Date().getTime());
+		if(status != null && status.isVisible())
 		{
-			@Override
-			public void loadStart(LoadingStartEvent event)
-			{
-				System.out.println(new Date().getTime());
-				if(status != null && !status.isVisible())
-				{
-					status.show();
-				}
-			}
-		});
-		
-		eventbus.addHandler(LoadingStopEvent.getType(), new LoadingStopEventHandler()
-		{
-			@Override
-			public void loadStop(LoadingStopEvent event)
-			{
-				System.out.println(new Date().getTime());
-				if(status != null && status.isVisible())
-				{
-					status.hide();
-				}
-			}
-		});
+			status.hide();
+		}
+	}
+	
+	@Override
+	public void loadStart(LoadingStartEvent event)
+	{
+		System.out.println("Load Start: " + new Date().getTime());
+		status.show();
 	}
 }

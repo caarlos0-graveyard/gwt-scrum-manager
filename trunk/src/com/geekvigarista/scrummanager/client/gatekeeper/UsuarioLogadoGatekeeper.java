@@ -90,7 +90,6 @@ public class UsuarioLogadoGatekeeper implements Gatekeeper
 			usuario = null;
 			final DispatchRequest request = dispatcher.execute(new VerificaUsuarioLogadoAction(), new AbstractCallback<BuscarUsuarioObjResult>()
 			{
-				
 				@Override
 				public void onSuccess(BuscarUsuarioObjResult result)
 				{

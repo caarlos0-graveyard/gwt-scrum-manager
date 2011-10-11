@@ -23,6 +23,8 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	MenuItem sair;
 	@UiField
 	MenuItem inicio;
+	@UiField
+	MenuItem novo;
 	
 	Widget widget;
 	
@@ -75,5 +77,11 @@ public class MainMenu extends ViewImpl implements MainMenuView
 	public MenuItem sair()
 	{
 		return sair;
+	}
+	
+	@Override
+	public MenuItem novo()
+	{
+		return novo;
 	}
 }

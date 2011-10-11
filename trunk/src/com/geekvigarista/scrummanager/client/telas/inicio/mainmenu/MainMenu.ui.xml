@@ -9,7 +9,7 @@
 		<g:MenuBar>
 			<g:MenuItem text="{msg.inicio}" ui:field="inicio" />
 			<g:MenuItemSeparator />
-			<g:MenuItem text="{msg.novo}">
+			<g:MenuItem text="{msg.novo}" ui:field="novo">
 				<g:MenuBar vertical="true">
 					<g:MenuItem text="{msg.projeto}" ui:field="projeto" />
 					<g:MenuItem text="{msg.produto}" ui:field="produto" />

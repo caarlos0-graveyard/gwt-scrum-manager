@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IStakeholderConverter;
-import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.AdminGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
@@ -35,11 +35,12 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class AddStakeholderPresenter extends SimpleCadPresenter<AddStakeholderPresenter.AddStakeholderView, AddStakeholderPresenter.AddStakeholderProxy>
+public class AddStakeholderPresenter extends
+		SimpleCadPresenter<AddStakeholderPresenter.AddStakeholderView, AddStakeholderPresenter.AddStakeholderProxy>
 {
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addstak)
-	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
+	@UseGatekeeper(AdminGatekeeper.class)
 	public interface AddStakeholderProxy extends ProxyPlace<AddStakeholderPresenter>
 	{
 	}
@@ -204,10 +205,12 @@ public class AddStakeholderPresenter extends SimpleCadPresenter<AddStakeholderPr
 		if(stakeholder == null)
 		{
 			this.stakeholder = new Stakeholder();
-		}else{
+		}
+		else
+		{
 			this.stakeholder = stakeholder;
 		}
-		converter.updateView(stakeholder, getView(),usuariosSistema);
+		converter.updateView(stakeholder, getView(), usuariosSistema);
 		getView().getNome().setFocus(true);
 	}
 	

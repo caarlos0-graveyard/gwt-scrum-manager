@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IRequisitoConverter;
-import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.AdminGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
@@ -53,7 +53,7 @@ public class AddRequisitoPresenter extends SimpleCadPresenter<AddRequisitoPresen
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addreq)
-	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
+	@UseGatekeeper(AdminGatekeeper.class)
 	public interface AddRequisitoProxy extends ProxyPlace<AddRequisitoPresenter>
 	{
 		

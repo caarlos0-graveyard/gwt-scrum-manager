@@ -40,13 +40,15 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrumProxy>
+public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrumProxy> implements ProjetoSelecionadoEventHandler,
+		EncaminharEventHandler, AbrirModalEncaminharEventHandler
 {
 	public interface QuadroScrumView extends View
 	{
@@ -145,61 +147,54 @@ public class QuadroScrumPresenter extends Presenter<QuadroScrumView, QuadroScrum
 	protected void onBind()
 	{
 		super.onBind();
-		
-		getEventBus().addHandler(ProjetoSelecionadoEvent.getType(), new ProjetoSelecionadoEventHandler()
+	}
+	
+	@Override
+	@ProxyEvent
+	public void onProjetoSelecionado(ProjetoSelecionadoEvent event)
+	{
+		constroiColunas(event.getProjeto());
+	}
+	
+	@Override
+	@ProxyEvent
+	public void onEncaminharRequisito(EncaminharEvent event)
+	{
+		getEventBus().fireEvent(new LoadingStartEvent());
+		Requisito requisito = EncaminharUtil.encaminhar(event.getRequisito(), event.getStakeholder(), event.getDescricao(), event.getTempoGasto(),
+				event.getAcao());
+		dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
 		{
 			@Override
-			public void selecionar(ProjetoSelecionadoEvent event)
+			public void onSuccess(SalvarRequisitoResult result)
 			{
-				constroiColunas(event.getProjeto());
+				if(placeManager.getCurrentPlaceRequest().getNameToken().equals(NameTokens.visreq))
+				{
+					Window.alert("OI");
+					placeManager.revealCurrentPlace();
+				}
+				else
+				{
+					constroiColunas(result.getProjeto());
+				}
 			}
 		});
+	}
+	
+	@Override
+	@ProxyEvent
+	public void onAbrirModalEncaminharRequisito(AbrirModalEncaminharEvent event)
+	{
+		final AcaoEncaminhar acao = event.getAcao();
+		final Requisito requisito = event.getRequisito();
 		
-		getEventBus().addHandler(AbrirModalEncaminharEvent.getType(), new AbrirModalEncaminharEventHandler()
-		{
-			
-			@Override
-			public void abrirModal(AbrirModalEncaminharEvent event)
-			{
-				final AcaoEncaminhar acao = event.getAcao();
-				final Requisito requisito = event.getRequisito();
-				
-				dispatcher.execute(new BuscarStakeholderAction(null), new AbstractCallback<BuscarStakeholderListResult>()
-				{
-					@Override
-					public void onSuccess(BuscarStakeholderListResult result)
-					{
-						ModalEncaminhar me = new ModalEncaminhar(result.getResponse(), getEventBus(), acao, requisito);
-						me.show();
-					}
-				});
-			}
-		});
-		
-		getEventBus().addHandler(EncaminharEvent.getType(), new EncaminharEventHandler()
+		dispatcher.execute(new BuscarStakeholderAction(null), new AbstractCallback<BuscarStakeholderListResult>()
 		{
 			@Override
-			public void encaminhar(EncaminharEvent event)
+			public void onSuccess(BuscarStakeholderListResult result)
 			{
-				getEventBus().fireEvent(new LoadingStartEvent());
-				Requisito requisito = EncaminharUtil.encaminhar(event.getRequisito(), event.getStakeholder(), event.getDescricao(),
-						event.getTempoGasto(), event.getAcao());
-				dispatcher.execute(new SalvarRequisitoAction(requisito, requisito.getProjeto()), new AbstractCallback<SalvarRequisitoResult>()
-				{
-					@Override
-					public void onSuccess(SalvarRequisitoResult result)
-					{
-						if(placeManager.getCurrentPlaceRequest().getNameToken().equals(NameTokens.visreq))
-						{
-							Window.alert("OI");
-							placeManager.revealCurrentPlace();
-						}
-						else
-						{
-							constroiColunas(result.getProjeto());
-						}
-					}
-				});
+				ModalEncaminhar me = new ModalEncaminhar(result.getResponse(), getEventBus(), acao, requisito);
+				me.show();
 			}
 		});
 	}

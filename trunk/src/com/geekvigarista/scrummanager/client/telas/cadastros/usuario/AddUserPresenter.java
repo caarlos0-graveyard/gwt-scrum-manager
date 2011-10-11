@@ -1,7 +1,7 @@
 package com.geekvigarista.scrummanager.client.telas.cadastros.usuario;
 
 import com.geekvigarista.scrummanager.client.converters.interfaces.IUsuarioConverter;
-import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
+import com.geekvigarista.scrummanager.client.gatekeeper.AdminGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
 import com.geekvigarista.scrummanager.client.telas.cadastros.interfaces.SimpleCadPresenter;
 import com.geekvigarista.scrummanager.client.telas.cadastros.usuario.AddUserPresenter.AddUserProxy;
@@ -31,7 +31,7 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.adduser)
-	@UseGatekeeper(UsuarioLogadoGatekeeper.class)
+	@UseGatekeeper(AdminGatekeeper.class)
 	public interface AddUserProxy extends ProxyPlace<AddUserPresenter>
 	{
 	}
