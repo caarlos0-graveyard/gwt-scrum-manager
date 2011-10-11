@@ -12,7 +12,7 @@
 			horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE" ui:field="vpTudo">
 			<g:DecoratorPanel>
 				<g:VerticalPanel>
-					<g:Image width="316px" height="91px" url="imagens/logo3.png"/>
+					<g:Image width="316px" height="91px" ui:field="logo" />
 					<g:Label text="{msg.efetuarlogin}" styleName="titulo1" direction="RTL" horizontalAlignment="ALIGN_CENTER"></g:Label>
 					<g:HorizontalPanel>
 						<g:Grid width="351px" height="113px">

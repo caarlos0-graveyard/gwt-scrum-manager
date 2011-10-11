@@ -1,16 +1,17 @@
 package com.geekvigarista.scrummanager.client.telas.inicio.home;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class HomeView extends ViewImpl implements HomePresenter.HomeView
+public class HomeView extends ViewImpl implements HomePresenter.HomeView, ResizeHandler
 {
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 	
@@ -25,14 +26,15 @@ public class HomeView extends ViewImpl implements HomePresenter.HomeView
 	SimplePanel panelQuadro;
 	
 	@UiField
-	HorizontalSplitPanel splitPanel;
+	HorizontalSplitPanel splitPanel; //FIXME um dia
 	
 	private final Widget widget;
 	
 	public HomeView()
 	{
 		widget = uiBinder.createAndBindUi(this);
-		splitPanel.setHeight(Window.getClientHeight() + "px");
+		Window.addResizeHandler(this);
+		adjustPanelHeight();
 	}
 	
 	@Override
@@ -74,6 +76,17 @@ public class HomeView extends ViewImpl implements HomePresenter.HomeView
 		{
 			panelQuadro.setWidget(content);
 		}
+	}
+	
+	@Override
+	public void onResize(ResizeEvent event)
+	{
+		adjustPanelHeight();
+	}
+	
+	void adjustPanelHeight()
+	{
+		splitPanel.setHeight(Window.getClientHeight() - 93 + "px");
 	}
 	
 }

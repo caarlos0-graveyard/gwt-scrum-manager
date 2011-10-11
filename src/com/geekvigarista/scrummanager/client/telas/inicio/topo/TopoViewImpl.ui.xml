@@ -11,10 +11,11 @@
 		<g:Grid width="100%">
 			<g:row>
 				<g:customCell>
-					<g:Image height="32px" width="90px" url="imagens/logo3.png" />
+					<g:Image height="32px" width="90px" ui:field="logo" />
 				</g:customCell>
 				<g:customCell>
-					<s:SearchBox ui:field="txtbusca" width="400px" horizontalAlignment="ALIGN_RIGHT" />
+					<s:SearchBox ui:field="txtbusca" width="400px"
+						horizontalAlignment="ALIGN_RIGHT" />
 				</g:customCell>
 			</g:row>
 		</g:Grid>
