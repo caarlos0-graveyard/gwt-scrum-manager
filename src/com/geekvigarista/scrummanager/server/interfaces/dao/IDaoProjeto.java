@@ -15,7 +15,7 @@ import com.geekvigarista.scrummanager.shared.vos.Usuario;
  */
 public interface IDaoProjeto extends IDao<Projeto, ProjetoPOJO>
 {
-	List<Projeto> buscarLike(String parametro);
+	List<Projeto> buscarLike(String parametro, Usuario usuario);
 	
 	List<ProjetoStakeholderDTO> buscarByUsuario(Usuario usuario);
 	
