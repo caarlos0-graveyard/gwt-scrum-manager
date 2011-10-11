@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.geekvigarista.scrummanager.client.gatekeeper.UsuarioLogadoGatekeeper;
 import com.geekvigarista.scrummanager.client.place.NameTokens;
+import com.geekvigarista.scrummanager.client.place.Parameters;
 import com.geekvigarista.scrummanager.client.telas.commons.AbstractCallback;
 import com.geekvigarista.scrummanager.client.telas.inicio.events.updatesearchinput.UpdateSearchBoxValueEvent;
 import com.geekvigarista.scrummanager.client.telas.inicio.main.MainPresenter;
@@ -19,6 +20,8 @@ import com.geekvigarista.scrummanager.shared.vos.Projeto;
 import com.geekvigarista.scrummanager.shared.vos.Usuario;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -36,6 +39,8 @@ public class ResultadoBuscaPresenter extends Presenter<ResultadoBuscaView, Resul
 	public interface ResultadoBuscaView extends View
 	{
 		void setData(List<Projeto> lista);
+		
+		SingleSelectionModel<Projeto> geetSelectionModel();
 		
 	}
 	
@@ -65,6 +70,21 @@ public class ResultadoBuscaPresenter extends Presenter<ResultadoBuscaView, Resul
 	protected void revealInParent()
 	{
 		RevealContentEvent.fire(this, MainPresenter.TYPE_SetMainContent, this);
+	}
+	
+	@Override
+	protected void onBind()
+	{
+		super.onBind();
+		getView().geetSelectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler()
+		{
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event)
+			{
+				placemanager.revealPlace(new PlaceRequest(NameTokens.addproj).with(Parameters.projid, getView().geetSelectionModel()
+						.getSelectedObject().getId()));
+			}
+		});
 	}
 	
 	@Override
