@@ -26,7 +26,7 @@ public class TopoViewImpl extends ViewImpl implements TopoView
 	public TopoViewImpl()
 	{
 		w = uiBinder.createAndBindUi(this);
-		txtbusca.setStakeholder(Mensagem.get.buscarProjetos());
+		txtbusca.setPlaceholder(Mensagem.get.buscarProjetos());
 	}
 	
 	@Override
