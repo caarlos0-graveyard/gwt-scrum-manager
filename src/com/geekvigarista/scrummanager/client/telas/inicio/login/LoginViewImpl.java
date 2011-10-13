@@ -45,7 +45,7 @@ public class LoginViewImpl extends ViewImpl implements LoginPresenter.LoginView,
 	VerticalPanel vpTudo;
 	@UiField
 	Image logo;
-	
+	 
 	public LoginViewImpl()
 	{
 		uiBinder.createAndBindUi(this);
