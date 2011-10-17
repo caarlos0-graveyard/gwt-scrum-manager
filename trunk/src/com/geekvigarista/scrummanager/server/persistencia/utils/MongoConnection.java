@@ -15,27 +15,28 @@ import com.mongodb.Mongo;
  * @author Raduq
  * @version 1.0
  */
-public class MongoConnection 
+public class MongoConnection
 {
-	private static final String BANCO = "scrumDB";
+	private static final String BANCO = "gpa";
 	private static final String HOST = "localhost";
 	private static final int PORT = 27017;
-
+	
 	private static Mongo mongo;
 	private static Morphia morphia;
 	private static Datastore datastore;
-
+	
 	/**
 	 * Retorna uma instancia de Mongo. Caso nao tenha nenhuma, cria uma.
 	 */
-	private static Mongo getMongo() 
+	private static Mongo getMongo()
 	{
-		if (mongo == null) 
+		if(mongo == null)
 		{
-			try 
+			try
 			{
 				mongo = new Mongo(HOST, PORT);
-			} catch (Exception e) 
+			}
+			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
@@ -44,20 +45,14 @@ public class MongoConnection
 	}
 	
 	/**
-	 * Retorna uma instancia do Morphia.
-	 * Caso nao tenha nenhuma cria uma, e mapea as classes.
-	 * Tambem da ensureIndex nos indices do mongo.
+	 * Retorna uma instancia do Morphia. Caso nao tenha nenhuma cria uma, e mapea as classes. Tambem da ensureIndex nos indices do mongo.
 	 */
-	private static Morphia getMorphia() 
+	private static Morphia getMorphia()
 	{
-		if (morphia == null) 
+		if(morphia == null)
 		{
 			morphia = new Morphia();
-			morphia.map(UsuarioPOJO.class)
-				   .map(StakeholderPOJO.class)
-				   .map(ProjetoPOJO.class)
-			       .map(EncaminhamentoPOJO.class)
-			       .map(RequisitoPOJO.class);
+			morphia.map(UsuarioPOJO.class).map(StakeholderPOJO.class).map(ProjetoPOJO.class).map(EncaminhamentoPOJO.class).map(RequisitoPOJO.class);
 			// TODO mapear os outros beans RADUUUQQQ
 			// TODO inserir ensureIndex RADUUUQQQ
 		}
@@ -65,17 +60,16 @@ public class MongoConnection
 	}
 	
 	/**
-	 * Retorna o datastore.
-	 * Caso nao tenha nenhum cria um.
+	 * Retorna o datastore. Caso nao tenha nenhum cria um.
 	 */
-	public static Datastore getDatastore() 
+	public static Datastore getDatastore()
 	{
-		if (datastore == null) 
+		if(datastore == null)
 		{
 			datastore = getMorphia().createDatastore(getMongo(), BANCO);
 			datastore.ensureIndexes();
 		}
 		return datastore;
 	}
-
+	
 }

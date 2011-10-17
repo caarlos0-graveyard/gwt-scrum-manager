@@ -22,20 +22,17 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 
 /**
- * Componente campo de busca estilizado com stakeholder :D
+ * Componente "campo de busca" estilizado com placeholder e botão com a lupa.
  * 
  * @author caarlos0
- * 
  */
 public class SearchBox extends HorizontalPanel implements HasSearchHandlers, HasValue<String>
 {
-	/**
-	 * Css.
-	 */
 	private static SearchCss css = Resources.CSS;
 	
 	static
 	{
+		// injeta o CSS no componente
 		StyleInjector.inject(css.getText());
 	}
 	
@@ -43,13 +40,10 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 	private PushButton button;
 	
 	/**
-	 * Texto que fica "atras" do campo, "Digite aqui para pesquisar..." por exemplo.
+	 * Texto que fica "atrás" do campo, "Digite aqui para pesquisar..." por exemplo.
 	 */
 	private String placeholder;
 	
-	/**
-	 * Constructor.
-	 */
 	public SearchBox()
 	{
 		text = new TextBox();
@@ -62,7 +56,7 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 		bind();
 	}
 	
-	public String getStakeholder()
+	public String getPlaceholder()
 	{
 		return placeholder;
 	}
@@ -100,7 +94,7 @@ public class SearchBox extends HorizontalPanel implements HasSearchHandlers, Has
 			@Override
 			public void onBlur(BlurEvent event)
 			{
-				if(text.getValue().trim().equals("") || text.getValue().trim().equals(getStakeholder()))
+				if(text.getValue().trim().equals("") || text.getValue().trim().equals(getPlaceholder()))
 				{
 					text.setValue(placeholder);
 					setBlurStyle();

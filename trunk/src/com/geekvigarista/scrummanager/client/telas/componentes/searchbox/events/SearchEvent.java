@@ -5,7 +5,6 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class SearchEvent extends GwtEvent<SearchEventHandler>
 {
-	
 	private static final Type<SearchEventHandler> TYPE = new Type<SearchEventHandler>();
 	
 	public static Type<SearchEventHandler> getType()
@@ -18,9 +17,7 @@ public class SearchEvent extends GwtEvent<SearchEventHandler>
 		eventBus.fireEvent(new SearchEvent());
 	}
 	
-	public SearchEvent()
-	{
-	}
+	public SearchEvent(){}
 	
 	@Override
 	protected void dispatch(SearchEventHandler handler)

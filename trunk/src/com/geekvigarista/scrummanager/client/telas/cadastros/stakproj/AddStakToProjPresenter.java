@@ -235,4 +235,21 @@ public class AddStakToProjPresenter extends SimpleCadPresenter<AddStakToProjView
 			}
 		}.scheduleRepeating(250);
 	}
+
+	@Override
+	public void doNovo()
+	{
+		
+	}
+
+	@Override
+	public void doCancelar()
+	{
+	}
+
+	@Override
+	public void doExcluir()
+	{
+		
+	}
 }

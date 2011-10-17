@@ -186,6 +186,8 @@ public class AddStakeholderPresenter extends
 	
 	public void doLoadStakeholderFromRequest(final String stakid)
 	{
+		if(stakid == null)
+			return;
 		new AbstractCallback<BuscarStakeholderObjResult>()
 		{
 			@Override
@@ -236,5 +238,11 @@ public class AddStakeholderPresenter extends
 	public void populaCadastro()
 	{
 		converter.updateView(getStakeholder(), getView(), usuariosSistema);
+	}
+	
+	@Override
+	public void doExcluir()
+	{
+		
 	}
 }

@@ -227,5 +227,22 @@ public class AddProjetoPresenter extends SimpleCadPresenter<AddProjetoPresenter.
 			getView().getLBProdutos().setSelectedIndex(index);
 		}
 	}
-	
+
+	@Override
+	public void doNovo()
+	{
+
+	}
+
+	@Override
+	public void doCancelar()
+	{
+		
+	}
+
+	@Override
+	public void doExcluir()
+	{
+		
+	}
 }
