@@ -20,5 +20,4 @@ public class GWT_ScrumManager implements EntryPoint
 		ginjector.getPlaceManager().revealCurrentPlace();
 		RootPanel.get("carregando").setVisible(false);
 	}
-	
 }

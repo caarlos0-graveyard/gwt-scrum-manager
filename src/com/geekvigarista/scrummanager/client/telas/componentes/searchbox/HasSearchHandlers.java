@@ -1,6 +1,5 @@
 package com.geekvigarista.scrummanager.client.telas.componentes.searchbox;
 
-import com.geekvigarista.scrummanager.client.telas.componentes.searchbox.events.SearchEvent;
 import com.geekvigarista.scrummanager.client.telas.componentes.searchbox.events.SearchEventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.HasHandlers;
@@ -8,7 +7,7 @@ import com.google.gwt.event.shared.HasHandlers;
 public interface HasSearchHandlers extends HasHandlers
 {
 	/**
-	 * Adiciona um {@link SearchEvent} handler.
+	 * Adiciona um {@link SearchEventHandler} a um componente.
 	 * 
 	 * @param handler
 	 *            o handler de busca

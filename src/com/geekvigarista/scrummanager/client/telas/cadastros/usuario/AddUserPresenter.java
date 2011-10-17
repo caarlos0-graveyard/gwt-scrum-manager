@@ -146,5 +146,17 @@ public class AddUserPresenter extends SimpleCadPresenter<AddUserView, AddUserPro
 	{
 		setUsuario(new Usuario());
 	}
+
+	@Override
+	public void doCancelar()
+	{
+		
+	}
+
+	@Override
+	public void doExcluir()
+	{
+		
+	}
 	
 }

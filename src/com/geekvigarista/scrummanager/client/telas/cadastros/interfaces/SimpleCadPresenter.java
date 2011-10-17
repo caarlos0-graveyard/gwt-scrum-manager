@@ -30,53 +30,13 @@ public abstract class SimpleCadPresenter<V extends View, Proxy_ extends Proxy<?>
 		super(eventBus, view, proxy);
 	}
 	
-	public void doSalvar()
-	{
-		try
-		{
-			throw new Exception("você precisa dar override nessa merda");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	public abstract void doSalvar();
 	
-	public void doNovo()
-	{
-		try
-		{
-			throw new Exception("você precisa dar override nessa merda");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	public abstract void doNovo();
 	
-	public void doCancelar()
-	{
-		try
-		{
-			throw new Exception("você precisa dar override nessa merda");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	public abstract void doCancelar();
 	
-	public void doExcluir()
-	{
-		try
-		{
-			throw new Exception("você precisa dar override nessa merda");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	public abstract void doExcluir();
 	
 	/*
 	 * inner classes dos handlers
@@ -107,7 +67,7 @@ public abstract class SimpleCadPresenter<V extends View, Proxy_ extends Proxy<?>
 		{
 			if(Window.confirm(Mensagem.get.temCerteza()))
 			{
-				doExcluir(); 
+				doExcluir();
 			}
 		}
 	}
